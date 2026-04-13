@@ -1,6 +1,6 @@
 namespace Vertex.Models.ConsistencyUnit;
 
-public class ConsistencyCalculator
+public class Consistency
 {
     
 }

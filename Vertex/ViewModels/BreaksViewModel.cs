@@ -1,0 +1,66 @@
+using Vertex.Models.UserData.DataHandling;
+using Vertex.Models.UserDataHandling;
+using Vertex.MVVM;
+
+namespace Vertex.ViewModels;
+
+public class BreaksViewModel : ViewModelBase
+{
+    private BreakData _breakData;
+    
+    public BreaksViewModel()
+    {
+        var breakData = new BreakData();
+        _breakData = breakData;
+    }
+    
+    public void OnAddBreak()
+    {
+        var breaks = new BreakEntry(
+            BreakId,
+            BreakDurationHour,
+            BreakPlacementOrder);
+
+        _breakData.Load(breaks);
+    }
+
+    public bool CanAddBreak()
+    {
+        return true;
+    }
+    
+    private string _breakId;
+    public string BreakId
+    {
+        get => _breakId;
+        set
+        {
+            _breakId = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private TimeSpan _breakDurationHour;
+
+    public TimeSpan BreakDurationHour
+    {
+        get => _breakDurationHour;
+        set
+        {
+            _breakDurationHour = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _breakPlacementOrder;
+
+    public int BreakPlacementOrder
+    {
+        get => _breakPlacementOrder;
+        set
+        {
+            _breakPlacementOrder = value;
+            OnPropertyChanged();
+        }
+    }
+}

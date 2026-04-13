@@ -3,8 +3,9 @@ using static System.Math;
 
 namespace Vertex.Models.StressRiskUnit;
 
-public static class StressProcessingUnit
+public static class Stress
 {
+    // Converts user entry daya into Stress unit
     public static (double Score, string Id) ConvertToScore(
         RequiredEnergy energy,
         ExpectedEnjoyment enjoyment,

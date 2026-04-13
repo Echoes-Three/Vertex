@@ -1,0 +1,16 @@
+## Visual Studio / .NET Core
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+
+## JetBrains Rider
+.idea/
+*.sln.iml
+
+## Publish output
+publish/
+
+## User-specific
+.vs/

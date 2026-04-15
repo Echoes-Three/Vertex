@@ -6,12 +6,12 @@ namespace Vertex.ViewModels;
 
 public class RemindersViewModel : ViewModelBase
 {
-    private ReminderData _reminderData;
+    private RemindersHandler _remindersHandler;
     
     public RemindersViewModel()
     {
-        var reminderData = new ReminderData();
-        _reminderData = reminderData;
+        var reminderData = new RemindersHandler();
+        _remindersHandler = reminderData;
     }
     
     public void OnAddReminder()
@@ -23,7 +23,7 @@ public class RemindersViewModel : ViewModelBase
             ReminderCompleted,
             ReminderCreatedAt);
         
-        _reminderData.Load(reminders);
+        _remindersHandler.Save(reminders);
     }
 
     public bool CanAddReminder()

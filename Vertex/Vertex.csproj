@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Models\Settings\" />
       <Folder Include="Themes\" />
     </ItemGroup>
 

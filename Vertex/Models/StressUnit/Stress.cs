@@ -1,20 +1,20 @@
 using Vertex.Models.EnumDefinitions;
 using static System.Math;
 
-namespace Vertex.Models.StressRiskUnit;
+namespace Vertex.Models.StressUnit;
 
 public static class Stress
 {
-    // Converts user entry daya into Stress unit
-    public static (double Score, string Id) ConvertToScore(
+    public static double ToScore(
         RequiredEnergy energy,
         ExpectedEnjoyment enjoyment,
-        int duration,
-        string id)
+        TimeSpan duration)
     {
+        var h = (int)duration.TotalHours;
         var delta = (int)energy - (int)enjoyment;
-        var stress = delta * (1 - Exp(-0.7 * duration)) + 0.4 * delta * duration;
+        var stress = delta * (1 - Exp(-0.7 * h)) + 0.4 * delta * h;
         var score = 5 + 5 * Tanh(stress);
-        return ( score, id);
+        
+        return score;
     }
 }

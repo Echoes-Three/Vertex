@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using Vertex.Models.StressUnit;
 using Vertex.Models.UserData.DataHandling;
 
 namespace Vertex;
@@ -13,9 +14,12 @@ public partial class App : Application
     public IServiceProvider ServiceProvider { get; private set; }
     protected override void OnStartup(StartupEventArgs e)
     {
-        var breakData = new BreakData();
-        var dailyData = new DailyData();
-        var reminderData = new ReminderData();
-        var weeklyData = new WeeklyData();
+        var breakData = new BreaksHandler();
+        var dailyData = new ActivitiesHandler();
+        var reminderData = new RemindersHandler();
+        var weeklyData = new ConsistencyHandler();
+
+        var scores = new ScoreData();
+        scores.GetScores(dailyData);
     }
 }

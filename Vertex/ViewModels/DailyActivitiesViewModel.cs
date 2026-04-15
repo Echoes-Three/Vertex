@@ -8,12 +8,12 @@ namespace Vertex.ViewModels;
 
 public class DailyActivitiesViewModel : ViewModelBase
 {
-    private DailyData _dailyData;
+    private ActivitiesHandler _activitiesHandler;
     
     public DailyActivitiesViewModel()
     {
-        var dailyData = new DailyData();
-        _dailyData = dailyData;
+        var dailyData = new ActivitiesHandler();
+        _activitiesHandler = dailyData;
     }
     
     public void OnAddActivity()
@@ -29,7 +29,7 @@ public class DailyActivitiesViewModel : ViewModelBase
             ActivityPlacementOrder
         );
 
-        _dailyData.Load(activities);
+        _activitiesHandler.Save(activities);
     }
     
     public bool CanAddActivity()

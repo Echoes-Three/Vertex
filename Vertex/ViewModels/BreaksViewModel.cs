@@ -6,12 +6,12 @@ namespace Vertex.ViewModels;
 
 public class BreaksViewModel : ViewModelBase
 {
-    private BreakData _breakData;
+    private BreaksHandler _breaksHandler;
     
     public BreaksViewModel()
     {
-        var breakData = new BreakData();
-        _breakData = breakData;
+        var breakData = new BreaksHandler();
+        _breaksHandler = breakData;
     }
     
     public void OnAddBreak()
@@ -21,7 +21,7 @@ public class BreaksViewModel : ViewModelBase
             BreakDurationHour,
             BreakPlacementOrder);
 
-        _breakData.Load(breaks);
+        _breaksHandler.Save(breaks);
     }
 
     public bool CanAddBreak()

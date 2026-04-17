@@ -1,9 +1,8 @@
 using System.IO;
 using System.Text.Json;
 using Vertex.Models.Interfaces;
-using Vertex.Models.UserData.Entry;
 
-namespace Vertex.Models.UserData.DataHandling;
+namespace Vertex.Models.DataServices.DataHandling;
 
 public class ConsistencyHandler(
     List<int> currentWeek,
@@ -11,21 +10,25 @@ public class ConsistencyHandler(
     List<int> priorWeekTwo)
     : IFileHandler
 {
-    public List<int> currentWeek { get; set; } = currentWeek;
-    public List<int> priorWeekOne { get; set; } = priorWeekOne;
-    public List<int> priorWeekTwo { get; set; } = priorWeekTwo;
-
+    public ConsistencyHandler() : this([], [], []) 
+    {
+    }
+    
+    public List<int> CurrentWeek { get; set; } = currentWeek;
+    public List<int> PriorWeekOne { get; set; } = priorWeekOne;
+    public List<int> PriorWeekTwo { get; set; } = priorWeekTwo;
+    
     public void Save(int percentage)
     {
         
-        if (currentWeek.Count == 7)
+        if (CurrentWeek.Count == 7)
         {
-            priorWeekTwo = priorWeekOne;
-            priorWeekOne = currentWeek;
-            currentWeek.Clear();
+            PriorWeekTwo = PriorWeekOne;
+            PriorWeekOne = CurrentWeek;
+            CurrentWeek.Clear();
         }
         
-        currentWeek.Add(percentage);
+        CurrentWeek.Add(percentage);
     }
 
     public void Load()
@@ -41,9 +44,9 @@ public class ConsistencyHandler(
         
         if (weeks == null) return;
         
-        currentWeek = weeks.currentWeek;
-        priorWeekOne = weeks.priorWeekOne;
-        priorWeekTwo = weeks.priorWeekTwo;
+        CurrentWeek = weeks.CurrentWeek;
+        PriorWeekOne = weeks.PriorWeekOne;
+        PriorWeekTwo = weeks.PriorWeekTwo;
         
     }
 }

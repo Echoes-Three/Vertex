@@ -3,15 +3,15 @@ using System.Text.Json;
 using Vertex.Models.Interfaces;
 using Vertex.Models.UserData.Entry;
 
-namespace Vertex.Models.UserData.DataHandling;
+namespace Vertex.Models.DataServices.DataHandling;
 
 public class RemindersHandler : IFileHandler
 {
-    public List<ReminderEntry>  Reminders { get; set; }
+    public List<ReminderEntry>?  Reminders { get; set; }
     
     public void Save(ReminderEntry entry)
     {
-        Reminders.Add(entry);
+        Reminders!.Add(entry);
         
         var json = JsonSerializer.Serialize(Reminders);
 

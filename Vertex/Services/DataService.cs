@@ -3,6 +3,8 @@ using System.Windows.Media;
 using Vertex.Models;
 using Vertex.Models.EnumDefinitions;
 using System.Text.Json;
+using Vertex.Models.DataServices.DataHandling;
+using Vertex.Models.Entities.Entry;
 using Vertex.Models.UserData.DataHandling;
 
 
@@ -13,7 +15,7 @@ public class DataService
     private readonly string _dataPath;
     public DataService()
     {
-        var _dataPath = Path.Combine(
+        _dataPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "Vertex", "Data"
         );
@@ -24,6 +26,7 @@ public class DataService
         InitializeFile<BreaksHandler>("Breaks.json");
         InitializeFile<RemindersHandler>("Reminders.json");
         InitializeFile<ConsistencyHandler>("Weeks.json");
+        InitializeFile<SleepHandler>("Sleep.json");
     }
 
     public void InitializeFile<T>(string fileNeme) where T : new()

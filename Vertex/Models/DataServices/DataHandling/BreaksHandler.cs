@@ -7,11 +7,11 @@ namespace Vertex.Models.UserData.DataHandling;
 
 public class BreaksHandler : IFileHandler
 {
-    public List<BreakEntry> Breaks { get; set; }
+    public List<BreakEntry>? Breaks { get; set; }
     
     public void Save(BreakEntry entry)
     {
-        Breaks.Add(entry);
+        Breaks!.Add(entry);
         
         var json = JsonSerializer.Serialize(Breaks);
 

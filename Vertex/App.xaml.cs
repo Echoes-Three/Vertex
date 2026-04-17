@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.StressUnit;
 using Vertex.Models.UserData.DataHandling;
 

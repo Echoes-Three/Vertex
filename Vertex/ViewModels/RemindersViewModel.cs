@@ -7,12 +7,11 @@ namespace Vertex.ViewModels;
 
 public class RemindersViewModel : ViewModelBase
 {
-    private RemindersHandler _remindersHandler;
+    private RemindersHandler RemindersData {get; set;}
     
-    public RemindersViewModel()
+    public RemindersViewModel( RemindersHandler remindersHandler )
     {
-        var reminderData = new RemindersHandler();
-        _remindersHandler = reminderData;
+        RemindersData = remindersHandler;
     }
     
     public void OnAddReminder()
@@ -22,11 +21,13 @@ public class RemindersViewModel : ViewModelBase
             ReminderTitle,
             ReminderContent,
             ReminderCompleted,
-            ReminderCreatedAt);
+            ReminderCreatedAt,
+            ReminderDoneAt,
+            ReminderSetFor);
         
-        _remindersHandler.Save(reminders);
+        RemindersData.Save(reminders);
     }
-
+    
     public bool CanAddReminder()
     {
         return true;
@@ -91,6 +92,30 @@ public class RemindersViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
+    private DateTime _reminderDoneAt;
+
+    public DateTime ReminderDoneAt
+    {
+        get => _reminderDoneAt;
+        set
+        {
+            _reminderDoneAt = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private DateTime _reminderSetFor;
+
+    public DateTime ReminderSetFor
+    {
+        get => _reminderSetFor;
+        set
+        {
+            _reminderSetFor = value;
+            OnPropertyChanged();
+        }
+    }
+
     
 }

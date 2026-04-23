@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using Vertex.Models.Interfaces;
@@ -7,7 +8,7 @@ namespace Vertex.Models.DataServices.DataHandling;
 
 public class RemindersHandler : IFileHandler
 {
-    public List<ReminderEntry>?  Reminders { get; set; }
+    public ObservableCollection<ReminderEntry>?  Reminders { get; set; }
     
     public void Save(ReminderEntry entry)
     {
@@ -32,7 +33,7 @@ public class RemindersHandler : IFileHandler
         
         var file = File.ReadAllText(fullPath);
         
-        var reminders = JsonSerializer.Deserialize<List<ReminderEntry>>(file);
+        var reminders = JsonSerializer.Deserialize<ObservableCollection<ReminderEntry>>(file);
         
         if (reminders == null) return;
         

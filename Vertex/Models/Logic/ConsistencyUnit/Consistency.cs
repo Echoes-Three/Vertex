@@ -1,10 +1,11 @@
+using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.UserData.DataHandling;
 
 namespace Vertex.Models.ConsistencyUnit;
 
-public class Consistency
+public static class Consistency
 {
-    public int ToPercentage(ActivitiesHandler  activitiesHandler)
+    public static int ToPercentage(this ActivitiesHandler  activitiesHandler)
     {
         var activitiesCount = activitiesHandler.Activities.Count;
         var completedActivies = activitiesHandler.Activities.Count(activityEntry => activityEntry.Completed);

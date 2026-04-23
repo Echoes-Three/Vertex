@@ -13,11 +13,6 @@ public class MainWindowViewModel : ViewModelBase
 {
     public MainWindowViewModel()
     {
-        var dailyActivityViewModel = new DailyActivitiesViewModel();
-        var breaksViewModel = new BreaksViewModel();
-        var remindersViewModel = new RemindersViewModel();
-        var weeklySnapshotViewModel = new WeeklySnapshotViewModel();
-        var dataService = new DataService();
         
     }
     

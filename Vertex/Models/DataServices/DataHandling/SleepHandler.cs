@@ -9,7 +9,7 @@ public class SleepHandler : IFileHandler
 {
     public SleepEntry? SleepSchedule { get; set; }
 
-    public void Save( SleepEntry sleepSchedule)
+    public void Save(SleepEntry sleepSchedule)
     {
         SleepSchedule = sleepSchedule;
         
@@ -22,10 +22,10 @@ public class SleepHandler : IFileHandler
         
         File.WriteAllText(fullPath, json);
     }
+    
     public void Load()
     {
-        var json = JsonSerializer.Serialize(SleepSchedule);
-
+        
         var fullPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "Vertex", "Data", "Sleep.json"

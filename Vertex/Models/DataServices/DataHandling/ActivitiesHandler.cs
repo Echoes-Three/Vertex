@@ -1,13 +1,14 @@
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using Vertex.Models.Interfaces;
 using Vertex.Models.UserData.Entry;
 
-namespace Vertex.Models.UserData.DataHandling;
+namespace Vertex.Models.DataServices.DataHandling;
 
 public class ActivitiesHandler : IFileHandler
 {
-    public List<ActivityEntry> Activities { get; set; } = new();
+    public ObservableCollection<ActivityEntry> Activities { get; set; } = new();
     
     public void Save(ActivityEntry entry)
     {
@@ -31,7 +32,7 @@ public class ActivitiesHandler : IFileHandler
         );
         var file = File.ReadAllText(fullPath);
         
-        var activities = JsonSerializer.Deserialize<List<ActivityEntry>>(file);
+        var activities = JsonSerializer.Deserialize<ObservableCollection<ActivityEntry>>(file);
 
         if (activities == null) return;
         

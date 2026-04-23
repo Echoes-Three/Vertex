@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using Vertex.Models.Interfaces;
@@ -7,7 +8,7 @@ namespace Vertex.Models.UserData.DataHandling;
 
 public class BreaksHandler : IFileHandler
 {
-    public List<BreakEntry>? Breaks { get; set; }
+    public ObservableCollection<BreakEntry>? Breaks { get; set; }
     
     public void Save(BreakEntry entry)
     {
@@ -33,7 +34,7 @@ public class BreaksHandler : IFileHandler
         
         var file = File.ReadAllText(fullPath);
         
-        var breaks = JsonSerializer.Deserialize<List<BreakEntry>>(file);
+        var breaks = JsonSerializer.Deserialize<ObservableCollection<BreakEntry>>(file);
 
         if (breaks == null) return;
         

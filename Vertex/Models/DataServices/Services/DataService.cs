@@ -25,8 +25,8 @@ public class DataService
         InitializeFile<ActivitiesHandler>("Activities.json");
         InitializeFile<BreaksHandler>("Breaks.json");
         InitializeFile<RemindersHandler>("Reminders.json");
-        InitializeFile<ConsistencyHandler>("Weeks.json");
-        InitializeFile<SleepHandler>("Sleep.json");
+        InitializeFile<ConsistencyHandler>("Consistency.json");
+        InitializeFile<SleepHandler>("SleepSchedule.json");
     }
 
     public void InitializeFile<T>(string fileNeme) where T : new()

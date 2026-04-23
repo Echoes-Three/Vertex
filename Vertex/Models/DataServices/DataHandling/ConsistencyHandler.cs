@@ -1,52 +1,50 @@
 using System.IO;
 using System.Text.Json;
+using Vertex.Models.Entities.Entry;
 using Vertex.Models.Interfaces;
 
 namespace Vertex.Models.DataServices.DataHandling;
 
-public class ConsistencyHandler(
-    List<int> currentWeek,
-    List<int> priorWeekOne,
-    List<int> priorWeekTwo)
-    : IFileHandler
+public class ConsistencyHandler: IFileHandler
 {
-    public ConsistencyHandler() : this([], [], []) 
-    {
-    }
-    
-    public List<int> CurrentWeek { get; set; } = currentWeek;
-    public List<int> PriorWeekOne { get; set; } = priorWeekOne;
-    public List<int> PriorWeekTwo { get; set; } = priorWeekTwo;
+    public ConsistencyEntry? Consistency { get; set; }
     
     public void Save(int percentage)
     {
         
-        if (CurrentWeek.Count == 7)
+        if (Consistency!.CurrentWeek.Count == 7)
         {
-            PriorWeekTwo = PriorWeekOne;
-            PriorWeekOne = CurrentWeek;
-            CurrentWeek.Clear();
+            Consistency.LastWeek = Consistency.CurrentWeek;
+            Consistency.CurrentWeek.Clear();
         }
         
-        CurrentWeek.Add(percentage);
+        Consistency.CurrentWeek.Add(percentage);
+        
+        var json = JsonSerializer.Serialize(Consistency);
+
+        var fullPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "Vertex", "Data", "Consistency.json"
+        );
+        
+        File.WriteAllText(fullPath, json);
     }
 
     public void Load()
     {
         var fullPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Weeks.json"
+            "Vertex", "Data", "Consistency.json"
         );
         
         var file = File.ReadAllText(fullPath);
         
-        var weeks = JsonSerializer.Deserialize<ConsistencyHandler>(file);
+        var consistency = JsonSerializer.Deserialize<ConsistencyEntry>(file);
         
-        if (weeks == null) return;
+        if (consistency == null) return;
         
-        CurrentWeek = weeks.CurrentWeek;
-        PriorWeekOne = weeks.PriorWeekOne;
-        PriorWeekTwo = weeks.PriorWeekTwo;
+        Consistency.CurrentWeek = consistency.CurrentWeek;
+        Consistency.LastWeek = consistency.LastWeek;
         
     }
 }

@@ -8,10 +8,10 @@ public class BreaksViewModel : ViewModelBase
 {
     private BreaksHandler _breaksHandler;
     
-    public BreaksViewModel()
+    private BreaksHandler BreaksData { get; set; }
+    public BreaksViewModel( BreaksHandler breaksHandlerData)
     {
-        var breakData = new BreaksHandler();
-        _breaksHandler = breakData;
+        BreaksData = breaksHandlerData;
     }
     
     public void OnAddBreak()

@@ -7,37 +7,31 @@ namespace Vertex.Models.DataServices.DataHandling;
 
 public class SleepHandler : IFileHandler
 {
+    private readonly string _fullPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "Vertex", "Data", "SleepSchedule.json");
     public SleepEntry? SleepSchedule { get; set; }
 
     public void Save(SleepEntry sleepSchedule)
     {
         SleepSchedule = sleepSchedule;
         
-        var json = JsonSerializer.Serialize(SleepSchedule);
-
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Sleep.json"
-        );
+        var json = JsonSerializer.Serialize(this, new JsonSerializerOptions
+        {
+            WriteIndented =  true
+        });
         
-        File.WriteAllText(fullPath, json);
+        File.WriteAllText(_fullPath, json);
     }
     
     public void Load()
     {
+        var file = File.ReadAllText(_fullPath);
         
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Sleep.json"
-        );
+        var handler = JsonSerializer.Deserialize<SleepHandler>(file);
         
+        if (handler == null) return;
         
-        var file = File.ReadAllText(fullPath);
-        
-        var sleepSchedule = JsonSerializer.Deserialize<SleepEntry>(file);
-        
-        if (sleepSchedule == null) return;
-        
-        SleepSchedule = sleepSchedule;
+        SleepSchedule = handler.SleepSchedule;
     }
 }

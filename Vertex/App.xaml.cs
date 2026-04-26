@@ -4,7 +4,7 @@ using System.Security.Authentication.ExtendedProtection;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Vertex.Models.DataServices.DataHandling;
-using Vertex.Models.UserData.DataHandling;
+using Vertex.Services;
 using Vertex.ViewModels;
 
 namespace Vertex;
@@ -14,9 +14,11 @@ namespace Vertex;
 /// </summary>
 public partial class App : Application
 {
-    public IServiceProvider ServiceProvider { get; private set; }
+    public static IServiceProvider ServiceProvider { get; private set; }
     protected override void OnStartup(StartupEventArgs e)
     {
+        var dataService = new DataService();
+        
         var services = new ServiceCollection();
         
         services.AddSingleton<ActivitiesHandler>();
@@ -24,7 +26,7 @@ public partial class App : Application
         services.AddSingleton<SleepHandler>();
         services.AddSingleton<ConsistencyHandler>();
         services.AddSingleton<BreaksHandler>();
-        
+
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<ActivitiesViewModel>();
         services.AddSingleton<RemindersViewModel>();
@@ -33,7 +35,7 @@ public partial class App : Application
         services.AddSingleton<BreaksViewModel>();
 
         ServiceProvider = services.BuildServiceProvider();
-        
+
         ServiceProvider.GetRequiredService<ActivitiesHandler>().Load();
         ServiceProvider.GetRequiredService<RemindersHandler>().Load();
         ServiceProvider.GetRequiredService<SleepHandler>().Load();

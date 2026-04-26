@@ -1,7 +1,6 @@
 using System.Windows.Media;
 using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.EnumDefinitions;
-using Vertex.Models.UserData.DataHandling;
 using Vertex.Models.UserData.Entry;
 using Vertex.MVVM;
 
@@ -18,14 +17,7 @@ public class ActivitiesViewModel : ViewModelBase
     
     public void OnAddActivity()
     {
-        var activities = new ActivityEntry(
-            ActivityId,
-            ActivityColor,
-            ActivityName,
-            ActivityCompleted,
-            ActivityDurationHour,
-            ActivityPlacementOrder
-        );
+        var activities = new ActivityEntry( ActivityId, ActivityColor, ActivityName, ActivityCompleted, ActivityDurationHour, ActivityPlacementOrder);
 
         ActivitiesData.Save(activities);
     }

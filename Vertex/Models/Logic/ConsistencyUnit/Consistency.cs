@@ -1,5 +1,4 @@
 using Vertex.Models.DataServices.DataHandling;
-using Vertex.Models.UserData.DataHandling;
 
 namespace Vertex.Models.ConsistencyUnit;
 

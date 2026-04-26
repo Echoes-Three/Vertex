@@ -1,5 +1,4 @@
 using Vertex.Models.DataServices.DataHandling;
-using Vertex.Models.UserData.DataHandling;
 using Vertex.Models.UserData.Entry;
 using Vertex.MVVM;
 
@@ -18,7 +17,6 @@ public class RemindersViewModel : ViewModelBase
     {
         var reminders = new ReminderEntry(
             RemiderId,
-            ReminderTitle,
             ReminderContent,
             ReminderCompleted,
             ReminderCreatedAt,
@@ -44,19 +42,7 @@ public class RemindersViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private string _reminderTitle;
-
-    public string ReminderTitle
-    {
-        get => _reminderTitle;
-        set
-        {
-            _reminderTitle = value;
-            OnPropertyChanged();
-        }
-    }
-
+    
     private string _reminderContent;
 
     public string ReminderContent

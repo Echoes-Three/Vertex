@@ -8,35 +8,31 @@ namespace Vertex.Models.DataServices.DataHandling;
 
 public class RemindersHandler : IFileHandler
 {
+    private readonly string _fullPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "Vertex", "Data", "Reminders.json");
     public ObservableCollection<ReminderEntry>?  Reminders { get; set; }
     
     public void Save(ReminderEntry entry)
     {
         Reminders!.Add(entry);
         
-        var json = JsonSerializer.Serialize(Reminders);
-
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Reminders.json"
-        );
+        var json = JsonSerializer.Serialize(this, new  JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
         
-        File.WriteAllText(fullPath, json);
+        File.WriteAllText(_fullPath, json);
     }
 
     public void Load()
     {
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Reminders.json"
-        );
+        var file = File.ReadAllText(_fullPath);
         
-        var file = File.ReadAllText(fullPath);
+        var handler = JsonSerializer.Deserialize<RemindersHandler>(file);
         
-        var reminders = JsonSerializer.Deserialize<ObservableCollection<ReminderEntry>>(file);
+        if (handler == null) return;
         
-        if (reminders == null) return;
-        
-        Reminders = reminders;
+        Reminders = handler.Reminders;
     }
 }

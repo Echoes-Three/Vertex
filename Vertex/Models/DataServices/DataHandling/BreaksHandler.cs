@@ -4,41 +4,38 @@ using System.Text.Json;
 using Vertex.Models.Interfaces;
 using Vertex.Models.UserDataHandling;
 
-namespace Vertex.Models.UserData.DataHandling;
+namespace Vertex.Models.DataServices.DataHandling;
 
 public class BreaksHandler : IFileHandler
 {
+    private readonly string _fullPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "Vertex", "Data", "Breaks.json");
+        
     public ObservableCollection<BreakEntry>? Breaks { get; set; }
     
     public void Save(BreakEntry entry)
     {
         Breaks!.Add(entry);
         
-        var json = JsonSerializer.Serialize(Breaks);
-
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Breaks.json"
-        );
+        var json = JsonSerializer.Serialize(this, new  JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
         
-        File.WriteAllText(fullPath, json);
+        File.WriteAllText(_fullPath, json);
         
     }
 
     public void Load()
     {
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Breaks.json"
-        );
+        var file = File.ReadAllText(_fullPath);
         
-        var file = File.ReadAllText(fullPath);
-        
-        var breaks = JsonSerializer.Deserialize<ObservableCollection<BreakEntry>>(file);
+        var handler = JsonSerializer.Deserialize<BreaksHandler>(file);
 
-        if (breaks == null) return;
+        if (handler == null) return;
         
-        Breaks = breaks;
+        Breaks = handler.Breaks;
     }
     
 }

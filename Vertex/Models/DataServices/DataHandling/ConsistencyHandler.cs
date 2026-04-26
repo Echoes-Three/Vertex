@@ -7,11 +7,13 @@ namespace Vertex.Models.DataServices.DataHandling;
 
 public class ConsistencyHandler: IFileHandler
 {
+    private readonly string _fullPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "Vertex", "Data", "Consistency.json");
     public ConsistencyEntry? Consistency { get; set; }
     
     public void Save(int percentage)
     {
-        
         if (Consistency!.CurrentWeek.Count == 7)
         {
             Consistency.LastWeek = Consistency.CurrentWeek;
@@ -20,31 +22,24 @@ public class ConsistencyHandler: IFileHandler
         
         Consistency.CurrentWeek.Add(percentage);
         
-        var json = JsonSerializer.Serialize(Consistency);
-
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Consistency.json"
-        );
+        var json = JsonSerializer.Serialize(this, new  JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
         
-        File.WriteAllText(fullPath, json);
+        File.WriteAllText(_fullPath, json);
     }
 
     public void Load()
     {
-        var fullPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Vertex", "Data", "Consistency.json"
-        );
+        var file = File.ReadAllText(_fullPath);
         
-        var file = File.ReadAllText(fullPath);
+        var handler = JsonSerializer.Deserialize<ConsistencyHandler>(file);
         
-        var consistency = JsonSerializer.Deserialize<ConsistencyEntry>(file);
+        if (handler == null) return;
         
-        if (consistency == null) return;
-        
-        Consistency.CurrentWeek = consistency.CurrentWeek;
-        Consistency.LastWeek = consistency.LastWeek;
+        Consistency?.CurrentWeek = handler.Consistency?.CurrentWeek;
+        Consistency?.LastWeek = handler.Consistency?.LastWeek;
         
     }
 }

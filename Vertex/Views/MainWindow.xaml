@@ -1,12 +1,97 @@
-﻿<Window x:Class="Vertex.MainWindow"
+﻿<Window x:Class="Vertex.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vertex"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        SizeToContent="Manual"
+        Title="MainWindow">
+    
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1440" Height="900" Background="{DynamicResource WindowBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/> <!--TitleBar-->
+            <RowDefinition Height="95*"/> <!--Main Body-->
+        </Grid.RowDefinitions>
+            
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/> <!--Side Bar-->
+                <ColumnDefinition Width="97*"/> <!--Main Body-->
+            </Grid.ColumnDefinitions>
+            
+            <Border 
+                Background="{DynamicResource ElementBackground}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                    </Grid.RowDefinitions>
+                    
+                </Grid>
+            </Border>
+            
+            <Grid  Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.7*"/> <!--Spacer-->
+                    <RowDefinition Height="62.5*"/> <!--Donut Graph & Reminders-->
+                    <RowDefinition Height="1.7*"/> <!--Spacer-->
+                    <RowDefinition Height="32.4*"/> <!--Activities & Consistency-->
+                    <RowDefinition Height="1.7*"/> <!--Spacer-->
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="95*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40*"/> <!--Donut Graph-->
+                        <ColumnDefinition Width="1*"/> <!--Spacer-->
+                        <ColumnDefinition Width="59*"/><!--Activities-->
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Grid.Column="0" 
+                        Background="{DynamicResource ElementBackground}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10*"/> <!--Element Title Bar-->
+                                <RowDefinition Height="90*"/>
+                            </Grid.RowDefinitions>
+                    
+                            <TextBlock></TextBlock>
+                            <Border  Grid.Row="0" Background="LawnGreen"/>
+                    
+                    
+                        </Grid>
+                    </Border>
+                   <Border 
+                       Grid.Column="2"
+                       Background="{DynamicResource ElementBackground}"/>
+                   
+                </Grid>
+                
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="49.5*"/> <!--Reminders--> 
+                        <ColumnDefinition Width="1*"/> <!--Spacer-->
+                        <ColumnDefinition Width="49.5*"/> <!--Consistency-->
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border 
+                        
+                        Grid.Column="0"
+                        Background="{DynamicResource AccentColor}"/>
+                    <Border 
+                        Grid.Column="2"
+                        Background="{DynamicResource ElementBackground}"/>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
+    </Viewbox>
 </Window>

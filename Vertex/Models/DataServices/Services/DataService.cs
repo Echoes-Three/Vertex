@@ -5,7 +5,6 @@ using Vertex.Models.EnumDefinitions;
 using System.Text.Json;
 using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.Entities.Entry;
-using Vertex.Models.UserData.DataHandling;
 
 
 namespace Vertex.Services;
@@ -32,7 +31,7 @@ public class DataService
     public void InitializeFile<T>(string fileNeme) where T : new()
     {
         var fullPath = Path.Combine(_dataPath, fileNeme);
-        if (File.Exists(fileNeme)) return;
+        if (File.Exists(fullPath) && new FileInfo(fullPath).Length > 0) return;
         
         var dataStructure =  new T();
         var json = JsonSerializer.Serialize(dataStructure, new JsonSerializerOptions()

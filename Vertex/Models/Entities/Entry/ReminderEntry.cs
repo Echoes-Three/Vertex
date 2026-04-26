@@ -1,16 +1,14 @@
 namespace Vertex.Models.UserData.Entry;
 
 public class ReminderEntry(
-    string id,
-    string title,
-    string content,
-    bool completed,
-    DateTime createdAt,
-    DateTime doneAt,
-    DateTime setFor)
+    string id = "",
+    string content = "",
+    bool completed = false,
+    DateTime createdAt = default,
+    DateTime doneAt = default,
+    DateTime setFor = default)
 {
     public string Id { get; set; } = id;
-    public string Title { get; set; } = title;
     public string Content { get; set; } = content;
     public bool Completed { get; set; } = completed;
     public DateTime Setfor { get; set; } = setFor;

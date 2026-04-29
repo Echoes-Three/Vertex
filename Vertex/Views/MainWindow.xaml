@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Vertex"
+        xmlns:views="clr-namespace:Vertex.Views"
+        xmlns:viewModels="clr-namespace:Vertex.ViewModels"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
         SizeToContent="Manual"
+        AllowsTransparency="True"
         Title="MainWindow">
     
     <Viewbox Stretch="Uniform">
@@ -16,6 +18,8 @@
             <RowDefinition Height="5*"/> <!--TitleBar-->
             <RowDefinition Height="95*"/> <!--Main Body-->
         </Grid.RowDefinitions>
+            
+            <views:TitleBarView Grid.Row="0"/><!--TitleBar-->
             
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -32,7 +36,7 @@
                     </Grid.RowDefinitions>
                     
                 </Grid>
-            </Border>
+            </Border> <!--Side Bar-->
             
             <Grid  Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -55,24 +59,8 @@
                         <ColumnDefinition Width="59*"/><!--Activities-->
                     </Grid.ColumnDefinitions>
                     
-                    <Border Grid.Column="0" 
-                        Background="{DynamicResource ElementBackground}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="10*"/> <!--Element Title Bar-->
-                                <RowDefinition Height="90*"/>
-                            </Grid.RowDefinitions>
-                    
-                            <TextBlock></TextBlock>
-                            <Border  Grid.Row="0" Background="LawnGreen"/>
-                    
-                    
-                        </Grid>
-                    </Border>
-                   <Border 
-                       Grid.Column="2"
-                       Background="{DynamicResource ElementBackground}"/>
-                   
+                    <!--Donut Graph-->
+                    <!--Activities-->
                 </Grid>
                 
                 <Grid Grid.Row="3" Grid.Column="1">
@@ -82,13 +70,8 @@
                         <ColumnDefinition Width="49.5*"/> <!--Consistency-->
                     </Grid.ColumnDefinitions>
                     
-                    <Border 
-                        
-                        Grid.Column="0"
-                        Background="{DynamicResource AccentColor}"/>
-                    <Border 
-                        Grid.Column="2"
-                        Background="{DynamicResource ElementBackground}"/>
+                    <!--Reminders-->
+                    <views:ConsistencyView Grid.Column="2"/><!--Consistency-->
                 </Grid>
             </Grid>
         </Grid>

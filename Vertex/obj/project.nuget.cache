@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ajlhyzjkZ3U=",
+  "dgSpecHash": "JoMB2DsWUmk=",
   "success": true,
   "projectFilePath": "C:\\Users\\camig\\RiderProjects\\Vertex\\Vertex\\Vertex.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\camig\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\11.0.0-preview.3.26207.106\\microsoft.extensions.dependencyinjection.11.0.0-preview.3.26207.106.nupkg.sha512",
-    "C:\\Users\\camig\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\11.0.0-preview.3.26207.106\\microsoft.extensions.dependencyinjection.abstractions.11.0.0-preview.3.26207.106.nupkg.sha512"
+    "C:\\Users\\camig\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\11.0.0-preview.3.26207.106\\microsoft.extensions.dependencyinjection.abstractions.11.0.0-preview.3.26207.106.nupkg.sha512",
+    "C:\\Users\\camig\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.142\\microsoft.xaml.behaviors.wpf.1.1.142.nupkg.sha512"
   ],
   "logs": []
 }

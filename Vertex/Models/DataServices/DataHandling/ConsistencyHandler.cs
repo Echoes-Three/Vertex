@@ -14,13 +14,13 @@ public class ConsistencyHandler: IFileHandler
     
     public void Save(int percentage)
     {
-        if (Consistency!.CurrentWeek.Count == 7)
+        if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday )
         {
-            Consistency.LastWeek = Consistency.CurrentWeek;
-            Consistency.CurrentWeek.Clear();
+            Consistency!.LastWeek = Consistency.CurrentWeek;
+            Consistency.CurrentWeek = [0, 0, 0, 0, 0, 0, 0];
         }
         
-        Consistency.CurrentWeek.Add(percentage);
+        Consistency!.CurrentWeek.Add(percentage);
         
         var json = JsonSerializer.Serialize(this, new  JsonSerializerOptions
         {

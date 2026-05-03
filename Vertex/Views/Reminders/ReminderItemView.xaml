@@ -1,0 +1,86 @@
+<UserControl x:Class="Vertex.Views.ReminderItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Vertex.Views"
+             xmlns:viewModels="clr-namespace:Vertex.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="180" d:DesignWidth="500"
+             d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
+    
+    <Grid Background="{DynamicResource ElementBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!--Text Content-->
+            <RowDefinition Height="10"/> <!--Spacer-->
+            <RowDefinition Height="30"/> <!--Buttons-->
+            <RowDefinition Height="30"/> <!--Spacer-->
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Fill="{DynamicResource Element}"/>
+        
+        <TextBlock 
+            Grid.Row="0"
+            Style="{DynamicResource MediumBody}"
+            Text="{Binding Data.Content}"/>
+        
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                
+                <ColumnDefinition Width="5*"/> <!--Delete Button-->
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="10*"/> <!--Done Button-->
+                <ColumnDefinition Width="46*"/> <!--Spacer-->
+                <ColumnDefinition Width="30*"/> <!--Remind Button-->
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="5*"/> <!--Edit Button-->
+                
+            </Grid.ColumnDefinitions>
+            
+            <!--<Border   Grid.Column="1" Background="White" Opacity="0.5" />
+            <Border   Grid.Column="3" Background="White" Opacity="0.5"/>
+            <Border   Grid.Column="5" Background="White" Opacity="0.5"/>-->
+            
+            <Button 
+                Grid.Column="0"
+                Style="{DynamicResource ActionButton}">
+                <Path Style="{DynamicResource BinIcon}"/>
+            </Button> <!--Delete Button-->
+            
+            <Button 
+                Grid.Column="2"
+                Style="{DynamicResource ActionButton}"
+                Content="Done">
+            </Button> <!--Done Button-->
+            
+            
+            <Grid Grid.Column="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="65*"/>
+                    <ColumnDefinition Width="35*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button 
+                    Grid.Column="0"
+                    Content="Remind me in:"
+                    Style="{DynamicResource ActionButton}"/><!--Remind Day Button-->
+                
+                <Button 
+                    Grid.Column="1"
+                    Style="{DynamicResource ActionButton}"
+                    Content="{Binding CurrentRemindDay}"
+                    Command="{Binding OnRemindDay}"
+                    Tag="Remind">
+                </Button> <!--Remind Day Button-->
+                
+            </Grid>
+            
+            <Button 
+                Grid.Column="6"
+                Style="{DynamicResource ActionButton}">
+                <Path Style="{DynamicResource EditIcon}"/>
+            </Button> <!--Edit Button-->
+            
+        </Grid>
+    </Grid>
+</UserControl>

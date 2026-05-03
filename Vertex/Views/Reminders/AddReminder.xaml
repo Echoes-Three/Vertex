@@ -1,0 +1,78 @@
+<UserControl x:Class="Vertex.Views.Reminders.AddReminder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Vertex.Views.Reminders"
+             xmlns:viewModels="clr-namespace:Vertex.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="180" d:DesignWidth="500"
+             d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
+    
+    <Grid 
+        Background="{DynamicResource WindowBackground}"
+          MouseLeftButtonDown="OnDrag">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/> <!--Input Text-->
+            <RowDefinition Height="5*"/> <!--Spacer-->
+            <RowDefinition Height="15*"/> <!-- Buttons-->
+        </Grid.RowDefinitions>
+        
+        <!--<Border Grid.Row="0" Background="White" Opacity="0.5"></Border>
+        <Border Grid.Row="1" Background="White" Opacity="0.4"></Border>
+        <Border Grid.Row="2" Background="White" Opacity="0.3"></Border>-->
+        
+         <Rectangle Grid.Row="0" Fill="{DynamicResource Element}"/>
+        
+        <TextBlock 
+                    Grid.Row="0"
+                    Style="{DynamicResource ReminderContentPlaceholder}"
+                    Text="Content..."/>
+        
+        <TextBox
+            Grid.Row="0"
+            x:Name="ContentInput"
+            Style="{DynamicResource ReminderInput}"
+            Text="{Binding RemindersVM.ReminderContent, Mode=TwoWay}"
+            MouseLeftButtonDown="OnDrag"/>
+        
+        
+        
+       
+        
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45*"/> <!--Set Date & Hour Field-->
+                <ColumnDefinition Width="10*"/> <!--Spacer-->
+                <ColumnDefinition Width="15*"/> <!--Cancel Button-->
+                <ColumnDefinition Width="5*"/> <!--Spacer-->
+                <ColumnDefinition Width="15*"/> <!--Save Button-->
+             
+            </Grid.ColumnDefinitions>
+            
+            <!--<Border Grid.Column="1" Background="White" Opacity="0.5"></Border>
+            <Border Grid.Column="3" Background="White" Opacity="0.5"></Border>-->
+            
+            
+            <Button 
+                Grid.Column="0"
+                Content="DD/MM/YYYY at hh:mm aa"
+                Style="{DynamicResource ActionButton}"/>
+            
+            <Button 
+                Grid.Column="2"
+                Content="Cancel"
+                Style="{DynamicResource ActionButton}" 
+                Click="OnCancel"/> <!--Cancel Button-->
+            
+            <Button 
+                Grid.Column="4"
+                Content="Save"
+                Style="{DynamicResource ActionButton}"/> <!--Save Button-->
+
+            
+        </Grid>
+        
+        
+    </Grid>
+</UserControl>

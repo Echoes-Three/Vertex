@@ -14,12 +14,30 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+      <Page Update="Views\Consistency\ConsistencyView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\Reminders\ReminderItemView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\Reminders\RemindersView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Assets\Icons\" />
       <Folder Include="Assets\Typeface\" />
       <Folder Include="Models\DataServices\" />
+      <Folder Include="Views\Activities\" />
+      <Folder Include="Views\Breaks\" />
+      <Folder Include="Views\Sleep\" />
     </ItemGroup>
 
     <ItemGroup>

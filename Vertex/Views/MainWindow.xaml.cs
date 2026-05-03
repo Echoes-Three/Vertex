@@ -17,6 +17,5 @@ public partial class MainWindow : Window
         
         Width = screenWidth * widthPercentage;
         Height = Width * 0.625;
-
     }
 }

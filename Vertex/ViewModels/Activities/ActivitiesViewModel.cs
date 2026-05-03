@@ -15,12 +15,6 @@ public class ActivitiesViewModel : ViewModelBase
         ActivitiesData = activitiesData;
     }
     
-    public void OnAddActivity()
-    {
-        var activities = new ActivityEntry( ActivityId, ActivityColor, ActivityName, ActivityCompleted, ActivityDurationHour, ActivityPlacementOrder);
-
-        ActivitiesData.Save(activities);
-    }
     
     public bool CanAddActivity()
     {

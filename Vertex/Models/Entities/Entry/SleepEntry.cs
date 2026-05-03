@@ -1,11 +1,8 @@
 namespace Vertex.Models.Entities.Entry;
 
-public class SleepEntry(
-    DateTime? sleepTime = null,
-    DateTime? wakeUpTime = null,
-    TimeSpan? duration = null)
+public class SleepEntry
 {
-    public DateTime? SleepTime { get; set; } = sleepTime;
-    public DateTime? WakeupTime { get; set; } = wakeUpTime;
-    public TimeSpan? Duration { get; set; } = duration;
+    public DateTime? SleepTime { get; set; } = null;
+    public DateTime? WakeupTime { get; set; } = null;
+    public TimeSpan? Duration { get; set; } = null;
 }

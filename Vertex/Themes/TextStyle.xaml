@@ -14,7 +14,7 @@
     
     <Style x:Key="SmallSubtitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BasicTitle}">
         <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontSize" Value="15"/>
         
         <Style.Triggers>
             <Trigger Property="Tag" Value="Percentage">
@@ -28,7 +28,63 @@
             </Trigger>
             
         </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="MediumTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BasicTitle}">
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+    
+    <Style x:Key="MediumBody" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BasicTitle}">
+        <Setter Property="MinHeight" Value="100"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Margin" Value="10"/>
         
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" Value="{x:Null}">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
         
     </Style>
+    
+    <Style x:Key="ReminderContentPlaceholder" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BasicTitle}">
+        <Setter Property="MinHeight" Value="100"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Text, ElementName=ContentInput}" Value="">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    
+    
+    <Style x:Key="TextInput" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ELementHighlight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    
+    <Style x:Key="ReminderInput" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ELementHighlight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    
 </ResourceDictionary>

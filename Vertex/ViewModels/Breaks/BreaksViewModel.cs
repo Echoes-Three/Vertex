@@ -14,15 +14,7 @@ public class BreaksViewModel : ViewModelBase
         BreaksData = breaksHandlerData;
     }
     
-    public void OnAddBreak()
-    {
-        var breaks = new BreakEntry(
-            BreakId,
-            BreakDurationHour,
-            BreakPlacementOrder);
-
-        _breaksHandler.Save(breaks);
-    }
+    
 
     public bool CanAddBreak()
     {

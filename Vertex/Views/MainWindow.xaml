@@ -10,7 +10,8 @@
         ResizeMode="NoResize"
         SizeToContent="Manual"
         AllowsTransparency="True"
-        Title="MainWindow">
+        Title="MainWindow"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
     <Viewbox Stretch="Uniform">
         <Grid Width="1440" Height="900" Background="{DynamicResource WindowBackground}">
@@ -70,7 +71,7 @@
                         <ColumnDefinition Width="49.5*"/> <!--Consistency-->
                     </Grid.ColumnDefinitions>
                     
-                    <!--Reminders-->
+                    <views:RemindersView Grid.Column="0"/><!--Reminders-->
                     <views:ConsistencyView Grid.Column="2"/><!--Consistency-->
                 </Grid>
             </Grid>

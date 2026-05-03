@@ -1,7 +1,106 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Geometry x:Key="Add">M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z</Geometry>
-    <Geometry x:Key="ClosestToCurrentDate">M127.5-267.5Q40-355 40-480t87.5-212.5Q215-780 340-780t212.5 87.5Q640-605 640-480t-87.5 212.5Q465-180 340-180t-212.5-87.5ZM740-160v-488l-44 44-56-56 140-140 140 140-57 56-43-43v487h-80ZM496-324q64-64 64-156t-64-156q-64-64-156-64t-156 64q-64 64-64 156t64 156q64 64 156 64t156-64Zm-76-16 56-56-96-97v-147h-80v180l120 120Zm-80-140Z</Geometry>
-    <Geometry x:Key="CreatedFirst">M740-160v-488l-44 44-56-56 140-140 140 140-57 56-43-43v487h-80Zm-620-80v-163l295-294q24-24 57.5-23t56.5 25l48 50q23 23 22.5 56T576-533L283-240H120Zm80-80h50l162-162-25-25-25-25-162 162v50Zm269-219-50-50 50 50Z</Geometry>
+    <Geometry x:Key="Closest">M127.5-267.5Q40-355 40-480t87.5-212.5Q215-780 340-780t212.5 87.5Q640-605 640-480t-87.5 212.5Q465-180 340-180t-212.5-87.5ZM740-160v-488l-44 44-56-56 140-140 140 140-57 56-43-43v487h-80ZM496-324q64-64 64-156t-64-156q-64-64-156-64t-156 64q-64 64-64 156t64 156q64 64 156 64t156-64Zm-76-16 56-56-96-97v-147h-80v180l120 120Zm-80-140Z</Geometry>
+    <Geometry x:Key="Created">M740-160v-488l-44 44-56-56 140-140 140 140-57 56-43-43v487h-80Zm-620-80v-163l295-294q24-24 57.5-23t56.5 25l48 50q23 23 22.5 56T576-533L283-240H120Zm80-80h50l162-162-25-25-25-25-162 162v50Zm269-219-50-50 50 50Z</Geometry>
     <Geometry x:Key="History">M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z</Geometry>
+    <Geometry x:Key="Edit">M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z</Geometry>
+    <Geometry x:Key="ArrowUp">m280-400 200-200 200 200H280Z</Geometry>
+    <Geometry x:Key="ArrowDown">M480-360 280-560h400L480-360Z</Geometry>
+    <Geometry x:Key="Bin">M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z</Geometry>
+    
+
+    <!--Base Path Style-->
+    <Style x:Key="Icons" TargetType="{x:Type Path}">
+        <Setter Property="Fill" Value="{StaticResource ELementHighlight}"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource WindowBackground}"/>
+            </DataTrigger>
+            
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--Add-->
+    <Style x:Key="AddIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource Add}"/>
+    </Style>
+    
+    <!--History-->
+    <Style x:Key="HistoryIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource History}"/>
+    </Style>
+    
+    <!--Sort-->
+    <Style x:Key="SortIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        
+        <Setter Property="Data" Value="{StaticResource Closest}"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="25"/>
+        
+        <!--Icon Change-->
+        <Style.Triggers>
+            
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="Closest">
+                <Setter Property="Data" Value="{StaticResource Closest}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="Created">
+                <Setter Property="Data" Value="{StaticResource Created}"/>
+            </DataTrigger>
+            
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--Edit-->
+    <Style x:Key="EditIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource Edit}"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+    </Style>
+    
+    <Style x:Key="ArrowUpIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource ArrowUp}"/>
+        <Setter Property="Height" Value="12"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Margin" Value="0,0,0,35"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=RemindDay}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource WindowBackground}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="ArrowDownIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource ArrowDown}"/>
+        <Setter Property="Height" Value="12"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Margin" Value="0,35,0,0"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=RemindDay}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource WindowBackground}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Edit-->
+    <Style x:Key="BinIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource Bin}"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+    </Style>
+    
 </ResourceDictionary>

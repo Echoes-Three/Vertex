@@ -19,13 +19,8 @@ public partial class TitleBarView : UserControl
         if (e.ButtonState == MouseButtonState.Pressed) parentWindow?.DragMove();
     }
 
-    private void MinimizeButton(object sender, RoutedEventArgs e)
-    {
-        Window.GetWindow(this)?.WindowState = WindowState.Minimized;
-    }
-
-    private void CloseButton(object sender, RoutedEventArgs e)
-    {
-        Window.GetWindow(this)?.Close();
-    }
+    private void MinimizeButton(object sender, RoutedEventArgs e) => Window.GetWindow(this)?.WindowState = WindowState.Minimized;
+    
+    private void CloseButton(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+    
 }

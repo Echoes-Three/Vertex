@@ -34,20 +34,19 @@ public class ConsistencyViewModel : ViewModelBase
     
     private ConsistencyHandler ConsistencyData {get; set;}
     
-    public RelayCommand CanvasChanged { get; }
     public ConsistencyViewModel( ConsistencyHandler consistencyData)
     {
         ConsistencyData = consistencyData;
-        
     }
     
     public void OnCanvasChange()
     {
-        var percentageTest =
-            new ConsistencyEntry(
-                new List<int> { 10, 45, 77, 100, 33, 10, 0 },
-                new List<int> { 22, 70, 66, 90, 0, 0, 10 });
-        
+        var percentageTest = new ConsistencyEntry
+        {
+            CurrentWeek = [10, 45, 77, 100, 33, 10, 0],
+            LastWeek = [22, 70, 66, 90, 0, 0, 10]
+        };
+
         Consistency = (CanvasWidth, CanvasHeight, percentageTest).LoadGraph();
     }
     

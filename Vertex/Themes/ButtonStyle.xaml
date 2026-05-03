@@ -20,6 +20,20 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
+        <!--On Hover-->
+        <Style.Triggers>
+            
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ELementHighlight}"/>
+            </Trigger>
+            
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource WindowBackground}"/>
+            </Trigger>
+            
+        </Style.Triggers>
+        
     </Style>
     
     <!--Minimize Button-->
@@ -43,5 +57,31 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <Style x:Key="TabButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <!--On Hover-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ELementHighlight}"/>
+            </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <Style x:Key="ActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Foreground" Value="{StaticResource ELementHighlight}"/>
+        <Setter Property="Background" Value="{StaticResource Element}"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="15"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
     
 </ResourceDictionary>

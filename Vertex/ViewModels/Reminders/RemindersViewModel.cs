@@ -1,36 +1,65 @@
+using System.Collections.ObjectModel;
 using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.UserData.Entry;
 using Vertex.MVVM;
 
-namespace Vertex.ViewModels;
+namespace Vertex.ViewModels.Reminders;
 
 public class RemindersViewModel : ViewModelBase
 {
-    private RemindersHandler RemindersData {get; set;}
+    public ObservableCollection<ReminderItemViewModel> Reminders {get; set;}
     
-    public RemindersViewModel( RemindersHandler remindersHandler )
-    {
-        RemindersData = remindersHandler;
-    }
+    private readonly List<String> _sortIcons = ["Closest", "Created"];
+    private int _currentIconIndex;
     
-    public void OnAddReminder()
+    public RelayCommand OnSortIcon { get; }
+    
+    public RemindersViewModel( RemindersHandler remindersHandler)
     {
-        var reminders = new ReminderEntry(
-            RemiderId,
-            ReminderContent,
-            ReminderCompleted,
-            ReminderCreatedAt,
-            ReminderDoneAt,
-            ReminderSetFor);
+        Reminders = new ObservableCollection<ReminderItemViewModel>(
+            remindersHandler.Reminders.Select(x => new ReminderItemViewModel(x)));
+        OnSortIcon = new RelayCommand(_ => UpdateSortIcon());
         
-        RemindersData.Save(reminders);
     }
     
-    public bool CanAddReminder()
+    private void UpdateSortIcon() => CurrentIcon = _sortIcons[_currentIconIndex = (_currentIconIndex + 1) % 2];  
+    
+    private string _currentIcon;
+
+    public string CurrentIcon
     {
-        return true;
+        get => _currentIcon;
+        set
+        {
+            _currentIcon = value;
+            OnPropertyChanged();
+        }
     }
 
+    private string _canAppear = "True";
+
+    public string CanAppear
+    {
+        get => _canAppear;
+        set
+        {
+            _canAppear = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private int _remindMeInDays;
+
+    public int RemindMeInDays
+    {
+        get => _remindMeInDays;
+        set
+        {
+            _remindMeInDays = value;
+            OnPropertyChanged();
+        }
+    }
+    
     private string _reminderId;
 
     public string RemiderId

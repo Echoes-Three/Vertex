@@ -1,85 +1,87 @@
-<UserControl x:Class="Vertex.Views.ReminderItemView"
+<UserControl x:Class="Vertex.Views.Reminders.ReminderItemView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Vertex.Views"
-             xmlns:viewModels="clr-namespace:Vertex.ViewModels"
+             xmlns:reminders="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
-             d:DesignHeight="180" d:DesignWidth="500"
-             d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
+             d:DesignHeight="250" d:DesignWidth="650"
+             d:DataContext="{d:DesignInstance Type=reminders:ReminderItemViewModel}">
     
-    <Grid Background="{DynamicResource ElementBackground}">
+    <Grid Background="{DynamicResource ElementBackgroundBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!--Text Content-->
+            <RowDefinition Height="Auto"/> <!--Reminder Content-->
             <RowDefinition Height="10"/> <!--Spacer-->
             <RowDefinition Height="30"/> <!--Buttons-->
             <RowDefinition Height="30"/> <!--Spacer-->
         </Grid.RowDefinitions>
 
-        <Rectangle Grid.Row="0" Fill="{DynamicResource Element}"/>
+        <Rectangle Grid.Row="0" Fill="{DynamicResource ButtonBackgroundBrush}"/> <!--Content Background-->
         
         <TextBlock 
             Grid.Row="0"
-            Style="{DynamicResource MediumBody}"
-            Text="{Binding Data.Content}"/>
+            Style="{DynamicResource ReminderContentTextBlock}"
+            Text="{Binding Data.Content}"/> <!--Reminder Content-->
+        
         
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                
                 <ColumnDefinition Width="5*"/> <!--Delete Button-->
                 <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="10*"/> <!--Done Button-->
-                <ColumnDefinition Width="46*"/> <!--Spacer-->
-                <ColumnDefinition Width="30*"/> <!--Remind Button-->
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="36*"/> <!--Remind Button-->
+                <ColumnDefinition Width="40*"/> <!--Spacer-->
                 <ColumnDefinition Width="5*"/> <!--Edit Button-->
-                
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="10*"/> <!--Done Button-->
             </Grid.ColumnDefinitions>
-            
-            <!--<Border   Grid.Column="1" Background="White" Opacity="0.5" />
-            <Border   Grid.Column="3" Background="White" Opacity="0.5"/>
-            <Border   Grid.Column="5" Background="White" Opacity="0.5"/>-->
             
             <Button 
                 Grid.Column="0"
-                Style="{DynamicResource ActionButton}">
+                Style="{DynamicResource DeleteReminderButton}">
                 <Path Style="{DynamicResource BinIcon}"/>
             </Button> <!--Delete Button-->
             
-            <Button 
-                Grid.Column="2"
-                Style="{DynamicResource ActionButton}"
-                Content="Done">
-            </Button> <!--Done Button-->
-            
-            
-            <Grid Grid.Column="4">
+            <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="65*"/>
-                    <ColumnDefinition Width="35*"/>
+                    <ColumnDefinition Width="55*"/> <!--Remind me in:-->
+                    <ColumnDefinition Width="5*"/> <!--Spacer-->
+                    <ColumnDefinition Width="40*"/> <!--Remind Days-->
                 </Grid.ColumnDefinitions>
-                
+                        
                 <Button 
                     Grid.Column="0"
                     Content="Remind me in:"
-                    Style="{DynamicResource ActionButton}"/><!--Remind Day Button-->
+                    Style="{DynamicResource RemindMeButton}"/><!--Remind Day Button-->
                 
-                <Button 
-                    Grid.Column="1"
-                    Style="{DynamicResource ActionButton}"
-                    Content="{Binding CurrentRemindDay}"
-                    Command="{Binding OnRemindDay}"
-                    Tag="Remind">
-                </Button> <!--Remind Day Button-->
+                <Border
+                    Grid.Column="2"
+                    Style="{StaticResource RemindDayScrollBackground}">
+                    
+                    <TextBlock
+                        Text="{Binding CurrentRemindDay}"
+                        PreviewMouseWheel="OnRemindScroll"
+                        Style="{StaticResource RemindDayScroll}"/>
+                    
+                </Border> <!--Remind Day Scroll-->
                 
+                
+                
+                            
             </Grid>
+            
+                
+            
+            <Button 
+                Grid.Column="4"
+                Style="{DynamicResource EditReminderButton}">
+                <Path Style="{DynamicResource EditIcon}"/>
+            </Button> <!--Edit Button-->
             
             <Button 
                 Grid.Column="6"
-                Style="{DynamicResource ActionButton}">
-                <Path Style="{DynamicResource EditIcon}"/>
-            </Button> <!--Edit Button-->
+                Style="{DynamicResource MarkReminderAsDoneButton}"
+                Content="Done">
+            </Button> <!--Done Button-->
             
         </Grid>
     </Grid>

@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Vertex.Views.Reminders"
-             xmlns:viewModels="clr-namespace:Vertex.ViewModels"
+             xmlns:reminders="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
              d:DesignHeight="180" d:DesignWidth="500"
-             d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
+             d:DataContext="{d:DesignInstance Type=reminders:RemindersViewModel}">
     
     <Grid 
-        Background="{DynamicResource WindowBackground}"
+        Background="{StaticResource WindowBackgroundBrush}"
           MouseLeftButtonDown="OnDrag">
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/> <!--Input Text-->
@@ -18,61 +17,109 @@
             <RowDefinition Height="15*"/> <!-- Buttons-->
         </Grid.RowDefinitions>
         
-        <!--<Border Grid.Row="0" Background="White" Opacity="0.5"></Border>
-        <Border Grid.Row="1" Background="White" Opacity="0.4"></Border>
-        <Border Grid.Row="2" Background="White" Opacity="0.3"></Border>-->
-        
-         <Rectangle Grid.Row="0" Fill="{DynamicResource Element}"/>
+        <Rectangle Grid.Row="0" Fill="{StaticResource ButtonBackgroundBrush}"/> <!--Reminder Content Background-->
         
         <TextBlock 
-                    Grid.Row="0"
-                    Style="{DynamicResource ReminderContentPlaceholder}"
-                    Text="Content..."/>
-        
-        <TextBox
             Grid.Row="0"
-            x:Name="ContentInput"
-            Style="{DynamicResource ReminderInput}"
-            Text="{Binding RemindersVM.ReminderContent, Mode=TwoWay}"
-            MouseLeftButtonDown="OnDrag"/>
-        
-        
-        
-       
+            Style="{StaticResource ReminderContentPlaceholder}"
+            Text="Content..."
+            /><!-- Reminder Content Placeholder-->
+         
+         <TextBox
+             Grid.Row="0"
+             x:Name="ContentInput"
+             Style="{StaticResource ReminderInput}"
+             Text="{Binding ReminderContent, Mode=TwoWay}"/> <!--Reminder Content Input-->
         
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="45*"/> <!--Set Date & Hour Field-->
-                <ColumnDefinition Width="10*"/> <!--Spacer-->
+                <ColumnDefinition Width="46*"/> <!--Set Date & Hour Field-->
+                <ColumnDefinition Width="15*"/> <!--Spacer-->
                 <ColumnDefinition Width="15*"/> <!--Cancel Button-->
                 <ColumnDefinition Width="5*"/> <!--Spacer-->
                 <ColumnDefinition Width="15*"/> <!--Save Button-->
-             
             </Grid.ColumnDefinitions>
             
-            <!--<Border Grid.Column="1" Background="White" Opacity="0.5"></Border>
-            <Border Grid.Column="3" Background="White" Opacity="0.5"></Border>-->
-            
-            
-            <Button 
-                Grid.Column="0"
-                Content="DD/MM/YYYY at hh:mm aa"
-                Style="{DynamicResource ActionButton}"/>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="56*"/> <!--DatePicker-->
+                    <ColumnDefinition Width="8*"/> <!--DatePicker-->
+                    <ColumnDefinition Width="36*"/> <!--HourPicker-->
+                </Grid.ColumnDefinitions>
+                
+                <DatePicker 
+                    Grid.Column="0"
+                    FirstDayOfWeek="Monday"
+                    x:Name="ReminderDatePicker"
+                    SelectedDate="{Binding ReminderSetFor, Mode=TwoWay}"/> <!--DatePicker-->
+                
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32*"/> <!--HH-->
+                        <ColumnDefinition Width="3*"/> <!--:-->
+                        <ColumnDefinition Width="32*"/> <!--MM-->
+                        <ColumnDefinition Width="32*"/> <!--AA-->
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border  
+                        x:Name="TimePickerBackground"
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="4"
+                        Style="{StaticResource TimePickerScrollBackground}"/>
+                    
+                    <Border  
+                        Grid.Column="0" 
+                        x:Name="HourScroll"
+                        Background="Transparent" 
+                        PreviewMouseWheel="OnHourScroll"/><!--HH-->
+                    
+                    <Border  
+                        Grid.Column="2" 
+                        x:Name="MinuteScroll"
+                        Background="Transparent" 
+                        PreviewMouseWheel="OnMinuteScroll"/><!--MM-->
+                    
+                    <Border  
+                        Grid.Column="3" 
+                        x:Name="MeridiemScroll"
+                        Background="Transparent" 
+                        PreviewMouseWheel="OnMeridiemScroll"/><!--AA-->
+                    
+                    <TextBlock 
+                        Grid.Column="0"
+                        Style="{StaticResource TimePicker}"
+                        IsHitTestVisible="False"
+                        Text="{Binding CurrentRemindHour}"/>
+                    <TextBlock 
+                        Grid.Column="1"
+                        Style="{StaticResource TimePicker}"
+                        IsHitTestVisible="False"
+                        Text=":"></TextBlock>
+                    <TextBlock 
+                        Grid.Column="2"
+                        Style="{StaticResource TimePicker}"
+                        IsHitTestVisible="False"
+                        Text="{Binding CurrentRemindMinute}"/>
+                    <TextBlock 
+                        Grid.Column="3"
+                        Style="{StaticResource TimePicker}"
+                        IsHitTestVisible="False"
+                        Text="{Binding CurrentMeridiem}"/>
+                </Grid>
+            </Grid>
             
             <Button 
                 Grid.Column="2"
                 Content="Cancel"
-                Style="{DynamicResource ActionButton}" 
+                Style="{StaticResource CancelReminderEntry}" 
                 Click="OnCancel"/> <!--Cancel Button-->
             
             <Button 
                 Grid.Column="4"
                 Content="Save"
-                Style="{DynamicResource ActionButton}"/> <!--Save Button-->
-
+                Style="{StaticResource SaveReminderEntry}"
+                Click="OnSave"/> <!--Save Button-->
             
         </Grid>
-        
-        
     </Grid>
 </UserControl>

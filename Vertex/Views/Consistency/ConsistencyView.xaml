@@ -10,7 +10,7 @@
              d:DesignHeight="250" d:DesignWidth="500"
              d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
-    <Grid Background="{DynamicResource ElementBackground}">
+    <Grid Background="{StaticResource ElementBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/> <!--Spacer-->
             <RowDefinition Height="20*"/> <!--Tab Tittle-->
@@ -36,7 +36,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Text="Consistency"
-            Style="{DynamicResource BasicTitle}"/> <!--Tab Tittle-->
+            Style="{StaticResource BasicTextBlock}"/> <!--Tab Tittle-->
         
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -57,27 +57,27 @@
                 <TextBlock 
                     Grid.Row="0"
                     Text="100%"
-                    Style="{DynamicResource SmallSubtitle}"
+                    Style="{StaticResource Percentage}"
                     Tag="Percentage"/>
                 <TextBlock 
                     Grid.Row="1"
                     Text="75%"
-                    Style="{DynamicResource SmallSubtitle}"
+                    Style="{StaticResource Percentage}"
                     Tag="Percentage"/>
                 <TextBlock 
                     Grid.Row="2"
                     Text="50%"
-                    Style="{DynamicResource SmallSubtitle}"
+                    Style="{StaticResource Percentage}"
                     Tag="Percentage"/>
                 <TextBlock 
                     Grid.Row="3"
                     Text="25%"
-                    Style="{DynamicResource SmallSubtitle}"
+                    Style="{StaticResource Percentage}"
                     Tag="Percentage"/>
                 <TextBlock 
                     Grid.Row="4"
                     Text="0%"
-                    Style="{DynamicResource SmallSubtitle}"
+                    Style="{StaticResource Percentage}"
                     Tag="Percentage"/>
                 
             </Grid> <!--Percentages-->
@@ -93,31 +93,31 @@
                 
                 <Rectangle 
                     Grid.Row="0" 
-                    Fill="{DynamicResource ELementHighlight}"
+                    Fill="{StaticResource TextBrush}"
                     Opacity="0.5"
                     Height="1"
                     VerticalAlignment="Top"/>
                 <Rectangle 
                     Grid.Row="1" 
-                    Fill="{DynamicResource ELementHighlight}"
+                    Fill="{StaticResource TextBrush}"
                     Opacity="0.5"
                     Height="1"
                     VerticalAlignment="Top"/>
                 <Rectangle 
                     Grid.Row="2" 
-                    Fill="{DynamicResource ELementHighlight}"
+                    Fill="{StaticResource TextBrush}"
                     Opacity="0.5"
                     Height="1"
                     VerticalAlignment="Top"/>
                 <Rectangle 
                     Grid.Row="3" 
-                    Fill="{DynamicResource ELementHighlight}"
+                    Fill="{StaticResource TextBrush}"
                     Opacity="0.5"
                     Height="1"
                     VerticalAlignment="Top"/>
                 <Rectangle 
                     Grid.Row="4" 
-                    Fill="{DynamicResource ELementHighlight}"
+                    Fill="{StaticResource TextBrush}"
                     Opacity="0.5"
                     Height="1"
                     VerticalAlignment="Top"/>
@@ -136,37 +136,37 @@
                     <TextBlock 
                         Grid.Column="0"
                         Text="Mon"
-                        Style="{DynamicResource SmallSubtitle}"
+                        Style="{StaticResource WeekDays}"
                         Tag="WeekDays"/>
                     <TextBlock 
                         Grid.Column="1"
                         Text="Tue"
-                        Style="{DynamicResource SmallSubtitle}"
+                        Style="{StaticResource WeekDays}"
                         Tag="WeekDays"/>
                     <TextBlock 
                         Grid.Column="2"
                         Text="Wed"
-                        Style="{DynamicResource SmallSubtitle}"
+                        Style="{StaticResource WeekDays}"
                         Tag="WeekDays"/>
                     <TextBlock 
                         Grid.Column="3"
                         Text="Thu"
-                        Style="{DynamicResource SmallSubtitle}"
+                        Style="{StaticResource WeekDays}"
                         Tag="WeekDays"/>
                     <TextBlock 
                         Grid.Column="4"
                         Text="Fri"
-                        Style="{DynamicResource SmallSubtitle}"
+                        Style="{StaticResource WeekDays}"
                         Tag="WeekDays"/>
                     <TextBlock 
                         Grid.Column="5"
                         Text="Sat"
-                        Style="{DynamicResource SmallSubtitle}"
+                        Style="{StaticResource WeekDays}"
                         Tag="WeekDays"/>
                     <TextBlock 
                         Grid.Column="6"
                         Text="Sun"
-                        Style="{DynamicResource SmallSubtitle}"
+                        Style="{StaticResource WeekDays}"
                         Tag="WeekDays"/>
                     
                 </Grid> <!--Weekdays-->

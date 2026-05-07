@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Vertex.Views"
         xmlns:viewModels="clr-namespace:Vertex.ViewModels"
+        xmlns:reminders="clr-namespace:Vertex.Views.Reminders"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -14,7 +15,11 @@
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
     <Viewbox Stretch="Uniform">
-        <Grid Width="1440" Height="900" Background="{DynamicResource WindowBackground}">
+        
+        <Grid 
+            Width="1440" 
+            Height="900" 
+            Background="{DynamicResource WindowBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/> <!--TitleBar-->
             <RowDefinition Height="95*"/> <!--Main Body-->
@@ -29,13 +34,12 @@
             </Grid.ColumnDefinitions>
             
             <Border 
-                Background="{DynamicResource ElementBackground}">
+                Background="{DynamicResource ElementBackgroundBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30*"/>
                         <RowDefinition Height="30*"/>
                     </Grid.RowDefinitions>
-                    
                 </Grid>
             </Border> <!--Side Bar-->
             
@@ -48,9 +52,9 @@
                     <RowDefinition Height="1.7*"/> <!--Spacer-->
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="95*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/> <!--Spacer-->
+                    <ColumnDefinition Width="95*"/> <!--Activities, Consistency, Donut Graph, Reminders-->
+                    <ColumnDefinition Width="1*"/> <!--Spacer-->
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Row="1" Grid.Column="1">
@@ -62,7 +66,7 @@
                     
                     <!--Donut Graph-->
                     <!--Activities-->
-                </Grid>
+                </Grid><!--Donut Graph & Reminders-->
                 
                 <Grid Grid.Row="3" Grid.Column="1">
                     <Grid.ColumnDefinitions>
@@ -71,11 +75,11 @@
                         <ColumnDefinition Width="49.5*"/> <!--Consistency-->
                     </Grid.ColumnDefinitions>
                     
-                    <views:RemindersView Grid.Column="0"/><!--Reminders-->
+                    <reminders:RemindersView Grid.Column="0"/><!--Reminders-->
                     <views:ConsistencyView Grid.Column="2"/><!--Consistency-->
                 </Grid>
             </Grid>
-        </Grid>
+        </Grid><!--Main Body-->
     </Grid>
     </Viewbox>
 </Window>

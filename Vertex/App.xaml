@@ -12,6 +12,8 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/TextStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Icons.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ScroolBar.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Calendar.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/DatePicker.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

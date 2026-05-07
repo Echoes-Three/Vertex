@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.UserData.Entry;
 using Vertex.MVVM;
@@ -9,20 +10,30 @@ public class ReminderItemViewModel : ViewModelBase
 {
     public ReminderEntry? Data { get; }
     
-    private int _currentRemindDayIndex;
-    private readonly List<string> _sortRemindDays = ["1 Day", "2 Days", "3 Days", "4 Days", "5 Days", "6 Days", "7 Days"];
-
-    public RelayCommand OnRemindDay { get; }
-
+    private int _currentRemindDayCount = 1;
+    
     public ReminderItemViewModel(ReminderEntry  entry)
     {
         Data = entry;
-        OnRemindDay = new RelayCommand(_ => UpdateRemindDay());
     }
-    
-    private void UpdateRemindDay() => CurrentRemindDay = _sortRemindDays[_currentRemindDayIndex = (_currentRemindDayIndex + 1) % 7];
 
-    private string _currentRemindDay = "1 Day";
+    public void RemindDayUp()
+    {
+        if(_currentRemindDayCount == 7)
+            return;
+        _currentRemindDayCount++;
+        CurrentRemindDay = $"{_currentRemindDayCount} day(s)";
+    }
+
+    public void RemindDayDown()
+    {
+        if(_currentRemindDayCount == 1)
+            return;
+        _currentRemindDayCount--;
+        CurrentRemindDay = $"{_currentRemindDayCount} day(s)";
+    }
+
+    private string _currentRemindDay = "1 day(s)";
     public string CurrentRemindDay
     {
         get => _currentRemindDay;
@@ -32,6 +43,4 @@ public class ReminderItemViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
-    
 }

@@ -5,16 +5,16 @@ using Vertex.Models.Interfaces;
 
 namespace Vertex.Models.DataServices.DataHandling;
 
-public class SleepHandler : IFileHandler
+public class SleepHandler : IFileHandler<SleepEntry>
 {
     private readonly string _fullPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "Vertex", "Data", "SleepSchedule.json");
     public SleepEntry? SleepSchedule { get; set; }
 
-    public void Save(SleepEntry sleepSchedule)
+    public void Save(SleepEntry entry)
     {
-        SleepSchedule = sleepSchedule;
+        SleepSchedule = entry;
         
         var json = JsonSerializer.Serialize(this, new JsonSerializerOptions
         {

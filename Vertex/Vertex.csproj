@@ -19,12 +19,47 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="Views\Reminders\ReminderItemView.xaml">
+      <Page Update="Views\Reminders\ReminderNotDoneView.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="Views\Reminders\RemindersView.xaml">
+      <Page Update="Views\Reminders\RemindersTabView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\Reminders\ReminderDoneView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Themes\Reminders\AddReminderStyle.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Themes\Reminders\ReminderNotDoneStyle.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Themes\Reminders\ReminderDoneStyle.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Themes\Reminders\RemindersTabStyle.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Themes\Reminders\Calendar.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Themes\Reminders\DatePicker.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
@@ -41,6 +76,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-preview.3.26207.106" />
       <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />
       <PackageReference Include="MiqM.Xceed.Wpf.Toolkit.NETCore" Version="3.5.1.3" />
@@ -115,13 +151,9 @@
       <None Remove="Assets\Icons\CreatedFirst.svg" />
       <None Remove="Assets\Icons\Add.svg" />
       <Page Remove="Assets\Icons\Add.xaml" />
-      <Resource Include="Assets\Icons\Add.xaml" />
       <Page Remove="Assets\Icons\ClosestToCurrentDate.xaml" />
-      <Resource Include="Assets\Icons\ClosestToCurrentDate.xaml" />
       <Page Remove="Assets\Icons\CreatedFirst.xaml" />
-      <Resource Include="Assets\Icons\CreatedFirst.xaml" />
       <Page Remove="Assets\Icons\History.xaml" />
-      <Resource Include="Assets\Icons\History.xaml" />
     </ItemGroup>
 
 </Project>

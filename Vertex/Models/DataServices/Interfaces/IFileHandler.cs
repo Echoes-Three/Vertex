@@ -1,7 +1,9 @@
 namespace Vertex.Models.Interfaces;
 
-public interface IFileHandler
+public interface IFileHandler<T>
 {
-    public void Save(){}
+    public void Save(T entry){}
+    public void Delete(T entry){}
+    public void Serialize(){}
     public void Load(){}
 }

@@ -5,7 +5,6 @@ using Vertex.Models;
 using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.Entities.Entry;
 using Vertex.Models.EnumDefinitions;
-using Vertex.Models.UserData.Entry;
 using Vertex.Models.UserDataHandling;
 using Vertex.ViewModels.Reminders;
 

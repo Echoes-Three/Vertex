@@ -16,9 +16,7 @@
     
     <Viewbox Stretch="Uniform">
         
-        <Grid 
-            Width="1440" 
-            Height="900" 
+        <Grid Width="1440" Height="900" 
             Background="{DynamicResource WindowBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/> <!--TitleBar-->
@@ -33,15 +31,7 @@
                 <ColumnDefinition Width="97*"/> <!--Main Body-->
             </Grid.ColumnDefinitions>
             
-            <Border 
-                Background="{DynamicResource ElementBackgroundBrush}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30*"/>
-                        <RowDefinition Height="30*"/>
-                    </Grid.RowDefinitions>
-                </Grid>
-            </Border> <!--Side Bar-->
+            <Border Background="{DynamicResource ElementBackgroundBrush}"/> <!--Side Bar-->
             
             <Grid  Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -75,7 +65,7 @@
                         <ColumnDefinition Width="49.5*"/> <!--Consistency-->
                     </Grid.ColumnDefinitions>
                     
-                    <reminders:RemindersView Grid.Column="0"/><!--Reminders-->
+                    <reminders:RemindersTabView Grid.Column="0"/><!--Reminders-->
                     <views:ConsistencyView Grid.Column="2"/><!--Consistency-->
                 </Grid>
             </Grid>

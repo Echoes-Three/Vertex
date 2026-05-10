@@ -5,9 +5,9 @@ using Vertex.ViewModels.Reminders;
 
 namespace Vertex.Views.Reminders;
 
-public partial class AddReminder : UserControl
+public partial class AddReminderView : UserControl
 {
-    public AddReminder()
+    public AddReminderView()
     {
         InitializeComponent();
     }
@@ -15,13 +15,18 @@ public partial class AddReminder : UserControl
     private void OnCancel(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)?.Close();
+        
+        if (DataContext is RemindersViewModel vm)
+        {
+            vm.CleanNewReminderWindow();
+        }
     }
 
     private void OnDrag(object sender, MouseButtonEventArgs e)
     {
         Window.GetWindow(this)?.DragMove();
     }
-    
+
     private void OnHourScroll(object sender, MouseWheelEventArgs e)
     {
         if (DataContext is RemindersViewModel vm)
@@ -32,7 +37,7 @@ public partial class AddReminder : UserControl
                 vm.RemindHourDown();
         }
     }
-    
+
     private void OnMinuteScroll(object sender, MouseWheelEventArgs e)
     {
         if (DataContext is RemindersViewModel vm)
@@ -50,14 +55,7 @@ public partial class AddReminder : UserControl
         {
             vm.UpdateMeridiem();
         }
-        
+
     }
 
-    private void OnSave(object sender, RoutedEventArgs e)
-    {
-        if (DataContext is RemindersViewModel vm)
-        {
-            vm.SaveNewReminder();
-        }
-    }
 }

@@ -1,0 +1,130 @@
+<UserControl x:Class="Vertex.Views.Reminders.RemindersTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:reminders="clr-namespace:Vertex.Views.Reminders"
+             xmlns:reminders1="clr-namespace:Vertex.ViewModels.Reminders"
+             DataContext="{Binding RemindersVM}"
+             mc:Ignorable="d"
+             d:DesignHeight="250" d:DesignWidth="500"
+             d:DataContext="{d:DesignInstance Type=reminders1:RemindersViewModel}">
+    
+    <Grid Background="{StaticResource ElementBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/> <!--Spacer-->
+            <RowDefinition Height="20*"/> <!--Tab-->
+            <RowDefinition Height="4*"/> <!--Spacer-->
+            <RowDefinition Height="76*"/> <!--Reminders Content-->
+            <RowDefinition Height="4*"/> <!--Spacer-->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/> <!--Spacer-->
+            <ColumnDefinition Width="98*"/> <!--Tab Title & Reminders Content-->
+            <ColumnDefinition Width="2*"/> <!--Spacer-->
+        </Grid.ColumnDefinitions>
+        
+        
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="76*"/> <!--Tab Tittle-->
+                <ColumnDefinition Width="8*"/> <!--Add Reminder Button-->
+                <ColumnDefinition Width="8*"/> <!--Reminders History Button-->
+                <ColumnDefinition Width="8*"/> <!--Sort Button-->
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock
+                Grid.Column="0"
+                Text="Reminders"
+                Style="{StaticResource ReminderTabTitle}"/> <!--Tab Tittle-->
+            
+            <Button 
+                Grid.Column="1"
+                Style="{StaticResource AddReminderButton}"
+                Command="{Binding OnAddNewReminder}">
+                
+                <Path Style="{StaticResource AddIcon}"/>
+                
+            </Button> <!--Add Reminder Button-->
+            
+            <ToggleButton 
+                Grid.Column="2"
+                IsChecked="{Binding IsRemindersHistoryOn}"
+                Command="{Binding OnReminderHistory}"
+                Style="{StaticResource ReminderHistoryToggleButton}"
+                Tag="{Binding IsRemindersHistoryOn}">
+                
+                <Path Style="{StaticResource HistoryIcon}"/>
+                
+            </ToggleButton> <!--Reminders History Button-->
+            
+            <Button 
+                Grid.Column="3"
+                Command="{Binding OnSortIcon}"
+                Style="{StaticResource SortButton}">
+                
+                <Path 
+                    Style="{StaticResource SortIcon}"
+                    Tag="{Binding CurrentIcon}"/>
+                
+            </Button> <!--Sort Button-->
+            
+        </Grid> <!--Tab Buttons-->
+        
+        <TextBlock 
+            Grid.Row="3"
+            Grid.Column="1"
+            Text="Click on + to add a reminder"
+            Style="{StaticResource RemindersNotDonePlaceholderMessage}"
+            Tag="{Binding IsRemindersHistoryOn}"/>
+        
+        <TextBlock 
+            Grid.Row="3"
+            Grid.Column="1"
+            Text="Nothing marked as done yet..."
+            Style="{StaticResource RemindersDonePlaceholderMessage}"
+            Tag="{Binding IsRemindersHistoryOn}"/>
+        
+        <!--RemindersNotDone-->
+        <ScrollViewer Grid.Row="3" Grid.Column="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Style="{StaticResource ReminderHistoryIsOff}"
+                      Tag="{Binding IsRemindersHistoryOn}">
+            
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
+            </ScrollViewer.Resources>
+            
+            <ItemsControl ItemsSource="{Binding RemindersNotDone}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <reminders:ReminderNotDoneView/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+        </ScrollViewer>
+        
+        <!--RemindersDone-->
+        <ScrollViewer Grid.Row="3" Grid.Column="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Style="{StaticResource ReminderHistoryIsOn}"
+                      Tag="{Binding IsRemindersHistoryOn}">
+            
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
+            </ScrollViewer.Resources>
+            
+            <ItemsControl ItemsSource="{Binding RemindersDone}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <reminders:ReminderDoneView/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+        </ScrollViewer>
+    </Grid>
+</UserControl>

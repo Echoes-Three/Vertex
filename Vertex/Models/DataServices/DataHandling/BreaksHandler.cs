@@ -6,7 +6,7 @@ using Vertex.Models.UserDataHandling;
 
 namespace Vertex.Models.DataServices.DataHandling;
 
-public class BreaksHandler : IFileHandler
+public class BreaksHandler : IFileHandler<BreakEntry>
 {
     private readonly string _fullPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),

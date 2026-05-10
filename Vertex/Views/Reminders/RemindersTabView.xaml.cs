@@ -4,10 +4,10 @@ using System.Windows.Media;
 
 namespace Vertex.Views.Reminders;
 
-public partial class RemindersView : UserControl
+public partial class RemindersTabView : UserControl
 {
 
-    public RemindersView()
+    public RemindersTabView()
     {
         InitializeComponent();
     }

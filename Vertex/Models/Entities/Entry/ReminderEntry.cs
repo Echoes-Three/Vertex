@@ -1,12 +1,12 @@
-using System.Text.Json.Serialization;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Vertex.Models.UserData.Entry;
+namespace Vertex.Models.Entities.Entry;
 
-public class ReminderEntry
+public class ReminderEntry : ObservableObject
 {
     public string Id { get; set; } = "";
     public string Content { get; set; } = "";
-    public bool Completed { get; set; } = false;
+    public bool Done { get; set; } = false;
     public DateTime Setfor { get; set; } = default;
     public DateTime CreatedAt { get; set; } = default;
     public DateTime DonedAt { get; set; } = default;

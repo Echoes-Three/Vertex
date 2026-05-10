@@ -1,7 +1,9 @@
 using System.Collections.ObjectModel;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Models.DataServices.DataHandling;
-using Vertex.Models.UserData.Entry;
+using Vertex.Models.Entities.Entry;
+using Vertex.Models.Entities.Helpers;
 using Vertex.MVVM;
 
 namespace Vertex.ViewModels.Reminders;
@@ -10,37 +12,66 @@ public class ReminderItemViewModel : ViewModelBase
 {
     public ReminderEntry? Data { get; }
     
-    private int _currentRemindDayCount = 1;
-    
+    public RelayCommand OnDeleteReminder { get; }
+    public RelayCommand OnReminderDone { get; }
+    public RelayCommand OnRestoreReminder { get; }
     public ReminderItemViewModel(ReminderEntry  entry)
     {
         Data = entry;
+        OnDeleteReminder = new RelayCommand(_ => DeleteReminder());
+        OnReminderDone = new RelayCommand(_ => MarkReminderAsDone());
+        OnRestoreReminder = new RelayCommand(_ => RestoreReminder());
+        
+        CreatedAt = Data.CreatedAt.ToString("yyyy-MM-dd HH:mm tt");
+        SetFor = Data.Setfor.ToString("yyyy-MM-dd HH:mm tt");
+        DoneAt = Data.DonedAt.ToString("yyyy-MM-dd HH:mm tt");
     }
+    
+    private void DeleteReminder()
+        => WeakReferenceMessenger.Default.Send(new DeleteReminderMessage(Data!.Id));
 
-    public void RemindDayUp()
-    {
-        if(_currentRemindDayCount == 7)
-            return;
-        _currentRemindDayCount++;
-        CurrentRemindDay = $"{_currentRemindDayCount} day(s)";
-    }
+    private void MarkReminderAsDone()
+        => WeakReferenceMessenger.Default.Send(new MarkReminderAsDoneMessage(Data!.Id));
+    
+    private void RestoreReminder()
+        => WeakReferenceMessenger.Default.Send(new RestoreReminderMessage(Data!.Id));
 
-    public void RemindDayDown()
-    {
-        if(_currentRemindDayCount == 1)
-            return;
-        _currentRemindDayCount--;
-        CurrentRemindDay = $"{_currentRemindDayCount} day(s)";
-    }
+    private string _setFor;
 
-    private string _currentRemindDay = "1 day(s)";
-    public string CurrentRemindDay
+    public string SetFor
     {
-        get => _currentRemindDay;
+        get => _setFor;
         set
         {
-            _currentRemindDay = value;
-            OnPropertyChanged();
+            _setFor = value;
+            OnPropertyChanged(nameof(Data));
         }
     }
+
+    
+    private string _cretedAt;
+
+    public string CreatedAt
+    {
+        get => _cretedAt;
+        set
+        {
+            _cretedAt = value;
+            OnPropertyChanged(nameof(Data));
+        }
+    }
+
+    private string _doneAt;
+
+    public string DoneAt
+    {
+        get => _doneAt;
+        set
+        {
+            _doneAt = value;
+            OnPropertyChanged(nameof(Data));
+        }
+    }
+
+    
 }

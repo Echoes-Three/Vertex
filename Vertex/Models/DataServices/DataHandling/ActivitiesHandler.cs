@@ -3,12 +3,11 @@ using System.IO;
 using System.Text.Json;
 using Vertex.Models.Entities.Entry;
 using Vertex.Models.Interfaces;
-using Vertex.Models.UserData.Entry;
 using Vertex.MVVM;
 
 namespace Vertex.Models.DataServices.DataHandling;
 
-public class ActivitiesHandler : ViewModelBase, IFileHandler
+public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
 {
     private readonly string _fullPath = Path.Combine(
     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),

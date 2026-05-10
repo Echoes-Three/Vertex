@@ -9,11 +9,20 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/DarkTheme.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Typeface.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/TextStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Icons.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ScroolBar.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/Calendar.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/DatePicker.xaml"/>
+                <!--Main Window-->
+                <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/TitleBarStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/MainWindowStyle.xaml"/>
+                <!--Reminders-->
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersTabStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderNotDoneStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderDoneStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/AddReminderStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/Calendar.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/DatePicker.xaml"/>
+                <!--Consistency-->
+                <ResourceDictionary Source="/Vertex;component/Themes/Consistency/ConsistencyStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

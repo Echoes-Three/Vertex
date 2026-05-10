@@ -5,14 +5,14 @@ using Vertex.Models.Interfaces;
 
 namespace Vertex.Models.DataServices.DataHandling;
 
-public class ConsistencyHandler: IFileHandler
+public class ConsistencyHandler: IFileHandler<ConsistencyEntry>
 {
     private readonly string _fullPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "Vertex", "Data", "Consistency.json");
     public ConsistencyEntry? Consistency { get; set; }
     
-    public void Save(int percentage)
+    public void Save(int entry)
     {
         if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday )
         {
@@ -20,7 +20,7 @@ public class ConsistencyHandler: IFileHandler
             Consistency.CurrentWeek = [0, 0, 0, 0, 0, 0, 0];
         }
         
-        Consistency!.CurrentWeek.Add(percentage);
+        Consistency!.CurrentWeek.Add(entry);
         
         var json = JsonSerializer.Serialize(this, new  JsonSerializerOptions
         {

@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:reminders="clr-namespace:Vertex.Views.Reminders"
-             xmlns:reminders1="clr-namespace:Vertex.ViewModels.Reminders"
+             xmlns:remindersView="clr-namespace:Vertex.Views.Reminders"
+             xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              DataContext="{Binding RemindersVM}"
              mc:Ignorable="d"
              d:DesignHeight="250" d:DesignWidth="500"
-             d:DataContext="{d:DesignInstance Type=reminders1:RemindersViewModel}">
+             d:DataContext="{d:DesignInstance Type=remindersViewModel:RemindersViewModel}">
     
     <Grid Background="{StaticResource ElementBackgroundBrush}">
         <Grid.RowDefinitions>
@@ -50,7 +50,6 @@
             <ToggleButton 
                 Grid.Column="2"
                 IsChecked="{Binding IsRemindersHistoryOn}"
-                Command="{Binding OnReminderHistory}"
                 Style="{StaticResource ReminderHistoryToggleButton}"
                 Tag="{Binding IsRemindersHistoryOn}">
                 
@@ -99,7 +98,7 @@
             <ItemsControl ItemsSource="{Binding RemindersNotDone}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <reminders:ReminderNotDoneView/>
+                        <remindersView:ReminderNotDoneView/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -120,7 +119,7 @@
             <ItemsControl ItemsSource="{Binding RemindersDone}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <reminders:ReminderDoneView/>
+                        <remindersView:ReminderDoneView/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

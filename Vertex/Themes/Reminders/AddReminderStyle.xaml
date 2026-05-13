@@ -41,6 +41,7 @@
         <Setter Property="Margin" Value="10"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
     </Style>
     
     <!--Time Picker Scroll Background-->
@@ -74,7 +75,6 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Cursor" Value="ScrollNS"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         

@@ -11,7 +11,7 @@ public static class Consistency
     public static int ToPercentage(this ActivitiesHandler  activitiesHandler)
     {
         var activitiesCount = activitiesHandler.Activities.Count;
-        var completedActivies = activitiesHandler.Activities.Count(activityEntry => activityEntry.Completed);
+        var completedActivies = activitiesHandler.Activities.Count(activityEntry => activityEntry.Done);
 
         var percentage = (completedActivies / activitiesCount) * 100;
         

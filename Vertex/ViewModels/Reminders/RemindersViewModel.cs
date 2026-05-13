@@ -13,13 +13,19 @@ namespace Vertex.ViewModels.Reminders;
 
 public class RemindersViewModel : ViewModelBase
 {
+    /*Stores the Actual ObservableCollection of ReminderEntry*/
     public RemindersHandler RemindersData;
     
     private ObservableCollection<ReminderItemViewModel> _remindersNotDone;
+
     public ObservableCollection<ReminderItemViewModel> RemindersNotDone
     {
         get => _remindersNotDone;
-        set { _remindersNotDone = value; OnPropertyChanged(); }
+        set
+        {
+            _remindersNotDone = value;
+            OnPropertyChanged();
+        }
     }
 
     private ObservableCollection<ReminderItemViewModel> _remindersDone;
@@ -27,35 +33,40 @@ public class RemindersViewModel : ViewModelBase
     public ObservableCollection<ReminderItemViewModel> RemindersDone
     {
         get => _remindersDone;
-        set { _remindersDone = value; OnPropertyChanged(); }
+        set
+        {
+            _remindersDone = value;
+            OnPropertyChanged();
+        }
     }
-
-
 
     private readonly List<string> _icons = ["Closest", "Created"];
     private int _currentIconIndex;
-    
+
     private readonly List<string> _meridiem = ["AM", "PM"];
     private int _currentMeridiemIndex;
     private int _currentHourCount = 12;
-    private int  _currentMinuteCount = 59;
+    private int _currentMinuteCount = 59;
 
     private Window? CurrentAddReminderView { get; set; }
+    private Window? CurrentEditReminderView { get; set; }
     public RelayCommand OnSortIcon { get; }
-    public RelayCommand OnSaveNewReminder { get;}
+    public RelayCommand OnSaveNewReminder { get; }
     public RelayCommand OnAddNewReminder { get; }
-    public RelayCommand OnReminderHistory { get; }
+    public RelayCommand OnSaveEditReminder { get; }
 
-    public RemindersViewModel(RemindersHandler remindersHandler)
+public RemindersViewModel(RemindersHandler remindersHandler)
     {
         RemindersData = remindersHandler;
 
+        /*Separates the main data in two new ObservableCollection branches based on the property Done*/
         RemindersNotDone = new ObservableCollection<ReminderItemViewModel>(
             remindersHandler.Reminders!.Where(x => !x.Done).Select(x => new ReminderItemViewModel(x)));
 
         RemindersDone = new ObservableCollection<ReminderItemViewModel>(
             remindersHandler.Reminders!.Where(x => x.Done).Select(x => new ReminderItemViewModel(x)));
 
+        /*Updates both branches when an instance is added or removed*/
         remindersHandler.Reminders!.CollectionChanged += (s, e) =>
         {
             if (e.NewItems != null)
@@ -65,116 +76,77 @@ public class RemindersViewModel : ViewModelBase
             if (e.OldItems != null)
                 foreach (ReminderEntry entry in e.OldItems)
                 {
-                    var vm = RemindersNotDone.FirstOrDefault(x => x.Data!.Id == entry.Id);
+                    var vm = RemindersNotDone.FirstOrDefault(x => x.EntryData!.Id == entry.Id);
                     if (vm != null)
                         RemindersNotDone.Remove(vm);
                 }
         };
 
+        /*WeakReferences*/
         WeakReferenceMessenger.Default.Register<DeleteReminderMessage>(this, (r, msg) =>
             DeleteReminder(msg.Value));
 
         WeakReferenceMessenger.Default.Register<MarkReminderAsDoneMessage>(this, (r, msg) =>
             MarkReminderAsDone(msg.Value));
-        
+
         WeakReferenceMessenger.Default.Register<RestoreReminderMessage>(this, (r, msg) =>
             RestoreReminder(msg.Value));
 
+        WeakReferenceMessenger.Default.Register<EditReminderMessage>(this, (r, msg) =>
+            EditReminder(msg.Value));
+
+        /*RelayCommand initializations*/
         OnSortIcon = new RelayCommand(_ => UpdateSortIcon());
         OnSaveNewReminder = new RelayCommand(_ => SaveNewReminder(), _ => CanSaveNewReminder());
         OnAddNewReminder = new RelayCommand(_ => AddReminder());
+        OnSaveEditReminder = new RelayCommand(_ => SaveEditReminder(), _ => CanSaveEditReminder());
     }
 
-    private void OrderReminders(string orderby)
+    /*Action on Save EditReminder*/
+    private bool CanSaveEditReminder() => 
+        !string.IsNullOrEmpty(ReminderContent) && ReminderSetFor != null;
+    private void SaveEditReminder()
     {
-        RemindersDone = orderby switch
-        {
-            "Created" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersDone.OrderBy(x => x.Data!.CreatedAt)),
-
-            "Closest" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersDone.OrderBy(x => x.Data!.Setfor))
-        };
-        
-        RemindersNotDone = orderby switch
-        {
-            "Created" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersNotDone.OrderBy(x => x.Data!.CreatedAt)),
-
-            "Closest" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersNotDone.OrderBy(x => x.Data!.Setfor))
-        };
-    }
-    
-    private void DeleteReminder(string reminderId)
-    {
-        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
-        RemindersData.Delete(reminderEntry!);
-        
-    }
-
-    private void MarkReminderAsDone(string reminderId)
-    {
-        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
+        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == EditReminderId);
         if (reminderEntry == null) return;
         
-        reminderEntry!.Done = true;
-        reminderEntry!.DonedAt = DateTime.Now;
-        
-        RemindersData.Serialize();
-
-        ReloadCollections();
-    }
-    
-    private void RestoreReminder(string reminderId)
-    {
-        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
-        if (reminderEntry == null) return;
-        
-        reminderEntry!.Done = false;
-        reminderEntry!.DonedAt = default;
-        
-        RemindersData.Serialize();
-
-        ReloadCollections();
-    }
-
-    private void ReloadCollections()
-    {
-        RemindersNotDone = new ObservableCollection<ReminderItemViewModel>(
-            RemindersData.Reminders!.Where(x => !x.Done).Select(x => new ReminderItemViewModel(x)));
-
-        RemindersDone = new ObservableCollection<ReminderItemViewModel>(
-            RemindersData.Reminders!.Where(x => x.Done).Select(x => new ReminderItemViewModel(x)));
-    }
-    private void AddReminder()
-    {
-        if (CurrentAddReminderView == null)
+        switch (_currentRemindMeridiem)
         {
-            CurrentAddReminderView = new Window
-            {
-                Title = "AddReminderView",
-                DataContext = this,
-                WindowStyle = WindowStyle.None,
-                ResizeMode = ResizeMode.NoResize,
-                AllowsTransparency = true,
-                Background = Brushes.Transparent,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                Width = 450,
-                Height = 150,
-                Content = new AddReminderView()
-            }; 
-               
-            CurrentAddReminderView.Closed += (_, _) =>  CurrentAddReminderView = null;
-            CurrentAddReminderView.Show();
+            case "PM" when _currentHourCount != 12:
+                _currentHourCount += 12;
+                break;
+            case "AM" when _currentHourCount == 12:
+                _currentHourCount = 0;
+                break;
         }
-        
-        CurrentAddReminderView.Activate();
 
+        var setFor = new DateTime(
+            ReminderSetFor!.Value.Year,
+            ReminderSetFor!.Value.Month,
+            ReminderSetFor!.Value.Day,
+            _currentHourCount,
+            _currentMinuteCount,
+            0
+        );
+
+        reminderEntry.Content = ReminderContent;
+        reminderEntry.SetFor = setFor;
+        reminderEntry.Done = false;
+        reminderEntry.DoneAt = default;
+      
+
+        RemindersData.Serialize();
+        CurrentEditReminderView!.Close();
+        
+        CleanNewReminderWindow();
+        ReloadCollections();
     }
+    
+ 
+    /*Action on Save Reminder*/
     private bool CanSaveNewReminder() => 
         !string.IsNullOrEmpty(ReminderContent) && ReminderSetFor != null;
-    public void SaveNewReminder()
+    private void SaveNewReminder()
     {
         switch (_currentRemindMeridiem)
         {
@@ -193,15 +165,15 @@ public class RemindersViewModel : ViewModelBase
             _currentHourCount,
             _currentMinuteCount,
             0
-            );
+        );
         
         var reminder = new ReminderEntry
         {
             Content = ReminderContent,
-            Setfor = setFor,
+            SetFor = setFor,
             Done = false,
             CreatedAt = DateTime.Now,
-            DonedAt = default,
+            DoneAt = default,
             Id = Guid.NewGuid().ToString()
         };
 
@@ -210,20 +182,156 @@ public class RemindersViewModel : ViewModelBase
         
         CleanNewReminderWindow();
     }
+   
     
+    /*Actions on RemindersNotDoneView - (Mark Done, Edit, Delete)*/
+    private void MarkReminderAsDone(string reminderId)
+    {
+        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
+        if (reminderEntry == null) return;
+        
+        reminderEntry!.Done = true;
+        reminderEntry!.DoneAt = DateTime.Now;
+        
+        RemindersData.Serialize();
+
+        ReloadCollections();
+    }
+    private void DeleteReminder(string reminderId)
+    {
+        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
+        if (reminderEntry == null) return;
+        RemindersData.Delete(reminderEntry!);
+        
+    }
+    private void EditReminder(string reminderId)
+    {
+        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
+        if (reminderEntry == null) return;
+
+        var hour12 = reminderEntry.SetFor.Hour % 12 == 0 ? 12 :reminderEntry.SetFor.Hour % 12; ;
+        var minute = reminderEntry.SetFor.Minute;
+        var meridiemCount = reminderEntry.SetFor.ToString("tt") == "AM" ? 0 : 1;
+        var meridiem = reminderEntry.SetFor.ToString("tt");
+        
+        EditReminderId = reminderId;
+        ReminderContent = reminderEntry.Content;
+        ReminderSetFor = new DateTime(reminderEntry.SetFor.Year, reminderEntry.SetFor.Month, reminderEntry.SetFor.Day);
+        
+        (_currentHourCount, CurrentRemindHour) = ( hour12, hour12.ToString());
+        (_currentMinuteCount, CurrentRemindMinute) = (minute, minute.ToString("D2"));
+        (_currentMeridiemIndex, CurrentRemindMeridiem) = (meridiemCount, meridiem);
+
+        if (CurrentEditReminderView == null)
+        {
+            CurrentEditReminderView = new Window
+            {
+                Title = "EditReminderView",
+                DataContext = this,
+                Owner = Application.Current.MainWindow,
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                AllowsTransparency = true,
+                Background = Brushes.Transparent,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Width = 450,
+                Height = 150,
+                Content = new EditReminderView()
+            }; 
+               
+            CurrentEditReminderView.Closed += (_, _) =>  CurrentEditReminderView = null;
+            CurrentEditReminderView.ShowDialog();
+        }
+        
+    }
+    
+    
+    /*Action on RemindersDoneView (Restore)*/
+    private void RestoreReminder(string reminderId)
+    {
+        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
+        if (reminderEntry == null) return;
+        
+        reminderEntry!.Done = false;
+        reminderEntry!.DoneAt = default;
+        
+        RemindersData.Serialize();
+
+        ReloadCollections();
+    }
+
+   
+    /*Actions on RemindersView - (Add, Sort)*/
+    private void AddReminder()
+    {
+        if (CurrentAddReminderView == null)
+        {
+            CurrentAddReminderView = new Window
+            {
+                Title = "AddReminderView",
+                DataContext = this,
+                Owner = Application.Current.MainWindow,
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                AllowsTransparency = true,
+                Background = Brushes.Transparent,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Width = 450,
+                Height = 150,
+                Content = new AddReminderView()
+            }; 
+               
+            CurrentAddReminderView.Closed += (_, _) =>  CurrentAddReminderView = null;
+            CurrentAddReminderView.ShowDialog();
+        }
+        
+    }
+    private void SortReminders(string orderby)
+    {
+        RemindersDone = orderby switch
+        {
+            "Created" => new ObservableCollection<ReminderItemViewModel>(
+                RemindersDone.OrderBy(x => x.EntryData!.CreatedAt)),
+
+            "Closest" => new ObservableCollection<ReminderItemViewModel>(
+                RemindersDone.OrderBy(x => x.EntryData!.SetFor))
+        };
+        
+        RemindersNotDone = orderby switch
+        {
+            "Created" => new ObservableCollection<ReminderItemViewModel>(
+                RemindersNotDone.OrderBy(x => x.EntryData!.CreatedAt)),
+
+            "Closest" => new ObservableCollection<ReminderItemViewModel>(
+                RemindersNotDone.OrderBy(x => x.EntryData!.SetFor))
+        };
+    }
+    
+    
+    /*Add and Delete Helpers (Clean fields, Reload collection)*/
     public void CleanNewReminderWindow()
     {
+        EditReminderId = "";
         (ReminderSetFor, ReminderContent) = (null, "");
         (_currentHourCount, CurrentRemindHour) = (12, "12");
         (_currentMinuteCount, CurrentRemindMinute) = (59, "59");
         (_currentMeridiemIndex, CurrentRemindMeridiem) = (0, "AM");
     }
+    private void ReloadCollections()
+    {
+        RemindersNotDone = new ObservableCollection<ReminderItemViewModel>(
+            RemindersData.Reminders!.Where(x => !x.Done).Select(x => new ReminderItemViewModel(x)));
+
+        RemindersDone = new ObservableCollection<ReminderItemViewModel>(
+            RemindersData.Reminders!.Where(x => x.Done).Select(x => new ReminderItemViewModel(x)));
+    }
+
     
+    /*Methods responsible for the HourPicker scroll behavior*/
     private void UpdateSortIcon() => 
         CurrentIcon = _icons[_currentIconIndex = (_currentIconIndex + 1) % 2];
     public void UpdateMeridiem() => 
         CurrentRemindMeridiem = _meridiem[_currentMeridiemIndex = (_currentMeridiemIndex + 1) % 2];
-    
     public void RemindHourUp()
     {
         if (_currentHourCount == 12)
@@ -262,6 +370,20 @@ public class RemindersViewModel : ViewModelBase
     }
 
     
+    /*Full Properties*/
+    private string _editReminderId;
+
+    public string EditReminderId
+    {
+        get => _editReminderId;
+        set
+        {
+            _editReminderId = value;
+            OnPropertyChanged();
+        }
+    }
+
+    
     private bool _isRemindersHistoryOn;
 
     public bool IsRemindersHistoryOn
@@ -287,6 +409,7 @@ public class RemindersViewModel : ViewModelBase
         }
     }
 
+    
     private string _currentIcon = "Closest";
 
     public string CurrentIcon
@@ -296,9 +419,10 @@ public class RemindersViewModel : ViewModelBase
         {
             _currentIcon = value;
             OnPropertyChanged();
-            OrderReminders(value);
+            SortReminders(value);
         }
     }
+    
     
     private string _reminderContent = "";
 
@@ -313,6 +437,7 @@ public class RemindersViewModel : ViewModelBase
         }
     }
     
+    
     private DateTime? _reminderSetFor;
 
     public DateTime? ReminderSetFor
@@ -326,6 +451,7 @@ public class RemindersViewModel : ViewModelBase
         }
     }
     
+    
     private string _currentRemindHour = "12";
 
     public string CurrentRemindHour
@@ -337,6 +463,7 @@ public class RemindersViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    
     
     private string _currentRemindMinute = "59";
 

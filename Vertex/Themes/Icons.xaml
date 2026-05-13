@@ -10,7 +10,9 @@
     <Geometry x:Key="ArrowDown">M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z</Geometry>
     <Geometry x:Key="Bin">M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z</Geometry>
     <Geometry x:Key="Calendar">M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z</Geometry>
-
+    <Geometry x:Key="Swap">M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z</Geometry>
+    <Geometry x:Key="All">M240-280h280v-80H240v80Zm400 0h80v-400h-80v400ZM240-440h280v-80H240v80Zm0-160h280v-80H240v80Zm-80 480q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H160Zm0-80h640v-560H160v560Zm0 0v-560 560Z</Geometry>
+    
     <!--Base Path Style-->
     <Style x:Key="Icons" TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="{StaticResource TextBrush}"/>
@@ -70,5 +72,34 @@
                 <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
             </DataTrigger>
         </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="SwapIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource Swap}"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+        
+        <!--On Hover-->
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=SwapActivity}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <Style x:Key="ShowAllIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource All}"/>
+        
+        <!--On Hover-->
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=Tag}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
     </Style>
 </ResourceDictionary>

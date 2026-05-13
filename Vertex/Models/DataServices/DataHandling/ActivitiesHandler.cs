@@ -12,12 +12,23 @@ public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
     private readonly string _fullPath = Path.Combine(
     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
     "Vertex", "Data", "Activities.json");
-    public ObservableCollection<ActivityEntry> Activities { get; set; } = new();
+    public ObservableCollection<ActivityEntry> Activities { get; set; }
     
     public void Save(ActivityEntry entry)
     {
         Activities.Add(entry);
+        Serialize();
         
+    }
+    
+    public void Delete(ActivityEntry entry)
+    {
+        Activities!.Remove(entry);
+        Serialize();
+    }
+
+    public void Serialize()
+    {
         var json = JsonSerializer.Serialize(this, new JsonSerializerOptions
         {
             WriteIndented = true
@@ -25,7 +36,7 @@ public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
         
         File.WriteAllText(_fullPath, json);
     }
-    
+
     public void Load()
     {
         var file = File.ReadAllText(_fullPath);

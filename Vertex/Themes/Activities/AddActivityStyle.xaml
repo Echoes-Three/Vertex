@@ -1,0 +1,158 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    
+    <!--Activity Content Input-->
+    <Style x:Key="ActivityContentInput" TargetType="{x:Type TextBox}" BasedOn="{StaticResource ReminderContentInput}">
+  
+    </Style>
+    
+    <!--Activity Content Input Placeholder-->
+    <Style x:Key="ActivityContentInputPlaceholder" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="MinHeight" Value="100"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Text, ElementName=ContentInput}" Value="">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--Activity Title Input-->
+    <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}" BasedOn="{StaticResource ReminderContentInput}">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="10,10,10,5"/>
+    </Style>
+    
+    <!--Activity Title Input Placeholder-->
+    <Style x:Key="ActivityTitleInputPlaceholder" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+      
+        <Setter Property="MinHeight" Value="0"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Text, ElementName=TitleInput}" Value="">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--Time Picker Scroll Background-->
+    <Style x:Key="DurationPickerScrollBackground" TargetType="{x:Type Border}" BasedOn="{StaticResource TimePickerScrollBackground}">
+        
+        <Style.Triggers>
+            
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+            </Trigger>
+            
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
+                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
+                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+            </DataTrigger>
+            
+        </Style.Triggers>
+    </Style>
+    
+    <!--Time Picker-->
+    <Style x:Key="DurationPicker" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TimePicker}">
+        
+        <Style.Triggers>
+            
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=DurationPickerBackground}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+            </DataTrigger>
+            
+        </Style.Triggers>
+    </Style>
+    
+    <!--Activity/Break Toggle-->
+    <Style x:Key="ActivityBreakToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="12"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <Style x:Key="SwapColourGroup" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        
+        <!--On Hover-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="ColorSelectionHighlight" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="{StaticResource TextBrush}"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border, AncestorLevel=1}}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="ColorSelectionVisibility" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Visible"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="WeekDayToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="12"/>
+        
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+            </Trigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

@@ -115,50 +115,13 @@
         </Style.Triggers>
     </Style>
     
-    <!--Edit-->
-    <Style x:Key="EditIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource Edit}"/>
-        <Setter Property="Height" Value="15"/>
-        <Setter Property="Width" Value="15"/>
-    </Style>
-    
-    <Style x:Key="ArrowUpIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource ArrowUp}"/>
-        <Setter Property="Height" Value="12"/>
-        <Setter Property="Width" Value="12"/>
-        <Setter Property="Margin" Value="0,0,0,35"/>
-        <Setter Property="IsHitTestVisible" Value="False"/>
-        
-        <Style.Triggers>
-            <!--On Hover-->
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=RemindDay}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="ArrowDownIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource ArrowDown}"/>
-        <Setter Property="Height" Value="12"/>
-        <Setter Property="Width" Value="12"/>
-        <Setter Property="Margin" Value="0,35,0,0"/>
-        <Setter Property="IsHitTestVisible" Value="False"/>
-        
-        <Style.Triggers>
-            <!--On Hover-->
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=RemindDay}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
     <!--Add Reminder icon-->
     <Style x:Key="AddIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
         <Setter Property="Data" Value="{StaticResource Add}"/>
         
         <!--On Hover-->
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsMouseOver}" Value="True">
                 <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
             </DataTrigger>
         </Style.Triggers>
@@ -200,6 +163,19 @@
             </DataTrigger>
         </Style.Triggers>
         
+    </Style>
+    
+    <!--Reminders Done Placeholder Message-->
+    <Style x:Key="CurrentDayActivityPlaceholderMessage" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource RemindersDonePlaceholderMessage}">
+        <Setter Property="Margin" Value="0,0,0,200"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>

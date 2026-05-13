@@ -10,32 +10,38 @@ namespace Vertex.ViewModels.Reminders;
 
 public class ReminderItemViewModel : ViewModelBase
 {
-    public ReminderEntry? Data { get; }
+    public ReminderEntry? EntryData { get; }
     
     public RelayCommand OnDeleteReminder { get; }
     public RelayCommand OnReminderDone { get; }
     public RelayCommand OnRestoreReminder { get; }
+    public RelayCommand OnEditReminder { get; }
     public ReminderItemViewModel(ReminderEntry  entry)
     {
-        Data = entry;
+        EntryData = entry;
         OnDeleteReminder = new RelayCommand(_ => DeleteReminder());
         OnReminderDone = new RelayCommand(_ => MarkReminderAsDone());
         OnRestoreReminder = new RelayCommand(_ => RestoreReminder());
+        OnEditReminder = new RelayCommand(_ => EditReminder());
         
-        CreatedAt = Data.CreatedAt.ToString("yyyy-MM-dd HH:mm tt");
-        SetFor = Data.Setfor.ToString("yyyy-MM-dd HH:mm tt");
-        DoneAt = Data.DonedAt.ToString("yyyy-MM-dd HH:mm tt");
+        CreatedAt = EntryData.CreatedAt.ToString("yyyy-MM-dd hh:mm tt");
+        SetFor = EntryData.SetFor.ToString("yyyy-MM-dd hh:mm tt");
+        DoneAt = EntryData.DoneAt.ToString("yyyy-MM-dd hh:mm tt");
     }
     
     private void DeleteReminder()
-        => WeakReferenceMessenger.Default.Send(new DeleteReminderMessage(Data!.Id));
+        => WeakReferenceMessenger.Default.Send(new DeleteReminderMessage(EntryData!.Id));
 
     private void MarkReminderAsDone()
-        => WeakReferenceMessenger.Default.Send(new MarkReminderAsDoneMessage(Data!.Id));
+        => WeakReferenceMessenger.Default.Send(new MarkReminderAsDoneMessage(EntryData!.Id));
     
     private void RestoreReminder()
-        => WeakReferenceMessenger.Default.Send(new RestoreReminderMessage(Data!.Id));
+        => WeakReferenceMessenger.Default.Send(new RestoreReminderMessage(EntryData!.Id));
 
+    private void EditReminder()
+        => WeakReferenceMessenger.Default.Send(new EditReminderMessage(EntryData!.Id));
+    
+    
     private string _setFor;
 
     public string SetFor
@@ -44,7 +50,7 @@ public class ReminderItemViewModel : ViewModelBase
         set
         {
             _setFor = value;
-            OnPropertyChanged(nameof(Data));
+            OnPropertyChanged(nameof(EntryData));
         }
     }
 
@@ -57,7 +63,7 @@ public class ReminderItemViewModel : ViewModelBase
         set
         {
             _cretedAt = value;
-            OnPropertyChanged(nameof(Data));
+            OnPropertyChanged(nameof(EntryData));
         }
     }
 
@@ -69,7 +75,7 @@ public class ReminderItemViewModel : ViewModelBase
         set
         {
             _doneAt = value;
-            OnPropertyChanged(nameof(Data));
+            OnPropertyChanged(nameof(EntryData));
         }
     }
 

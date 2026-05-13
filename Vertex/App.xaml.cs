@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Vertex.Models.DataServices.DataHandling;
 using Vertex.Services;
 using Vertex.ViewModels;
+using Vertex.ViewModels.Activities;
 using Vertex.ViewModels.Reminders;
 
 namespace Vertex;

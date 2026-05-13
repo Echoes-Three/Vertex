@@ -23,6 +23,10 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/DatePicker.xaml"/>
                 <!--Consistency-->
                 <ResourceDictionary Source="/Vertex;component/Themes/Consistency/ConsistencyStyle.xaml"/>
+                <!--Activities-->
+                <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivitiesTabStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivityItemStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Activities/AddActivityStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

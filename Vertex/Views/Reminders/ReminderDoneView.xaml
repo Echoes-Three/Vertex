@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:reminders="clr-namespace:Vertex.ViewModels.Reminders"
+             xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
              d:DesignHeight="250" d:DesignWidth="650"
-             d:DataContext="{d:DesignInstance Type=reminders:ReminderItemViewModel}">
+             d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderItemViewModel}">
     
     <Grid Background="{StaticResource ElementBackgroundBrush}">
         <Grid.RowDefinitions>
@@ -21,7 +21,7 @@
         <TextBlock 
             Grid.Row="0"
             Style="{StaticResource ReminderContent}"
-            Text="{Binding Data.Content}"/> <!--Reminder Content-->
+            Text="{Binding EntryData.Content}"/> <!--Reminder Content-->
         
         
         <Grid Grid.Row="2">

@@ -1,14 +1,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Vertex.ViewModels.Activities;
 using Vertex.ViewModels.Reminders;
 
-namespace Vertex.Views.Activities;
+namespace Vertex.Views.Reminders;
 
-public partial class AddActivityView : UserControl
+public partial class ReminderViewWindow : UserControl
 {
-    public AddActivityView()
+    public ReminderViewWindow()
     {
         InitializeComponent();
     }
@@ -17,9 +16,9 @@ public partial class AddActivityView : UserControl
     {
         Window.GetWindow(this)?.Close();
         
-        if (DataContext is ActivitiesViewModel vm)
+        if (DataContext is RemindersViewModel vm)
         {
-            vm.CleanAddActivityWindow();
+            vm.CleanReminderWindowFields();
         }
     }
 
@@ -28,26 +27,35 @@ public partial class AddActivityView : UserControl
         Window.GetWindow(this)?.DragMove();
     }
 
-
     private void OnHourScroll(object sender, MouseWheelEventArgs e)
     {
-        if (DataContext is ActivitiesViewModel vm)
+        if (DataContext is RemindersViewModel vm)
         {
             if (e.Delta > 0)
-                vm.DurationHourUp();
+                vm.RemindHourUp();
             else
-                vm.DurationHourDown();
+                vm.RemindHourDown();
         }
     }
 
     private void OnMinuteScroll(object sender, MouseWheelEventArgs e)
     {
-        if (DataContext is ActivitiesViewModel vm)
+        if (DataContext is RemindersViewModel vm)
         {
             if (e.Delta > 0)
-                vm.DurationMinuteUp();
+                vm.RemindMinuteUp();
             else
-                vm.DurationMinuteDown();
+                vm.RemindMinuteDown();
         }
     }
+
+    private void OnMeridiemScroll(object sender, MouseWheelEventArgs e)
+    {
+        if (DataContext is RemindersViewModel vm)
+        {
+            vm.UpdateMeridiem();
+        }
+
+    }
+
 }

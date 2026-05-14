@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
-using Vertex.Models.ConsistencyUnit;
-using Vertex.Models.DataServices.DataHandling;
+using Vertex.Data.Handlers;
+using Vertex.Data.Services;
 using Vertex.Models.Entities.Entry;
 using Vertex.MVVM;
 

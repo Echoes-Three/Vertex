@@ -18,7 +18,7 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersTabStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderNotDoneStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderDoneStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/AddReminderStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderWindowView.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/Calendar.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/DatePicker.xaml"/>
                 <!--Consistency-->
@@ -27,6 +27,8 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivitiesTabStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivityItemStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Activities/AddActivityStyle.xaml"/>
+                <!--Donut Graph-->
+                <ResourceDictionary Source="/Vertex;component/Themes/DonutGraph/DonutTabStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -65,7 +65,8 @@
         <Button 
             Grid.Column="6"
             Grid.Row="0"
-            Style="{StaticResource EditActivityButton}">
+            Style="{StaticResource EditActivityButton}"
+            Command="{Binding OnEditActivity}">
             <Path Style="{StaticResource EditIcon}"/>
         </Button> <!--Edit Button-->
         

@@ -93,21 +93,6 @@
         </Style.Triggers>
     </Style>
     
-    <!--Activity/Break Toggle-->
-    <Style x:Key="ActivityBreakToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="12"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
-    </Style>
-    
     <Style x:Key="SwapColourGroup" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
         
         <!--On Hover-->
@@ -126,16 +111,6 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border, AncestorLevel=1}}" Value="True">
                 <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="ColorSelectionVisibility" TargetType="{x:Type Grid}">
-        <Setter Property="Visibility" Value="Visible"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Hidden"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

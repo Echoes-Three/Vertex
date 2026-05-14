@@ -1,9 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.Messaging;
-using Vertex.Models.DataServices.DataHandling;
 using Vertex.Models.Entities.Entry;
-using Vertex.Models.Entities.Helpers;
 using Vertex.MVVM;
 
 namespace Vertex.ViewModels.Reminders;

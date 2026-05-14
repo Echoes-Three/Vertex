@@ -1,4 +1,4 @@
-namespace Vertex.Models.Interfaces;
+namespace Vertex.Models.Contracts;
 
 public interface IFileHandler<T>
 {

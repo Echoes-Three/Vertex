@@ -34,7 +34,7 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="Themes\Reminders\AddReminderStyle.xaml">
+      <Page Update="Themes\Reminders\ReminderWindowView.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
@@ -64,17 +64,7 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="Views\Reminders\AddReminderView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="Views\Reminders\EditReminderView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="Views\Activities\AddActivityView.xaml">
+      <Page Update="Views\Activities\ActivityViewWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
@@ -89,14 +79,17 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+      <Page Update="Views\Reminders\ReminderViewWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Assets\Icons\" />
       <Folder Include="Assets\Typeface\" />
-      <Folder Include="Models\DataServices\" />
-      <Folder Include="Views\Breaks\" />
-      <Folder Include="Views\Sleep\" />
+      <Folder Include="Data\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -3,8 +3,8 @@ using System.Data;
 using System.Security.Authentication.ExtendedProtection;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
-using Vertex.Models.DataServices.DataHandling;
-using Vertex.Services;
+using Vertex.Data.Handlers;
+using Vertex.Data.Services;
 using Vertex.ViewModels;
 using Vertex.ViewModels.Activities;
 using Vertex.ViewModels.Reminders;
@@ -27,14 +27,12 @@ public partial class App : Application
         services.AddSingleton<RemindersHandler>();
         services.AddSingleton<SleepHandler>();
         services.AddSingleton<ConsistencyHandler>();
-        services.AddSingleton<BreaksHandler>();
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<ActivitiesViewModel>();
         services.AddSingleton<RemindersViewModel>();
         services.AddSingleton<SleepViewModel>();
         services.AddSingleton<ConsistencyViewModel>();
-        services.AddSingleton<BreaksViewModel>();
 
         ServiceProvider = services.BuildServiceProvider();
 
@@ -42,7 +40,5 @@ public partial class App : Application
         ServiceProvider.GetRequiredService<RemindersHandler>().Load();
         ServiceProvider.GetRequiredService<SleepHandler>().Load();
         ServiceProvider.GetRequiredService<ConsistencyHandler>().Load();
-        ServiceProvider.GetRequiredService<BreaksHandler>().Load();
-        
     }
 }

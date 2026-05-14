@@ -1,11 +1,11 @@
-<UserControl x:Class="Vertex.Views.Activities.AddActivityView"
+<UserControl x:Class="Vertex.Views.Activities.ActivityViewWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:activitiesViewModel="clr-namespace:Vertex.ViewModels.Activities"
              mc:Ignorable="d"
-             d:DesignHeight="200" d:DesignWidth="800"
+             d:DesignHeight="200" d:DesignWidth="700"
              d:DataContext="{d:DesignInstance Type=activitiesViewModel:ActivitiesViewModel}">
     
     <Grid 
@@ -51,8 +51,6 @@
         
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="24*"/><!--Activity/Break Button-->
-                <ColumnDefinition Width="3*"/><!--Spacer-->
                 <ColumnDefinition Width="28*"/><!--Colors-->
                 <ColumnDefinition Width="3*"/><!--Spacer-->
                 <ColumnDefinition Width="32*"/><!--Repeat Week Days-->
@@ -64,34 +62,7 @@
                 <ColumnDefinition Width="10*"/><!--Save Button-->
             </Grid.ColumnDefinitions>
             
-            <Grid Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-                <ToggleButton
-                    IsChecked="{Binding IsActivity}"
-                    Grid.Column="0"
-                    Content="Activity"
-                    Style="{StaticResource ActivityBreakToggleButton}"
-                    Tag="{Binding IsActivity}"
-                    Command="{Binding OnSetToActivity}"/>
-                
-                <ToggleButton
-                    IsChecked="{Binding IsBreak}"
-                    Grid.Column="1"
-                    Content="Break"
-                    Style="{StaticResource ActivityBreakToggleButton}"
-                    Tag="{Binding IsBreak}"
-                    Command="{Binding OnSetToBreak}"/>
-                
-            </Grid><!--Activity/Break Button-->
-            
-            <Grid 
-                Grid.Column="2" 
-                Style="{StaticResource ColorSelectionVisibility}"
-                Tag="{Binding IsBreak}">
+            <Grid Grid.Column="0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/> <!--Color 1-->
                     <ColumnDefinition Width="*"/> <!--Color 2-->
@@ -167,7 +138,7 @@
                 
             </Grid><!--Colors-->
             
-            <Grid Grid.Column="4">
+            <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/> <!--Mon-->
                     <ColumnDefinition Width="*"/> <!--Tue-->
@@ -215,7 +186,7 @@
                     Style="{StaticResource WeekDayToggleButton}"/>
             </Grid>
             
-            <Grid Grid.Column="6">
+            <Grid Grid.Column="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45*"/> <!--HH-->
                     <ColumnDefinition Width="10*"/><!--:-->
@@ -260,16 +231,16 @@
             </Grid> <!--Duration Scroll-->
             
             <Button 
-                Grid.Column="8"
+                Grid.Column="6"
                 Content="Cancel"
                 Style="{StaticResource CancelReminderEntry}" 
                 Click="OnCancel"/> <!--Cancel Button-->
         
             <Button 
-                Grid.Column="10"
+                Grid.Column="8"
                 Content="Save"
                 Style="{StaticResource SaveReminderEntry}"
-                Command="{Binding OnSaveNewActivity}"/> <!--Save Button-->
+                Command="{Binding OnSaveAction}"/> <!--Save Button-->
             
         </Grid>
         

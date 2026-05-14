@@ -3,7 +3,6 @@ using System.Windows.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Models.Entities;
 using Vertex.Models.Entities.Entry;
-using Vertex.Models.Entities.Helpers;
 using Vertex.MVVM;
 using Vertex.Views.Activities;
 
@@ -20,7 +19,7 @@ public class ActivityItemViewModel : ViewModelBase
     public ActivityItemViewModel(ActivityEntry entry)
     {
         EntryData =  entry;
-        ActivityColor = ActivityColors.GetBrush(EntryData!.Color);
+        ActivityColor = ActivityColors.Categories[EntryData.Color.GroupIndex][EntryData.Color.ColorIndex];
         
         OnDeleteActivity = new RelayCommand(_ => DeleteActivity());
         OnEditActivity = new RelayCommand(_ => EditActivity());

@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:consistency="clr-namespace:Vertex.Views"
         xmlns:viewModels="clr-namespace:Vertex.ViewModels"
+        xmlns:consistency="clr-namespace:Vertex.Views"
         xmlns:reminders="clr-namespace:Vertex.Views.Reminders"
         xmlns:activities="clr-namespace:Vertex.Views.Activities"
+        xmlns:donutGraph="clr-namespace:Vertex.Views.DonutGraph"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -17,7 +18,7 @@
     
     <Viewbox Stretch="Uniform">
         
-        <Grid Width="1440" Height="900" 
+        <Grid Width="1600" Height="900" 
             Background="{DynamicResource WindowBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/> <!--TitleBar-->
@@ -55,8 +56,9 @@
                         <ColumnDefinition Width="59*"/><!--Activities-->
                     </Grid.ColumnDefinitions>
                     
-                    <!--Donut Graph-->
+                    <donutGraph:DonutGraphTabWindow Grid.Column="0"/><!--Donut Graph-->
                     <activities:ActivitiesTabView Grid.Column="2"/><!--Activities-->
+                    
                 </Grid><!--Donut Graph & Reminders-->
                 
                 <Grid Grid.Row="3" Grid.Column="1">

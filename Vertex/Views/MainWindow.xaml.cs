@@ -13,9 +13,9 @@ public partial class MainWindow : Window
         
         var screenWidth = SystemParameters.PrimaryScreenWidth;
         
-        const double widthPercentage = 0.75;
+        const double widthPercentage = 0.8;
         
         Width = screenWidth * widthPercentage;
-        Height = Width * 0.625;
+        Height = Width * 0.5625;
     }
 }

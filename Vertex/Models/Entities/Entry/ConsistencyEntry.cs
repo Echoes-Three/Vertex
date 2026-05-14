@@ -1,5 +1,3 @@
-using Vertex.Models.Interfaces;
-
 namespace Vertex.Models.Entities.Entry;
 
 public class ConsistencyEntry

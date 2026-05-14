@@ -1,9 +1,9 @@
 using System.IO;
 using System.Text.Json;
+using Vertex.Models.Contracts;
 using Vertex.Models.Entities.Entry;
-using Vertex.Models.Interfaces;
 
-namespace Vertex.Models.DataServices.DataHandling;
+namespace Vertex.Data.Handlers;
 
 public class ConsistencyHandler: IFileHandler<ConsistencyEntry>
 {

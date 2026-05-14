@@ -1,13 +1,8 @@
 using System.IO;
-using System.Windows.Media;
-using Vertex.Models;
-using Vertex.Models.EnumDefinitions;
 using System.Text.Json;
-using Vertex.Models.DataServices.DataHandling;
-using Vertex.Models.Entities.Entry;
+using Vertex.Data.Handlers;
 
-
-namespace Vertex.Services;
+namespace Vertex.Data.Services;
 
 public class DataService
 {
@@ -22,7 +17,6 @@ public class DataService
         Directory.CreateDirectory(_dataPath);
         
         InitializeFile<ActivitiesHandler>("Activities.json");
-        InitializeFile<BreaksHandler>("Breaks.json");
         InitializeFile<RemindersHandler>("Reminders.json");
         InitializeFile<ConsistencyHandler>("Consistency.json");
         InitializeFile<SleepHandler>("SleepSchedule.json");

@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              DataContext="{Binding ActivitiesVM}"
              xmlns:activitiesView="clr-namespace:Vertex.Views.Activities"
-             xmlns:activitiesViewModel="clr-namespace:Vertex.ViewModels"
              xmlns:activities="clr-namespace:Vertex.ViewModels.Activities"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="800"
@@ -82,7 +81,7 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
             </ScrollViewer.Resources>
             
-            <ItemsControl ItemsSource="{Binding CurrentDayActivities}">
+            <ItemsControl ItemsSource="{Binding ActivitiesForToday}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <activitiesView:CurrentDayActivitiesView/>
@@ -103,7 +102,7 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
             </ScrollViewer.Resources>
             
-            <ItemsControl ItemsSource="{Binding AllActivities}">
+            <ItemsControl ItemsSource="{Binding ActivitiesNotForToday}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <activitiesView:AllActivitiesView/>

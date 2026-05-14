@@ -1,4 +1,4 @@
-using Vertex.Models.DataServices.DataHandling;
+using Vertex.Data.Handlers;
 
 namespace Vertex.ViewModels;
 

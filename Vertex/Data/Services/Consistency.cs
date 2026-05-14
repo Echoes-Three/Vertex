@@ -1,9 +1,9 @@
 using System.Windows;
 using System.Windows.Media;
-using Vertex.Models.DataServices.DataHandling;
+using Vertex.Data.Handlers;
 using Vertex.Models.Entities.Entry;
 
-namespace Vertex.Models.ConsistencyUnit;
+namespace Vertex.Data.Services;
 
 public static class Consistency
 {

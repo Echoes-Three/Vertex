@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Xceed.Wpf.Toolkit.PropertyGrid;
 
-namespace Vertex.Models.Entities.Helpers;
+namespace Vertex.MVVM;
 
 public class DeleteReminderMessage(string id) : ValueChangedMessage<string>(id);
 public class MarkReminderAsDoneMessage(string id) : ValueChangedMessage<string>(id);

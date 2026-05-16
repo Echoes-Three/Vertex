@@ -49,6 +49,22 @@
             Style="{StaticResource ActivityContentInput}"
             Text="{Binding ActivityContent, UpdateSourceTrigger=PropertyChanged}"/> <!--Activity Content Input-->
         
+        <TextBlock 
+            Grid.Row="2"
+            Style="{StaticResource Percentage}"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            Text="{Binding ContentLimitCounter}"
+            Margin="0,0,5,5"></TextBlock> <!--Content Character Limit Count-->
+        
+        <TextBlock 
+            Grid.Row="0"
+            Style="{StaticResource Percentage}"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            Text="{Binding TitleLimitCounter}"
+            Margin="0,0,5,5"></TextBlock> <!--Title Character limit Count-->
+        
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="28*"/><!--Colors-->

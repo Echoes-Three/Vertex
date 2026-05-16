@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
-             d:DesignHeight="250" d:DesignWidth="650"
+             d:DesignHeight="138" d:DesignWidth="476"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderItemViewModel}">
     
     <Grid Background="{StaticResource ElementBackgroundBrush}">
@@ -26,8 +26,8 @@
         
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="55*"/> <!--Reminder Date Information-->
-                <ColumnDefinition Width="30*"/> <!--Spacer-->
+                <ColumnDefinition Width="65*"/> <!--Reminder Date Information-->
+                <ColumnDefinition Width="20*"/> <!--Spacer-->
                 <ColumnDefinition Width="15*"/> <!--Restore Button-->
             </Grid.ColumnDefinitions>
             

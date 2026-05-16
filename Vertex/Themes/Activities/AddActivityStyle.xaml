@@ -31,6 +31,7 @@
     <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}" BasedOn="{StaticResource ReminderContentInput}">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Margin" Value="10,10,10,5"/>
+        <Setter Property="AcceptsReturn" Value="False"/>
     </Style>
     
     <!--Activity Title Input Placeholder-->

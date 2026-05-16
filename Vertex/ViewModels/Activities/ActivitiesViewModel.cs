@@ -254,7 +254,11 @@ public class ActivitiesViewModel : ViewModelBase
             ActivitiesData.Activities!.Where(x => !x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
                 .Select(x => new ActivityItemViewModel(x)));
     }
-    
+
+    private void CountContentLimit(int length) =>
+       ContentLimitCounter = (500 - length).ToString();
+    private void CountTitleLimit(int length) => 
+        TitleLimitCounter = (22 - length).ToString();
     
     /*Color Picking on ActivityViewWindow*/
     private void SwapColorGroup()
@@ -311,7 +315,31 @@ public class ActivitiesViewModel : ViewModelBase
 
 
     /*Full Properties*/
-    
+
+    private string _contentLimitCounter = "500";
+
+    public string ContentLimitCounter
+    {
+        get => _contentLimitCounter;
+        set
+        {
+            _contentLimitCounter = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _titleLimitCounter = "22";
+
+    public string TitleLimitCounter
+    {
+        get => _titleLimitCounter;
+        set
+        {
+            _titleLimitCounter = value;
+            OnPropertyChanged();
+        }
+    }
+
     private bool _showAllActivities;
 
     public bool ShowAllActivities
@@ -570,6 +598,7 @@ public class ActivitiesViewModel : ViewModelBase
         set
         {
             _activityTitle = CharacterLimiter.LimitActivityTitle(value);
+            CountTitleLimit(_activityTitle.Length);
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
@@ -582,7 +611,8 @@ public class ActivitiesViewModel : ViewModelBase
         get => _activityContent;
         set
         {
-            _activityContent = value;
+            _activityContent = CharacterLimiter.LimitContentBody(value);
+            CountContentLimit(_activityContent.Length);
             OnPropertyChanged();
         }
     }

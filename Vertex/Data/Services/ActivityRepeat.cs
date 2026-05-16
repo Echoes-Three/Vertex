@@ -20,7 +20,7 @@ public static class ActivityRepeat
         
         for (var index = 0; index <= 6; index++)
         {
-            if (daysOfWeek[index]) converted.Add((DayOfWeek)index + 1);
+            if (daysOfWeek[index]) converted.Add((DayOfWeek)index);
         }
         return converted;
     }

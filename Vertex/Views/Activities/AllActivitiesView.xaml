@@ -10,13 +10,13 @@
     
     <Grid Background="{StaticResource ElementBackgroundBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/> <!--Activity Color-->
+            <ColumnDefinition Width="6*"/> <!--Activity Color-->
             <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="77*"/> <!--Activity Content-->
+            <ColumnDefinition Width="76*"/> <!--Activity Content-->
             <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="4*"/> <!--Delete Button-->
+            <ColumnDefinition Width="6*"/> <!--Delete Button-->
             <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="4*"/> <!--Edit Button-->
+            <ColumnDefinition Width="6*"/> <!--Edit Button-->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/> <!--ActionButtons -->

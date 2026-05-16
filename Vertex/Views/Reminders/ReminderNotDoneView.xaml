@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
-             d:DesignHeight="250" d:DesignWidth="650"
+             d:DesignHeight="138" d:DesignWidth="476"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderItemViewModel}">
     
     <Grid Background="{StaticResource ElementBackgroundBrush}">
@@ -26,11 +26,11 @@
         
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="46*"/> <!--Reminder Date Info-->
-                <ColumnDefinition Width="30*"/> <!--Spacer-->
-                <ColumnDefinition Width="5*"/> <!--Delete Button-->
+                <ColumnDefinition Width="65*"/> <!--Reminder Date Info-->
+                <ColumnDefinition Width="10*"/> <!--Spacer-->
+                <ColumnDefinition Width="6*"/> <!--Delete Button-->
                 <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="5*"/> <!--Edit Button-->
+                <ColumnDefinition Width="6*"/> <!--Edit Button-->
                 <ColumnDefinition Width="2*"/> <!--Spacer-->
                 <ColumnDefinition Width="10*"/> <!--Done Button-->
             </Grid.ColumnDefinitions>

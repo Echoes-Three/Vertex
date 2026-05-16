@@ -20,59 +20,44 @@
         
         <Grid Width="1600" Height="900" 
             Background="{DynamicResource WindowBackgroundBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5*"/> <!--TitleBar-->
-            <RowDefinition Height="95*"/> <!--Main Body-->
-        </Grid.RowDefinitions>
+               <Grid.RowDefinitions>
+                   <RowDefinition Height="5*"/> <!--TitleBar-->
+                   <RowDefinition Height="95*"/> <!--Main Body-->
+               </Grid.RowDefinitions>
             
             <consistency:TitleBarView Grid.Row="0"/><!--TitleBar-->
             
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/> <!--Side Bar-->
-                <ColumnDefinition Width="97*"/> <!--Main Body-->
-            </Grid.ColumnDefinitions>
-            
-            <Border Background="{DynamicResource ElementBackgroundBrush}"/> <!--Side Bar-->
-            
-            <Grid  Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1.7*"/> <!--Spacer-->
-                    <RowDefinition Height="62.5*"/> <!--Donut Graph & Reminders-->
-                    <RowDefinition Height="1.7*"/> <!--Spacer-->
-                    <RowDefinition Height="32.4*"/> <!--Activities & Consistency-->
-                    <RowDefinition Height="1.7*"/> <!--Spacer-->
-                </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/> <!--Spacer-->
-                    <ColumnDefinition Width="95*"/> <!--Activities, Consistency, Donut Graph, Reminders-->
+                    <ColumnDefinition Width="65*"/> <!--Donut Graph-->
+                    <ColumnDefinition Width="1*"/> <!--Spacer-->
+                    <ColumnDefinition Width="32*"/> <!--Side Panel-->
                     <ColumnDefinition Width="1*"/> <!--Spacer-->
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/> <!--Spacer-->
+                    <RowDefinition Height="96*"/> <!--Donut Graph & Side Panel-->
+                    <RowDefinition Height="2*"/> <!--Spacer-->
+                </Grid.RowDefinitions>
                 
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40*"/> <!--Donut Graph-->
-                        <ColumnDefinition Width="1*"/> <!--Spacer-->
-                        <ColumnDefinition Width="59*"/><!--Activities-->
-                    </Grid.ColumnDefinitions>
-                    
-                    <donutGraph:DonutGraphTabWindow Grid.Column="0"/><!--Donut Graph-->
-                    <activities:ActivitiesTabView Grid.Column="2"/><!--Activities-->
-                    
-                </Grid><!--Donut Graph & Reminders-->
+                <donutGraph:DonutGraphTabWindow Grid.Row="1" Grid.Column="1" /><!--Donut Graph-->
                 
-                <Grid Grid.Row="3" Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="49.5*"/> <!--Reminders--> 
-                        <ColumnDefinition Width="1*"/> <!--Spacer-->
-                        <ColumnDefinition Width="49.5*"/> <!--Consistency-->
-                    </Grid.ColumnDefinitions>
+                <Grid  Grid.Row="1" Grid.Column ="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="46*"/> <!--Activities-->
+                        <RowDefinition Height="2*"/> <!--Spacer-->
+                        <RowDefinition Height="28*"/> <!--Reminders-->
+                        <RowDefinition Height="2*"/> <!--Spacer-->
+                        <RowDefinition Height="22*"/> <!--Consistency-->
+                    </Grid.RowDefinitions>
                     
-                    <reminders:RemindersTabView Grid.Column="0"/><!--Reminders-->
-                    <consistency:ConsistencyView Grid.Column="2"/><!--Consistency-->
-                </Grid>
+                    <activities:ActivitiesTabView Grid.Row="0"/><!--Activities-->
+                    <reminders:RemindersTabView Grid.Row="2"/><!--Reminders-->
+                    <consistency:ConsistencyView Grid.Row="4"/><!--Consistency-->
+                    
+                </Grid> <!--Side Panel Activities/Reminders/Consistency-->
             </Grid>
         </Grid><!--Main Body-->
-    </Grid>
     </Viewbox>
 </Window>

@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/Typeface.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Icons.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/ScroolBar.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/ScrollBar.xaml"/>
                 <!--Main Window-->
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/TitleBarStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/MainWindowStyle.xaml"/>

@@ -172,7 +172,7 @@
                     Background="Transparent"
                     SizeChanged="OnSizeChsnged">
                     
-                    <Polyline Points="{Binding ConsistencyVM.CurentWeekConsistency}"
+                    <Polyline Points="{Binding ConsistencyVM.CurrentWeekConsistency}"
                               Stroke="White"
                               StrokeThickness="2"/>
                     

@@ -7,6 +7,7 @@ using Vertex.Data.Handlers;
 using Vertex.Data.Services;
 using Vertex.ViewModels;
 using Vertex.ViewModels.Activities;
+using Vertex.ViewModels.DonutGraph;
 using Vertex.ViewModels.Reminders;
 
 namespace Vertex;
@@ -33,6 +34,7 @@ public partial class App : Application
         services.AddSingleton<RemindersViewModel>();
         services.AddSingleton<SleepViewModel>();
         services.AddSingleton<ConsistencyViewModel>();
+        services.AddSingleton<DonutGraphViewModel>();
 
         ServiceProvider = services.BuildServiceProvider();
 

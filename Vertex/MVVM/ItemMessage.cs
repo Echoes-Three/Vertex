@@ -9,3 +9,4 @@ public class EditReminderMessage(string id) : ValueChangedMessage<string>(id);
 public class DeleteActivityMessage(string id) : ValueChangedMessage<string>(id);
 public class MarkActivityAsDoneMessage(string id) : ValueChangedMessage<string>(id);
 public class EditActivityMessage(string id) : ValueChangedMessage<string>(id);
+public class RebuildSlicesMessage {}

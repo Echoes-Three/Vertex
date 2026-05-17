@@ -63,6 +63,6 @@ public class ConsistencyViewModel : ViewModelBase
         }
     }
 
-    public PointCollection CurentWeekConsistency => Consistency.CurrentWeek;
+    public PointCollection CurrentWeekConsistency => Consistency.CurrentWeek;
     public PointCollection LastWeekConsistency => Consistency.LastWeek;
 }

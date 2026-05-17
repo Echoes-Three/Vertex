@@ -31,7 +31,8 @@ public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
     {
         var json = JsonSerializer.Serialize(this, new JsonSerializerOptions
         {
-            WriteIndented = true
+            WriteIndented = true,
+            IncludeFields = true
         });
         
         File.WriteAllText(_fullPath, json);
@@ -41,7 +42,12 @@ public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
     {
         var file = File.ReadAllText(_fullPath);
         
-        var handler = JsonSerializer.Deserialize<ActivitiesHandler>(file);
+        var options = new JsonSerializerOptions
+        {
+            IncludeFields = true
+        };
+        
+        var handler = JsonSerializer.Deserialize<ActivitiesHandler>(file, options);
 
         if (handler == null) return;
         

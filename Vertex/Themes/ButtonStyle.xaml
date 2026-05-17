@@ -27,7 +27,8 @@
                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                         To="{StaticResource AccentColor1}"
                                         Duration="0:0:0.1"
-                                        AutoReverse="True"/>
+                                        AutoReverse="True"
+                                        FillBehavior="Stop"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

@@ -149,12 +149,12 @@ public class ActivitiesViewModel : ViewModelBase
     {
         var activity = new ActivityEntry
         {
-            Color = (_currentColorGroupIndex, _currentColorIndex),
+            Color = (_currentColorGroupIndex, CurrentColorIndex),
             Title = ActivityTitle,
             Content = ActivityContent,
             Id = Guid.NewGuid().ToString(),
             Done = false,
-            DurationHours = new TimeSpan(hours: _currentHourCount, minutes: _currentMinuteCount, seconds: 0),
+            Duration = new TimeSpan(hours: _currentHourCount, minutes: _currentMinuteCount, seconds: 0),
             RepeatOn = DaysOfWeek.ToDayOfWeek()
         };
 
@@ -169,11 +169,11 @@ public class ActivitiesViewModel : ViewModelBase
         if (activityEntry == null) return;
 
         activityEntry.Id = ActivityId;
-        activityEntry.Color = (_currentColorGroupIndex, _currentColorIndex);
+        activityEntry.Color = (_currentColorGroupIndex, CurrentColorIndex);
         activityEntry.Title = ActivityTitle;
         activityEntry.Content = ActivityContent;
         activityEntry.Done = false;
-        activityEntry.DurationHours = new TimeSpan(hours: _currentHourCount, minutes: _currentMinuteCount, seconds: 0);
+        activityEntry.Duration = new TimeSpan(hours: _currentHourCount, minutes: _currentMinuteCount, seconds: 0);
         activityEntry.RepeatOn = DaysOfWeek.ToDayOfWeek();
         
         ActivitiesData.Serialize();
@@ -181,6 +181,8 @@ public class ActivitiesViewModel : ViewModelBase
         
         CleanActivityWindowFields();
         ReloadCollection();
+        
+        WeakReferenceMessenger.Default.Send(new RebuildSlicesMessage());
     }
     
     
@@ -201,7 +203,7 @@ public class ActivitiesViewModel : ViewModelBase
         if (activityEntry == null) return;
 
         _currentColorGroupIndex = activityEntry.Color.GroupIndex;
-        _currentColorIndex = activityEntry.Color.ColorIndex;
+        CurrentColorIndex = activityEntry.Color.ColorIndex;
         SetColorGroup();
 
         ActivityId = activityEntry.Id;
@@ -213,9 +215,9 @@ public class ActivitiesViewModel : ViewModelBase
             (day.Mon, day.Tue, day.Wed, day.Thu, day.Fri, day.Sat, day.Sun);
         
         (_currentHourCount, CurrentDurationHour) = 
-            (activityEntry.DurationHours.Hours, activityEntry.DurationHours.Hours.ToString("D2"));
+            (activityEntry.Duration.Hours, activityEntry.Duration.Hours.ToString("D2"));
         (_currentMinuteCount, CurrentDurationMinute) = 
-            (activityEntry.DurationHours.Minutes, activityEntry.DurationHours.Minutes.ToString("D2"));
+            (activityEntry.Duration.Minutes, activityEntry.Duration.Minutes.ToString("D2"));
 
         ActivityWindow();
     }

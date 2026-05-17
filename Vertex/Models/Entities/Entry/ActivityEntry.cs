@@ -9,5 +9,5 @@ public class ActivityEntry
     public string Content { get; set; } = "";
     public bool Done { get; set; } = false;
     public List<DayOfWeek>? RepeatOn { get; set; } = null;
-    public TimeSpan DurationHours { get; set; } = TimeSpan.Zero;
+    public TimeSpan Duration { get; set; } = TimeSpan.Zero;
 }

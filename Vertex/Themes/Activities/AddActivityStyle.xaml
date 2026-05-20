@@ -80,15 +80,15 @@
         <Style.Triggers>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=DurationPickerBackground}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
             
         </Style.Triggers>
@@ -127,7 +127,7 @@
             </Trigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True">
                 <Setter Property="Background" Value="{StaticResource TextBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"></Setter>
             </DataTrigger>
         </Style.Triggers>
     </Style>

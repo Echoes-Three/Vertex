@@ -19,7 +19,7 @@
     <Viewbox Stretch="Uniform">
         
         <Grid Width="1600" Height="900" 
-            Background="{DynamicResource WindowBackgroundBrush}">
+            Background="{DynamicResource DarkBackgroundBrush}">
                <Grid.RowDefinitions>
                    <RowDefinition Height="5*"/> <!--TitleBar-->
                    <RowDefinition Height="95*"/> <!--Main Body-->
@@ -45,16 +45,14 @@
                 
                 <Grid  Grid.Row="1" Grid.Column ="3">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="46*"/> <!--Activities-->
+                        <RowDefinition Height="60*"/> <!--Activities-->
                         <RowDefinition Height="2*"/> <!--Spacer-->
-                        <RowDefinition Height="28*"/> <!--Reminders-->
+                        <RowDefinition Height="36*"/> <!--Reminders-->
                         <RowDefinition Height="2*"/> <!--Spacer-->
-                        <RowDefinition Height="22*"/> <!--Consistency-->
                     </Grid.RowDefinitions>
                     
                     <activities:ActivitiesTabView Grid.Row="0"/><!--Activities-->
                     <reminders:RemindersTabView Grid.Row="2"/><!--Reminders-->
-                    <consistency:ConsistencyView Grid.Row="4"/><!--Consistency-->
                     
                 </Grid> <!--Side Panel Activities/Reminders/Consistency-->
             </Grid>

@@ -9,7 +9,7 @@
              d:DataContext="{d:DesignInstance Type=remindersViewModel:RemindersViewModel}">
     
     <Grid 
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{StaticResource DarkBackgroundBrush}"
           MouseLeftButtonDown="OnDrag">
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/> <!--Input Text-->
@@ -17,7 +17,7 @@
             <RowDefinition Height="15*"/> <!-- Buttons-->
         </Grid.RowDefinitions>
         
-        <Rectangle Grid.Row="0" Fill="{StaticResource ButtonBackgroundBrush}"/> <!--Reminder Content Background-->
+        <Rectangle Grid.Row="0" Fill="{StaticResource LightBackgroundBrush}"/> <!--Reminder Content Background-->
         
         <TextBlock 
             Grid.Row="0"

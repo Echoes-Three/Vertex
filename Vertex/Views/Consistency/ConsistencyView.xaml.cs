@@ -11,7 +11,7 @@ public partial class ConsistencyView : UserControl
         InitializeComponent();
     }
 
-    private void OnSizeChsnged(object sender, SizeChangedEventArgs e)
+    private void OnSizeChanged(object sender, SizeChangedEventArgs e)
     {
         var vm = (MainWindowViewModel)DataContext;
         vm.ConsistencyVM.CanvasWidth = e.NewSize.Width;

@@ -46,7 +46,7 @@
     
     <!--Time Picker Scroll Background-->
     <Style x:Key="TimePickerScrollBackground" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
         
         <Style.Triggers>
             
@@ -81,19 +81,19 @@
         <Style.Triggers>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=TimePickerBackground}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=MeridiemScroll}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
             
         </Style.Triggers>

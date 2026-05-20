@@ -8,7 +8,7 @@
              d:DesignHeight="150" d:DesignWidth="700"
              d:DataContext="{d:DesignInstance Type=activities:ActivityItemViewModel}">
     
-    <Grid Background="{StaticResource ElementBackgroundBrush}">
+    <Grid Background="{StaticResource MediumBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/> <!--Activity Color-->
             <ColumnDefinition Width="2*"/> <!--Spacer-->
@@ -28,13 +28,13 @@
         <Border 
             Grid.Row="0" 
             Grid.Column="2" 
-            Background="{StaticResource ButtonBackgroundBrush}"/> <!--Title Background-->
+            Background="{StaticResource LightBackgroundBrush}"/> <!--Title Background-->
         
         <Border 
             Grid.Row="2" 
             Grid.Column="0" 
             Grid.ColumnSpan="7" 
-            Background="{StaticResource ButtonBackgroundBrush}"/> <!--Content Background-->
+            Background="{StaticResource LightBackgroundBrush}"/> <!--Content Background-->
         
         <Border 
             Grid.Row="0"

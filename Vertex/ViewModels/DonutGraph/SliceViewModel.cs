@@ -13,35 +13,23 @@ public class SliceViewModel : ViewModelBase
     
     private const double Radius = 245;
     
-    public SliceViewModel(ActivityEntry entry, int order, DonutGraphViewModel parentViewModel)
+    public SliceViewModel(ActivityEntry entry)
     {
         EntryData = entry;
-        SliceOrder = order;
-        Vm = parentViewModel;
-
         InitializeSlice();
     }
 
     private void InitializeSlice()
     {
-        var hourSpam = EntryData!.Duration.Hours + EntryData.Duration.Minutes / 60.0;
+        var today = (int)DateTime.Today.DayOfWeek;
+        var durationSpam = EntryData!.Duration.Hours + EntryData.Duration.Minutes / 60.0;
         
-        EndAngle = StartAngle - hourSpam * 15;
+        StartAngle = EntryData.StartAngle[today];
+        EndAngle = EntryData.EndAngle[today] = EntryData.StartAngle[today] - durationSpam * 15;
         
         SliceColor = ActivityColors.Categories[EntryData.Color.GroupIndex][EntryData.Color.ColorIndex];
     }
     
-    public void RecalculateAngles()
-    {
-        StartAngle = SliceOrder == 0 ? 180 : Vm.Slices[SliceOrder - 1].EndAngle;
-        
-        var totalHours = EntryData!.Duration.Hours + (EntryData.Duration.Minutes / 60.0);
-        EndAngle = StartAngle - totalHours * 15;
-        
-        OnPropertyChanged(nameof(StartAngle));
-        OnPropertyChanged(nameof(EndAngle));
-    }
-
     private int _sliceOrder;
 
     public int SliceOrder

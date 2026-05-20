@@ -8,183 +8,189 @@
              d:DesignHeight="180" d:DesignWidth="496"
              d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
-    <Grid Background="{StaticResource ElementBackgroundBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/> <!--Spacer-->
-            <RowDefinition Height="20*"/> <!--Tab Tittle-->
-            <RowDefinition Height="4*"/> <!--Spacer-->
-            <RowDefinition Height="68*"/> <!--Graph Content-->
-            <RowDefinition Height="4*"/> <!--Spacer-->
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="96*"/> <!--Tab Title & Graph Content-->
-            <ColumnDefinition Width="2*"/> <!--Spacer-->
-        </Grid.ColumnDefinitions>
-        
-        <TextBlock
-            Grid.Row="1"
-            Grid.Column="1"
-            Text="Consistency"
-            Style="{StaticResource ConsistencyTabTitle}"/> <!--Tab Tittle-->
-        
-        <Grid Grid.Row="3" Grid.Column="1">
+    <Border
+        Background="{StaticResource DarkBackgroundBrush}"
+        BorderBrush="{StaticResource LightAccentColorBrush}"
+        BorderThickness="3"
+        CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/> <!--Spacer-->
+                <RowDefinition Height="20*"/> <!--Tab Tittle-->
+                <RowDefinition Height="4*"/> <!--Spacer-->
+                <RowDefinition Height="68*"/> <!--Graph Content-->
+                <RowDefinition Height="4*"/> <!--Spacer-->
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7*"/> <!--Percentages-->
-                <ColumnDefinition Width="91*"/> <!--Graph-->
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="96*"/> <!--Tab Title & Graph Content-->
                 <ColumnDefinition Width="2*"/> <!--Spacer-->
             </Grid.ColumnDefinitions>
             
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/> <!--100%-->
-                    <RowDefinition Height="*"/> <!--75%-->
-                    <RowDefinition Height="*"/> <!--50%-->
-                    <RowDefinition Height="*"/> <!--25%-->
-                    <RowDefinition Height="*"/> <!--0%-->
-                </Grid.RowDefinitions>
-                
-                <TextBlock 
-                    Grid.Row="0"
-                    Text="100%"
-                    Style="{StaticResource Percentage}"
-                    Tag="Percentage"/>
-                
-                <TextBlock 
-                    Grid.Row="1"
-                    Text="75%"
-                    Style="{StaticResource Percentage}"
-                    Tag="Percentage"/>
-                
-                <TextBlock 
-                    Grid.Row="2"
-                    Text="50%"
-                    Style="{StaticResource Percentage}"
-                    Tag="Percentage"/>
-                
-                <TextBlock 
-                    Grid.Row="3"
-                    Text="25%"
-                    Style="{StaticResource Percentage}"
-                    Tag="Percentage"/>
-                
-                <TextBlock 
-                    Grid.Row="4"
-                    Text="0%"
-                    Style="{StaticResource Percentage}"
-                    Tag="Percentage"/>
-                
-            </Grid> <!--Percentages-->
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="Consistency"
+                Style="{StaticResource ConsistencyTabTitle}"/> <!--Tab Tittle-->
             
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/> <!--100% Line-->
-                    <RowDefinition Height="*"/> <!--75% Line-->
-                    <RowDefinition Height="*"/> <!--50% Line-->
-                    <RowDefinition Height="*"/> <!--25% Line-->
-                    <RowDefinition Height="*"/> <!--0% Line-->
-                </Grid.RowDefinitions>
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/> <!--Percentages-->
+                    <ColumnDefinition Width="91*"/> <!--Graph-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                </Grid.ColumnDefinitions>
                 
-                <Rectangle 
-                    Grid.Row="0" 
-                    Fill="{StaticResource TextBrush}"
-                    Opacity="0.5"
-                    Height="1"
-                    VerticalAlignment="Top"/>
-                <Rectangle 
-                    Grid.Row="1" 
-                    Fill="{StaticResource TextBrush}"
-                    Opacity="0.5"
-                    Height="1"
-                    VerticalAlignment="Top"/>
-                <Rectangle 
-                    Grid.Row="2" 
-                    Fill="{StaticResource TextBrush}"
-                    Opacity="0.5"
-                    Height="1"
-                    VerticalAlignment="Top"/>
-                <Rectangle 
-                    Grid.Row="3" 
-                    Fill="{StaticResource TextBrush}"
-                    Opacity="0.5"
-                    Height="1"
-                    VerticalAlignment="Top"/>
-                <Rectangle 
-                    Grid.Row="4" 
-                    Fill="{StaticResource TextBrush}"
-                    Opacity="0.5"
-                    Height="1"
-                    VerticalAlignment="Top"/>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/> <!--100%-->
+                        <RowDefinition Height="*"/> <!--75%-->
+                        <RowDefinition Height="*"/> <!--50%-->
+                        <RowDefinition Height="*"/> <!--25%-->
+                        <RowDefinition Height="*"/> <!--0%-->
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock 
+                        Grid.Row="0"
+                        Text="100%"
+                        Style="{StaticResource Percentage}"
+                        Tag="Percentage"/>
+                    
+                    <TextBlock 
+                        Grid.Row="1"
+                        Text="75%"
+                        Style="{StaticResource Percentage}"
+                        Tag="Percentage"/>
+                    
+                    <TextBlock 
+                        Grid.Row="2"
+                        Text="50%"
+                        Style="{StaticResource Percentage}"
+                        Tag="Percentage"/>
+                    
+                    <TextBlock 
+                        Grid.Row="3"
+                        Text="25%"
+                        Style="{StaticResource Percentage}"
+                        Tag="Percentage"/>
+                    
+                    <TextBlock 
+                        Grid.Row="4"
+                        Text="0%"
+                        Style="{StaticResource Percentage}"
+                        Tag="Percentage"/>
+                    
+                </Grid> <!--Percentages-->
                 
-                <Grid Grid.Row="4"> 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/> <!--Mon-->
-                        <ColumnDefinition Width="*"/> <!--Tue-->
-                        <ColumnDefinition Width="*"/> <!--Wed-->
-                        <ColumnDefinition Width="*"/> <!--Thu-->
-                        <ColumnDefinition Width="*"/> <!--Fri-->
-                        <ColumnDefinition Width="*"/> <!--Sat-->
-                        <ColumnDefinition Width="*"/> <!--Sun-->
-                    </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/> <!--100% Line-->
+                        <RowDefinition Height="*"/> <!--75% Line-->
+                        <RowDefinition Height="*"/> <!--50% Line-->
+                        <RowDefinition Height="*"/> <!--25% Line-->
+                        <RowDefinition Height="*"/> <!--0% Line-->
+                    </Grid.RowDefinitions>
                     
-                    <TextBlock 
-                        Grid.Column="0"
-                        Text="Mon"
-                        Style="{StaticResource WeekDays}"
-                        Tag="WeekDays"/>
-                    <TextBlock 
-                        Grid.Column="1"
-                        Text="Tue"
-                        Style="{StaticResource WeekDays}"
-                        Tag="WeekDays"/>
-                    <TextBlock 
-                        Grid.Column="2"
-                        Text="Wed"
-                        Style="{StaticResource WeekDays}"
-                        Tag="WeekDays"/>
-                    <TextBlock 
-                        Grid.Column="3"
-                        Text="Thu"
-                        Style="{StaticResource WeekDays}"
-                        Tag="WeekDays"/>
-                    <TextBlock 
-                        Grid.Column="4"
-                        Text="Fri"
-                        Style="{StaticResource WeekDays}"
-                        Tag="WeekDays"/>
-                    <TextBlock 
-                        Grid.Column="5"
-                        Text="Sat"
-                        Style="{StaticResource WeekDays}"
-                        Tag="WeekDays"/>
-                    <TextBlock 
-                        Grid.Column="6"
-                        Text="Sun"
-                        Style="{StaticResource WeekDays}"
-                        Tag="WeekDays"/>
+                    <Rectangle 
+                        Grid.Row="0" 
+                        Fill="{StaticResource TextBrush}"
+                        Opacity="0.5"
+                        Height="1"
+                        VerticalAlignment="Top"/>
+                    <Rectangle 
+                        Grid.Row="1" 
+                        Fill="{StaticResource TextBrush}"
+                        Opacity="0.5"
+                        Height="1"
+                        VerticalAlignment="Top"/>
+                    <Rectangle 
+                        Grid.Row="2" 
+                        Fill="{StaticResource TextBrush}"
+                        Opacity="0.5"
+                        Height="1"
+                        VerticalAlignment="Top"/>
+                    <Rectangle 
+                        Grid.Row="3" 
+                        Fill="{StaticResource TextBrush}"
+                        Opacity="0.5"
+                        Height="1"
+                        VerticalAlignment="Top"/>
+                    <Rectangle 
+                        Grid.Row="4" 
+                        Fill="{StaticResource TextBrush}"
+                        Opacity="0.5"
+                        Height="1"
+                        VerticalAlignment="Top"/>
                     
-                </Grid> <!--Weekdays-->
-                
-                <Canvas
-                    Grid.Row="0" Grid.RowSpan="4"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Background="Transparent"
-                    SizeChanged="OnSizeChsnged">
+                    <Grid Grid.Row="4"> 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/> <!--Sun-->
+                            <ColumnDefinition Width="*"/> <!--Mon-->
+                            <ColumnDefinition Width="*"/> <!--Tue-->
+                            <ColumnDefinition Width="*"/> <!--Wed-->
+                            <ColumnDefinition Width="*"/> <!--Thu-->
+                            <ColumnDefinition Width="*"/> <!--Fri-->
+                            <ColumnDefinition Width="*"/> <!--Sat-->
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock 
+                            Grid.Column="0"
+                            Text="Sun"
+                            Style="{StaticResource WeekDays}"
+                            Tag="WeekDays"/>
+                        <TextBlock 
+                            Grid.Column="1"
+                            Text="Mon"
+                            Style="{StaticResource WeekDays}"
+                            Tag="WeekDays"/>
+                        <TextBlock 
+                            Grid.Column="2"
+                            Text="Tue"
+                            Style="{StaticResource WeekDays}"
+                            Tag="WeekDays"/>
+                        <TextBlock 
+                            Grid.Column="3"
+                            Text="Wed"
+                            Style="{StaticResource WeekDays}"
+                            Tag="WeekDays"/>
+                        <TextBlock 
+                            Grid.Column="4"
+                            Text="Thu"
+                            Style="{StaticResource WeekDays}"
+                            Tag="WeekDays"/>
+                        <TextBlock 
+                            Grid.Column="5"
+                            Text="Fri"
+                            Style="{StaticResource WeekDays}"
+                            Tag="WeekDays"/>
+                        <TextBlock 
+                            Grid.Column="6"
+                            Text="Sat"
+                            Style="{StaticResource WeekDays}"
+                            Tag="WeekDays"/>
+                        
+                    </Grid> <!--Weekdays-->
                     
-                    <Polyline Points="{Binding ConsistencyVM.CurrentWeekConsistency}"
-                              Stroke="White"
-                              StrokeThickness="2"/>
+                    <Canvas
+                        Grid.Row="0" Grid.RowSpan="4"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Background="Transparent"
+                        SizeChanged="OnSizeChanged">
+                        
+                        <Polyline Points="{Binding ConsistencyVM.CurrentWeekConsistency}"
+                                  Stroke="White"
+                                  StrokeThickness="2"/>
+                        
+                        <Polyline Points="{Binding ConsistencyVM.LastWeekConsistency}"
+                                  Stroke="White"
+                                  Opacity="0.3"
+                                  StrokeThickness="2"
+                                  StrokeDashArray="5,2"/>
+                        
+                    </Canvas>
                     
-                    <Polyline Points="{Binding ConsistencyVM.LastWeekConsistency}"
-                              Stroke="White"
-                              Opacity="0.3"
-                              StrokeThickness="2"
-                              StrokeDashArray="5,2"/>
-                    
-                </Canvas>
-                
-            </Grid> <!--Lines / Weekdays / Bars-->
+                </Grid> <!--Lines / Weekdays / Bars-->
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>

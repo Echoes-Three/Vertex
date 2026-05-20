@@ -5,78 +5,93 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:activities="clr-namespace:Vertex.ViewModels.Activities"
              mc:Ignorable="d"
-             d:DesignHeight="150" d:DesignWidth="700"
+             d:DesignHeight="170" d:DesignWidth="476"
              d:DataContext="{d:DesignInstance Type=activities:ActivityItemViewModel}">
     
-    <Grid Background="{StaticResource ElementBackgroundBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*"/> <!--Activity Color-->
-            <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="64*"/> <!--Activity Content-->
-            <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="6*"/> <!--Delete Button-->
-            <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="6*"/> <!--Edit Button-->
-            <ColumnDefinition Width="2*"/> <!--Spacer-->
-            <ColumnDefinition Width="10*"/> <!--Done Button-->
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/> <!--ActionButtons -->
-            <RowDefinition Height="10"/> <!--Spacer-->
-            <RowDefinition Height="Auto"/> <!--ActivityContent-->
-            <RowDefinition Height="25"/> <!--Spacer-->
-        </Grid.RowDefinitions>
-        
-        <Border 
-            Grid.Row="0" 
-            Grid.Column="2" 
-            Background="{StaticResource ButtonBackgroundBrush}"/> <!--Title Background-->
-        
-        <Border 
-            Grid.Row="2" 
-            Grid.Column="0" Grid.ColumnSpan="9" 
-            Background="{StaticResource ButtonBackgroundBrush}"/> <!--Content Background-->
-        
-        <Border 
-            Grid.Row="0"
-            Grid.Column="0" 
-            Background="{Binding ActivityColor}"/> <!-- Activity Color-->
-        
-        <TextBlock
-            Grid.Column="2"
-            Grid.Row="0"
-            Style="{StaticResource ActivityTitle}"
-            Text="{Binding EntryData.Title}"/> <!--Ativity Title-->
-        
-        <TextBlock 
-            Grid.Column="0"
-            Grid.ColumnSpan="7"
-            Grid.Row="2"
-            Style="{StaticResource ActivityContent}"
-            Text="{Binding EntryData.Content}"/> <!--Ativity Content-->
-        
-        <Button 
-            Grid.Column="4"
-            Grid.Row="0"
-            Style="{StaticResource EditActivityButton}"
-            Command="{Binding OnDeleteActivity}">
-            <Path Style="{StaticResource BinIcon}"/>
-        </Button> <!--Delete Button-->
-        
-        <Button 
-            Grid.Column="6"
-            Grid.Row="0"
-            Style="{StaticResource EditActivityButton}"
-            Command="{Binding OnEditActivity}">
-            <Path Style="{StaticResource EditIcon}"/>
-        </Button> <!--Edit Button-->
-        
-        <Button 
-            Grid.Column="8"
-            Grid.Row="0"
-            Style="{StaticResource MarkActivityAsDoneButton}"
-            Content="Done">
-        </Button> <!--Done Button-->
+    <Border
+        Height="170"
+        Width="476"
+        Background="{StaticResource MediumBackgroundBrush}"
+        CornerRadius="10"
+        Margin="0,0,0,20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="96*"/> <!--Content-->
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/> <!--Spacer -->
+                <RowDefinition Height="15*"/> <!--Title Elements-->
+                <RowDefinition Height="8*"/> <!--Spacer-->
+                <RowDefinition Height="61*"/> <!--Activity Content-->
+                <RowDefinition Height="8"/> <!--Spacer-->
+            </Grid.RowDefinitions>
             
+            <!--<Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="0"  Background="White" Opacity="0.3"/>
+            <Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="2" Background="White" Opacity="0.3"/>
+            
+            <Border Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Background="White" Opacity="0.3"/>
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="White" Opacity="0.3"/>
+            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Background="White" Opacity="0.3"/>-->
+            
+            
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/> <!--Activity Color-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                    <ColumnDefinition Width="68*"/> <!--Activity Content-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                    <ColumnDefinition Width="6*"/> <!--Delete Button-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                    <ColumnDefinition Width="6*"/> <!--Edit Button-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                    <ColumnDefinition Width="6*"/> <!--Done Button-->
+                </Grid.ColumnDefinitions>
+                
+                <Border 
+                    Grid.Column="0"
+                    CornerRadius="5"
+                    Background="{Binding ActivityColor}"/> <!-- Activity Color-->
+            
+                <TextBlock
+                    Grid.Column="2"
+                    Style="{StaticResource ActivityTitle}"
+                    Text="{Binding EntryData.Title}"/> <!--Activity Title-->
+                
+                <Button 
+                    Grid.Column="4"
+                    Style="{StaticResource EditActivityButton}"
+                    Command="{Binding OnDeleteActivity}">
+                    
+                    <Path Style="{StaticResource BinIcon}"/>
+                    
+                </Button> <!--Delete Button-->
+            
+                <Button 
+                    Grid.Column="6"
+                    Style="{StaticResource EditActivityButton}"
+                    Command="{Binding OnEditActivity}">
+                    
+                    <Path Style="{StaticResource EditIcon}"/>
+                    
+                </Button> <!--Edit Button-->
+                
+            
+                <Button 
+                    Grid.Column="8"
+                    Style="{StaticResource MarkActivityAsDoneButton}">
+                    
+                    <Path Style="{StaticResource EmptyCheckBoxIcon}"/>
+                    
+                </Button> <!--Done Button-->
+            </Grid>
+            
+            <TextBlock 
+                Grid.Column="1"
+                Grid.Row="3" 
+                Style="{StaticResource ActivityContent}"
+                Text="{Binding EntryData.Content}"/> <!--Activity Content-->
         </Grid>
+    </Border>
 </UserControl>

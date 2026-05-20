@@ -4,13 +4,14 @@ public static class ActivityRepeat
 {
     public struct DaysOfWeekBool
     {
+        public bool Sun;
         public bool Mon;
         public bool Tue;
         public bool Wed;
         public bool Thu;
         public bool Fri;
         public bool Sat;
-        public bool Sun;
+       
         
     }
     
@@ -29,13 +30,14 @@ public static class ActivityRepeat
     {
         return new DaysOfWeekBool
         {
+            Sun = daysOfWeek?.Contains(DayOfWeek.Sunday) ?? false,
             Mon = daysOfWeek?.Contains(DayOfWeek.Monday) ?? false,
             Tue = daysOfWeek?.Contains(DayOfWeek.Tuesday) ?? false,
             Wed = daysOfWeek?.Contains(DayOfWeek.Wednesday) ?? false,
             Thu = daysOfWeek?.Contains(DayOfWeek.Thursday) ?? false,
             Fri = daysOfWeek?.Contains(DayOfWeek.Friday) ?? false,
             Sat = daysOfWeek?.Contains(DayOfWeek.Saturday) ?? false,
-            Sun = daysOfWeek?.Contains(DayOfWeek.Sunday) ?? false,
+            
         };
     }
     

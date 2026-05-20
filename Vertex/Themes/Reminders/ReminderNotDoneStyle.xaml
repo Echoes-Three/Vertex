@@ -32,7 +32,7 @@
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource TextBrush}"/>
@@ -57,7 +57,7 @@
         <!--On Hover-->
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -71,7 +71,7 @@
         <!--On Hover-->
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource WindowBackgroundBrush}"/>
+                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

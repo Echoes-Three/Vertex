@@ -10,7 +10,7 @@
         d:DesignWidth="700"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
-    <Grid Background="{StaticResource ElementBackgroundBrush}">
+    <Grid Background="{StaticResource MediumBackgroundBrush}">
         <Grid.ColumnDefinitions>
         <ColumnDefinition Width="10*"/> <!--Logo/App Name-->
         <ColumnDefinition Width="80*"/> <!--Draggable Area-->

@@ -8,7 +8,7 @@
              d:DesignHeight="138" d:DesignWidth="476"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderItemViewModel}">
     
-    <Grid Background="{StaticResource ElementBackgroundBrush}">
+    <Grid Background="{StaticResource MediumBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/> <!--Reminder Content-->
             <RowDefinition Height="10"/> <!--Spacer-->
@@ -16,7 +16,7 @@
             <RowDefinition Height="30"/> <!--Spacer-->
         </Grid.RowDefinitions>
 
-        <Rectangle Grid.Row="0" Fill="{StaticResource ButtonBackgroundBrush}"/> <!--Content Background-->
+        <Rectangle Grid.Row="0" Fill="{StaticResource LightBackgroundBrush}"/> <!--Content Background-->
         
         <TextBlock 
             Grid.Row="0"

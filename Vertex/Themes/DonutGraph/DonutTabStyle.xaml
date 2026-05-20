@@ -3,4 +3,61 @@
     
     <Style x:Key="DonutGraphTabTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReminderTabTitle}">
     </Style>
+    
+    <Style x:Key="Hour" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="150"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    
+    <Style x:Key="Minute" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
+        <Setter Property="FontSize" Value="50"/>
+    </Style>
+    
+    <Style x:Key="Meridiem" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Minute}">
+    </Style>
+    
+    <Style x:Key="UpperInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+    
+    <Style x:Key="LowerInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+    
+    <Style x:Key="MainClockFace" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
+        <Setter Property="FontSize" Value="25"/>
+    </Style>
+    
+    <Style x:Key="ClockFace" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
+        <Setter Property="FontSize" Value="25"/>
+    </Style>
+    
+    <Style x:Key="SlicePopup" TargetType="{x:Type Popup}">
+        <Setter Property="Placement" Value="MousePoint"/>
+        <Setter Property="StaysOpen" Value="False"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        
+    </Style>
+    
+    <Style x:Key="MarkDonutActivityAsDoneButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MarkActivityAsDoneButton}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="RestoreDonutActivityAsDoneButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MarkActivityAsDoneButton}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

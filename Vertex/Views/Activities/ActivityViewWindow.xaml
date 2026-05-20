@@ -9,7 +9,7 @@
              d:DataContext="{d:DesignInstance Type=activitiesViewModel:ActivitiesViewModel}">
     
     <Grid 
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{StaticResource DarkBackgroundBrush}"
           MouseLeftButtonDown="OnDrag">
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/> <!--Activity Title-->
@@ -21,11 +21,11 @@
         
         <Rectangle
             Grid.Row="0"
-            Fill="{StaticResource ButtonBackgroundBrush}"/> <!--Activity Title Background-->
+            Fill="{StaticResource LightBackgroundBrush}"/> <!--Activity Title Background-->
         
         <Rectangle
             Grid.Row="2"
-            Fill="{StaticResource ButtonBackgroundBrush}"/> <!--Activity Content Background-->
+            Fill="{StaticResource LightBackgroundBrush}"/> <!--Activity Content Background-->
         
         <TextBlock 
             Grid.Row="0"
@@ -167,38 +167,38 @@
                 
                 <ToggleButton
                     Grid.Column="0"
+                    Content="Sun"
+                    IsChecked="{Binding Sunday}"
+                    Style="{StaticResource WeekDayToggleButton}"/>
+                <ToggleButton
+                    Grid.Column="1"
                     Content="Mon"
                     IsChecked="{Binding Monday}"
                     Style="{StaticResource WeekDayToggleButton}"/>
                 <ToggleButton
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Content="Tue"
                     IsChecked="{Binding Tuesday}"
                     Style="{StaticResource WeekDayToggleButton}"/>
                 <ToggleButton
-                    Grid.Column="2"
+                    Grid.Column="3"
                     Content="Wed"
                     IsChecked="{Binding Wednesday}"
                     Style="{StaticResource WeekDayToggleButton}"/>
                 <ToggleButton
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Content="Thu"
                     IsChecked="{Binding Thursday}"
                     Style="{StaticResource WeekDayToggleButton}"/>
                 <ToggleButton
-                    Grid.Column="4"
+                    Grid.Column="5"
                     Content="Fri"
                     IsChecked="{Binding Friday}"
                     Style="{StaticResource WeekDayToggleButton}"/>
                 <ToggleButton
-                    Grid.Column="5"
+                    Grid.Column="6"
                     Content="Sat"
                     IsChecked="{Binding Saturday}"
-                    Style="{StaticResource WeekDayToggleButton}"/>
-                <ToggleButton
-                    Grid.Column="6"
-                    Content="Sun"
-                    IsChecked="{Binding Sunday}"
                     Style="{StaticResource WeekDayToggleButton}"/>
             </Grid>
             

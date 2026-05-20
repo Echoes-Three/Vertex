@@ -6,11 +6,9 @@ namespace Vertex.Views.Reminders;
 
 public partial class RemindersTabView : UserControl
 {
-
     public RemindersTabView()
     {
         InitializeComponent();
     }
     
-
 }

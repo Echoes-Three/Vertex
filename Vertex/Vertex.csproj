@@ -84,6 +84,8 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+      <Page Remove="Views\Consistency\**" />
+      <Page Remove="ViewModels\Consistency\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -171,6 +173,19 @@
       <Page Remove="Assets\Icons\ClosestToCurrentDate.xaml" />
       <Page Remove="Assets\Icons\CreatedFirst.xaml" />
       <Page Remove="Assets\Icons\History.xaml" />
+      <None Remove="Views\Consistency\**" />
+      <None Remove="ViewModels\Consistency\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Views\Consistency\**" />
+      <Compile Remove="ViewModels\Consistency\**" />
+      <Compile Remove="Models\Entities\Entry\ConsistencyEntry.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Views\Consistency\**" />
+      <EmbeddedResource Remove="ViewModels\Consistency\**" />
     </ItemGroup>
 
 </Project>

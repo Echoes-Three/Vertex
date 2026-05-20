@@ -10,4 +10,7 @@ public class ActivityEntry
     public bool Done { get; set; } = false;
     public List<DayOfWeek>? RepeatOn { get; set; } = null;
     public TimeSpan Duration { get; set; } = TimeSpan.Zero;
+    public List<int> Order { get; set; } = [0,0,0,0,0,0,0];
+    public List<double> StartAngle { get; set; } = [0,0,0,0,0,0,0];
+    public List<double> EndAngle { get; set; } = [0,0,0,0,0,0,0];
 }

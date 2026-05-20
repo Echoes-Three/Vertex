@@ -26,21 +26,15 @@ public partial class App : Application
         
         services.AddSingleton<ActivitiesHandler>();
         services.AddSingleton<RemindersHandler>();
-        services.AddSingleton<SleepHandler>();
-        services.AddSingleton<ConsistencyHandler>();
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<ActivitiesViewModel>();
         services.AddSingleton<RemindersViewModel>();
-        services.AddSingleton<SleepViewModel>();
-        services.AddSingleton<ConsistencyViewModel>();
         services.AddSingleton<DonutGraphViewModel>();
 
         ServiceProvider = services.BuildServiceProvider();
 
         ServiceProvider.GetRequiredService<ActivitiesHandler>().Load();
         ServiceProvider.GetRequiredService<RemindersHandler>().Load();
-        ServiceProvider.GetRequiredService<SleepHandler>().Load();
-        ServiceProvider.GetRequiredService<ConsistencyHandler>().Load();
     }
 }

@@ -7,6 +7,8 @@ namespace Vertex.Views.Reminders;
 
 public partial class ReminderViewWindow : UserControl
 {
+    private RemindersViewModel? Vm => DataContext as RemindersViewModel;
+    
     public ReminderViewWindow()
     {
         InitializeComponent();
@@ -15,47 +17,30 @@ public partial class ReminderViewWindow : UserControl
     private void OnCancel(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)?.Close();
+        Vm.CleanReminderWindowFields();
         
-        if (DataContext is RemindersViewModel vm)
-        {
-            vm.CleanReminderWindowFields();
-        }
     }
 
-    private void OnDrag(object sender, MouseButtonEventArgs e)
-    {
-        Window.GetWindow(this)?.DragMove();
-    }
+    private void OnDrag(object sender, MouseButtonEventArgs e) => Window.GetWindow(this)?.DragMove();
+    
 
     private void OnHourScroll(object sender, MouseWheelEventArgs e)
     {
-        if (DataContext is RemindersViewModel vm)
-        {
-            if (e.Delta > 0)
-                vm.RemindHourUp();
-            else
-                vm.RemindHourDown();
-        }
+        if (e.Delta > 0)
+            Vm.RemindHourUp();
+        else
+            Vm.RemindHourDown();
     }
 
     private void OnMinuteScroll(object sender, MouseWheelEventArgs e)
     {
-        if (DataContext is RemindersViewModel vm)
-        {
-            if (e.Delta > 0)
-                vm.RemindMinuteUp();
-            else
-                vm.RemindMinuteDown();
-        }
+        if (e.Delta > 0)
+            Vm.RemindMinuteUp();
+        else
+            Vm.RemindMinuteDown();
     }
 
-    private void OnMeridiemScroll(object sender, MouseWheelEventArgs e)
-    {
-        if (DataContext is RemindersViewModel vm)
-        {
-            vm.UpdateMeridiem();
-        }
-
-    }
+    private void OnMeridiemScroll(object sender, MouseWheelEventArgs e) => Vm.UpdateMeridiem();
+        
 
 }

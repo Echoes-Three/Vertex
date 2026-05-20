@@ -8,6 +8,8 @@ namespace Vertex.Views.Activities;
 
 public partial class ActivityViewWindow : UserControl
 {
+    private ActivitiesViewModel? Vm => DataContext as ActivitiesViewModel;
+    
     public ActivityViewWindow()
     {
         InitializeComponent();
@@ -16,38 +18,24 @@ public partial class ActivityViewWindow : UserControl
     private void OnCancel(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)?.Close();
-        
-        if (DataContext is ActivitiesViewModel vm)
-        {
-            vm.CleanActivityWindowFields();
-        }
+        Vm.CleanActivityWindowFields();
     }
 
-    private void OnDrag(object sender, MouseButtonEventArgs e)
-    {
-        Window.GetWindow(this)?.DragMove();
-    }
-
-
+    private void OnDrag(object sender, MouseButtonEventArgs e) => Window.GetWindow(this)?.DragMove();
+    
     private void OnHourScroll(object sender, MouseWheelEventArgs e)
     {
-        if (DataContext is ActivitiesViewModel vm)
-        {
-            if (e.Delta > 0)
-                vm.DurationHourUp();
-            else
-                vm.DurationHourDown();
-        }
+        if (e.Delta > 0)
+            Vm.DurationHourUp();
+        else
+            Vm.DurationHourDown();
     }
 
     private void OnMinuteScroll(object sender, MouseWheelEventArgs e)
     {
-        if (DataContext is ActivitiesViewModel vm)
-        {
-            if (e.Delta > 0)
-                vm.DurationMinuteUp();
-            else
-                vm.DurationMinuteDown();
-        }
+        if (e.Delta > 0)
+            Vm.DurationMinuteUp();
+        else
+            Vm.DurationMinuteDown();
     }
 }

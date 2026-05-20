@@ -5,93 +5,105 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
-             d:DesignHeight="138" d:DesignWidth="476"
+             d:DesignHeight="177" d:DesignWidth="476"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderItemViewModel}">
-    
-    <Grid Background="{StaticResource ElementBackgroundBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!--Reminder Content-->
-            <RowDefinition Height="10"/> <!--Spacer-->
-            <RowDefinition Height="30"/> <!--Buttons-->
-            <RowDefinition Height="30"/> <!--Spacer-->
-        </Grid.RowDefinitions>
-
-        <Rectangle Grid.Row="0" Fill="{StaticResource ButtonBackgroundBrush}"/> <!--Content Background-->
-        
-        <TextBlock 
-            Grid.Row="0"
-            Style="{StaticResource ReminderContent}"
-            Text="{Binding EntryData.Content}"/> <!--Reminder Content-->
-        
-        
-        <Grid Grid.Row="2">
+    <Border
+        Height="177"
+        Width="476"
+        Background="{StaticResource DarkBackgroundBrush}"
+        CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/> <!--Spacer-->
+                <RowDefinition Height="61*"/> <!--Reminder Content-->
+                <RowDefinition Height="8*"/> <!--Spacer-->
+                <RowDefinition Height="15*"/> <!--Info / Buttons-->
+                <RowDefinition Height="8*"/> <!--Spacer-->
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="65*"/> <!--Reminder Date Info-->
-                <ColumnDefinition Width="10*"/> <!--Spacer-->
-                <ColumnDefinition Width="6*"/> <!--Delete Button-->
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="6*"/> <!--Edit Button-->
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="10*"/> <!--Done Button-->
+                <ColumnDefinition Width="*"/> <!--Spacer-->
+                <ColumnDefinition Width="*"/> <!--Content-->
+                <ColumnDefinition Width="*"/> <!--Spacer-->
             </Grid.ColumnDefinitions>
             
-            <Grid Grid.Column="0">
+            <TextBlock 
+                Grid.Row="0"
+                Style="{StaticResource ReminderContent}"
+                Text="{Binding EntryData.Content}"/> <!--Reminder Content-->
+            
+            
+            
+            
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="45*"/> <!--Reminder Create At-->
-                    <ColumnDefinition Width="5*"/> <!--Spacer-->
-                    <ColumnDefinition Width="45*"/> <!--Reminder Done At-->
+                    <ColumnDefinition Width="65*"/> <!--Reminder Date Info-->
+                    <ColumnDefinition Width="10*"/> <!--Spacer-->
+                    <ColumnDefinition Width="6*"/> <!--Delete Button-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                    <ColumnDefinition Width="6*"/> <!--Edit Button-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                    <ColumnDefinition Width="10*"/> <!--Done Button-->
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50*"/> <!--Created At Label / Done At Label-->
-                    <RowDefinition Height="50*"/> <!--Created At Date / Done At Date-->
-                </Grid.RowDefinitions>
                 
-                <TextBlock
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    Text="Created at:"
-                    Style="{StaticResource ReminderDateLabel}"/><!--Created At Label-->
-                
-                <TextBlock
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Text="{Binding CreatedAt}"
-                    Style="{StaticResource ReminderDateLabel}"/> <!--Created At Date-->
-                
-                <TextBlock
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45*"/> <!--Reminder Create At-->
+                        <ColumnDefinition Width="5*"/> <!--Spacer-->
+                        <ColumnDefinition Width="45*"/> <!--Reminder Done At-->
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/> <!--Created At Label / Done At Label-->
+                        <RowDefinition Height="50*"/> <!--Created At Date / Done At Date-->
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Created at:"
+                        Style="{StaticResource ReminderDateLabel}"/><!--Created At Label-->
+                    
+                    <TextBlock
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Text="{Binding CreatedAt}"
+                        Style="{StaticResource ReminderDateLabel}"/> <!--Created At Date-->
+                    
+                    <TextBlock
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        Text="Set for:"
+                        Style="{StaticResource ReminderDateLabel}"/> <!--Done At Label-->
+                    
+                    <TextBlock
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        Text="{Binding SetFor}"
+                        Style="{StaticResource ReminderDateLabel}"/> <!--Done At Date-->
+                    
+                </Grid>
+                <Button 
                     Grid.Column="2"
-                    Grid.Row="0"
-                    Text="Set for:"
-                    Style="{StaticResource ReminderDateLabel}"/> <!--Done At Label-->
+                    Style="{StaticResource DeleteReminderButton}"
+                    Command="{Binding OnDeleteReminder}">
+                    <Path Style="{StaticResource BinIcon}"/>
+                </Button> <!--Delete Button-->
                 
-                <TextBlock
-                    Grid.Column="2"
-                    Grid.Row="1"
-                    Text="{Binding SetFor}"
-                    Style="{StaticResource ReminderDateLabel}"/> <!--Done At Date-->
+                <Button 
+                    Grid.Column="4"
+                    Style="{StaticResource EditReminderButton}"
+                    Command="{Binding OnEditReminder}">
+                    <Path Style="{StaticResource EditIcon}"/>
+                </Button> <!--Edit Button-->
+                
+                <Button 
+                    Grid.Column="6"
+                    Style="{StaticResource MarkReminderAsDoneButton}"
+                    Content="Done"
+                    Command="{Binding OnReminderDone}">
+                </Button> <!--Done Button-->
                 
             </Grid>
-            <Button 
-                Grid.Column="2"
-                Style="{StaticResource DeleteReminderButton}"
-                Command="{Binding OnDeleteReminder}">
-                <Path Style="{StaticResource BinIcon}"/>
-            </Button> <!--Delete Button-->
-            
-            <Button 
-                Grid.Column="4"
-                Style="{StaticResource EditReminderButton}"
-                Command="{Binding OnEditReminder}">
-                <Path Style="{StaticResource EditIcon}"/>
-            </Button> <!--Edit Button-->
-            
-            <Button 
-                Grid.Column="6"
-                Style="{StaticResource MarkReminderAsDoneButton}"
-                Content="Done"
-                Command="{Binding OnReminderDone}">
-            </Button> <!--Done Button-->
-            
         </Grid>
-    </Grid>
+    </Border>
+    
 </UserControl>

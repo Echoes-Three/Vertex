@@ -47,7 +47,7 @@ public class ActivitiesViewModel : ViewModelBase
     private int _currentMinuteCount = 00;
     private int _currentColorGroupIndex = 0;
 
-    private List<bool> DaysOfWeek => [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday];
+    private List<bool> DaysOfWeek => [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday];
     private List<Brush> CurrentColorGroup => ActivityColors.Categories[_currentColorGroupIndex];
     
     public RelayCommand OnAddActivityView { get; }
@@ -132,11 +132,18 @@ public class ActivitiesViewModel : ViewModelBase
         }
     }
 
-    private bool CanSaveAction() =>
-        ActivityTitle != "" 
-            && ActivityRepeat.HasMinimumValue(DaysOfWeek)
-            && ((_currentHourCount == 0 && _currentMinuteCount >= 15)
-                || (_currentHourCount > 0 && _currentMinuteCount >= 0));
+    private bool CanSaveAction()
+    {
+        var totalDuration = new TimeSpan(ActivitiesData.Activities.Sum(x => x.Duration.Ticks));
+        var isNotEmpty = ActivityTitle != ""; 
+        var repeats = ActivityRepeat.HasMinimumValue(DaysOfWeek);
+        var isAboveMinimum = ((_currentHourCount == 0 && _currentMinuteCount >= 10) || (_currentHourCount > 0 && _currentMinuteCount >= 0));
+        
+        //var isBellowMaximum = 
+
+        return isNotEmpty && repeats && isAboveMinimum;
+    }
+        
     private void SaveAction()
     {
         if (_windowMode == WindowMode.Add)
@@ -211,8 +218,8 @@ public class ActivitiesViewModel : ViewModelBase
         ActivityContent = activityEntry.Content;
         
         var day =  activityEntry.RepeatOn.ToBoolList();
-        (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) = 
-            (day.Mon, day.Tue, day.Wed, day.Thu, day.Fri, day.Sat, day.Sun);
+        (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) = 
+            (day.Sun, day.Mon, day.Tue, day.Wed, day.Thu, day.Fri, day.Sat);
         
         (_currentHourCount, CurrentDurationHour) = 
             (activityEntry.Duration.Hours, activityEntry.Duration.Hours.ToString("D2"));
@@ -240,7 +247,7 @@ public class ActivitiesViewModel : ViewModelBase
         CurrentColorIndex = 0;
         SetColorGroup();
         SetColor("0");
-        (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) =
+        (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) =
             (true, true, true, true, true, true, true);
         (_currentHourCount, CurrentDurationHour) = (0, "00");
         (_currentMinuteCount, CurrentDurationMinute) = (0, "00");
@@ -353,8 +360,20 @@ public class ActivitiesViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    
+    private bool _sunday = true;
 
-
+    public bool Sunday
+    {
+        get => _sunday;
+        set
+        {
+            _sunday = value;
+            OnPropertyChanged();
+            OnSaveAction.RaiseCanExecuteChanged();
+        }
+    }
+    
     private bool _monday = true;
 
     public bool Monday
@@ -432,20 +451,7 @@ public class ActivitiesViewModel : ViewModelBase
             OnSaveAction.RaiseCanExecuteChanged();
         }
     }
-
-    private bool _sunday = true;
-
-    public bool Sunday
-    {
-        get => _sunday;
-        set
-        {
-            _sunday = value;
-            OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
-        }
-    }
-
+    
     private int _currentColorIndex;
 
     public int CurrentColorIndex

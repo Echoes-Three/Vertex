@@ -8,31 +8,30 @@
              d:DesignHeight="820" d:DesignWidth="1040"
              d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}">
     
-    <Grid Background="{StaticResource MediumBackgroundBrush}">
+    <Grid Background="{StaticResource ElectricAquaBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/> <!--Spacer-->
-            <RowDefinition Height="4*"/> <!--Tab-->
+            <RowDefinition Height="6*"/> <!--Tab-->
             <RowDefinition Height="2*"/> <!--Spacer-->
             <RowDefinition Height="90*"/> <!--Donut Graph Content-->
-            <RowDefinition Height="2*"/> <!--Spacer-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/> <!--Spacer-->
             <ColumnDefinition Width="98*"/> <!--Tab Title & Donut Graph Content-->
             <ColumnDefinition Width="1*"/> <!--Spacer-->
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="3" Grid.Column="1" Background="Transparent"/>
+        <Border Grid.Row="2" Grid.Column="1" Background="Transparent"/>
 
-        <!--<Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" Background="GreenYellow"></Border>-->
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource LightTextBrush}"></Border>
 
         <TextBlock
             Grid.Column="1"
-            Grid.Row="1" 
-            Text="Donut Graph"
+            Grid.Row="0" 
+            Text="DONUT GRAPH"
+            Foreground="{StaticResource DarkTextBrush}"
             Style="{StaticResource DonutGraphTabTitle}"/>
         <Canvas
             x:Name="DonutCanvas"
-            Grid.Row="3" Grid.Column="1" 
+            Grid.Row="2" Grid.Column="1" 
             Width="1020" Height="738"
             Background="Transparent"
             VerticalAlignment="Center"
@@ -88,19 +87,19 @@
                     Text="{Binding DonutGraphVM.LowerInfo}"
                     Style="{StaticResource LowerInfo}"/>
                 
-                <Button 
+                <!--<Button 
                     Grid.Row="3" Grid.Column="1"
                     Style="{StaticResource RestoreDonutActivityAsDoneButton}"
                     Content="Restore"
                     Tag="{Binding DonutGraphVM.ShowActivityInfo}">
-                </Button> <!--Done Button-->
+                </Button> ~1~Done Button@1@
                 
                 <Button 
                     Grid.Row="3" Grid.Column="1"
                     Style="{StaticResource MarkDonutActivityAsDoneButton}"
                     Content="Done"
                     Tag="{Binding DonutGraphVM.ShowMarkActivityAsDoneButton}">
-                </Button> <!--Done Button-->
+                </Button> ~1~Done Button@1@-->
                 
             </Grid>
             
@@ -122,7 +121,7 @@
             </Border>
 
             <Border 
-                BorderBrush="LightSlateGray" 
+                BorderBrush="White" 
                 Opacity="0.1"
                 BorderThickness="60"
                 Canvas.Left="235" Canvas.Top="94"
@@ -130,14 +129,14 @@
                 CornerRadius="550"/>
             
             <Border 
-                BorderBrush="LightSlateGray" 
+                BorderBrush="White" 
                 BorderThickness="4"
                 Opacity="0.2"
                 Canvas.Left="185" Canvas.Top="44"
                 Height="650" Width="650"
                 CornerRadius="620"/>
             
-            <Path Stroke="LightSlateGray"
+            <Path Stroke="White"
                   StrokeThickness="4"
                   StrokeDashArray="0 3.436"
                   StrokeDashCap="Round">
@@ -148,45 +147,45 @@
             
             
             
-            <Line X1="510" Y1="64" X2="510" Y2="44" StrokeThickness="4" Stroke="LightSlateGray"/> <!--12pm Face-->
+            <Line X1="510" Y1="64" X2="510" Y2="44" StrokeThickness="4" Stroke="White"/> <!--12pm Face-->
             
-            <Line X1="591" Y1="64" X2="594" Y2="55" StrokeThickness="4" Stroke="LightSlateGray"/> <!--1pm Face-->
-            <Line X1="667" Y1="96" X2="672" Y2="87" StrokeThickness="4" Stroke="LightSlateGray"/> <!--2pm Face-->
+            <Line X1="591" Y1="64" X2="594" Y2="55" StrokeThickness="4" Stroke="White"/> <!--1pm Face-->
+            <Line X1="667" Y1="96" X2="672" Y2="87" StrokeThickness="4" Stroke="White"/> <!--2pm Face-->
             
-            <Line X1="725" Y1="153" X2="739" Y2="139" StrokeThickness="4" Stroke="LightSlateGray"/> <!--3pm Face-->
+            <Line X1="725" Y1="153" X2="739" Y2="139" StrokeThickness="4" Stroke="White"/> <!--3pm Face-->
             
-            <Line X1="782" Y1="211" X2="791" Y2="206" StrokeThickness="4" Stroke="LightSlateGray"/> <!--4pm Face-->
-            <Line X1="814" Y1="287" X2="823" Y2="284" StrokeThickness="4" Stroke="LightSlateGray"/> <!--5pm Face-->
+            <Line X1="782" Y1="211" X2="791" Y2="206" StrokeThickness="4" Stroke="White"/> <!--4pm Face-->
+            <Line X1="814" Y1="287" X2="823" Y2="284" StrokeThickness="4" Stroke="White"/> <!--5pm Face-->
             
-            <Line X1="815" Y1="369" X2="835" Y2="369" StrokeThickness="4" Stroke="LightSlateGray"/> <!--6pm Face-->
+            <Line X1="815" Y1="369" X2="835" Y2="369" StrokeThickness="4" Stroke="White"/> <!--6pm Face-->
             
-            <Line X1="814" Y1="450" X2="823" Y2="453" StrokeThickness="4" Stroke="LightSlateGray"/> <!--7pm Face-->
-            <Line X1="782" Y1="526" X2="791" Y2="531" StrokeThickness="4" Stroke="LightSlateGray"/> <!--8pm Face-->
+            <Line X1="814" Y1="450" X2="823" Y2="453" StrokeThickness="4" Stroke="White"/> <!--7pm Face-->
+            <Line X1="782" Y1="526" X2="791" Y2="531" StrokeThickness="4" Stroke="White"/> <!--8pm Face-->
             
-            <Line X1="725" Y1="584" X2="739" Y2="598" StrokeThickness="4" Stroke="LightSlateGray"/> <!--9pm Face-->
+            <Line X1="725" Y1="584" X2="739" Y2="598" StrokeThickness="4" Stroke="White"/> <!--9pm Face-->
             
-            <Line X1="667" Y1="641" X2="672" Y2="650" StrokeThickness="4" Stroke="LightSlateGray"/> <!--10pm Face-->
-            <Line X1="591" Y1="673" X2="594" Y2="682" StrokeThickness="4" Stroke="LightSlateGray"/> <!--11pm Face-->
+            <Line X1="667" Y1="641" X2="672" Y2="650" StrokeThickness="4" Stroke="White"/> <!--10pm Face-->
+            <Line X1="591" Y1="673" X2="594" Y2="682" StrokeThickness="4" Stroke="White"/> <!--11pm Face-->
             
-            <Line X1="509" Y1="674" X2="509" Y2="694" StrokeThickness="4" Stroke="LightSlateGray"/> <!--12am Face-->
+            <Line X1="509" Y1="674" X2="509" Y2="694" StrokeThickness="4" Stroke="White"/> <!--12am Face-->
             
-            <Line X1="428" Y1="673" X2="425" Y2="682" StrokeThickness="4" Stroke="LightSlateGray"/> <!--1am Face-->
-            <Line X1="352" Y1="641" X2="347" Y2="650" StrokeThickness="4" Stroke="LightSlateGray"/> <!--2am Face-->
+            <Line X1="428" Y1="673" X2="425" Y2="682" StrokeThickness="4" Stroke="White"/> <!--1am Face-->
+            <Line X1="352" Y1="641" X2="347" Y2="650" StrokeThickness="4" Stroke="White"/> <!--2am Face-->
             
-            <Line X1="294" Y1="584" X2="280" Y2="598" StrokeThickness="4" Stroke="LightSlateGray"/> <!--3am Face-->
+            <Line X1="294" Y1="584" X2="280" Y2="598" StrokeThickness="4" Stroke="White"/> <!--3am Face-->
             
-            <Line X1="237" Y1="526" X2="228" Y2="531" StrokeThickness="4" Stroke="LightSlateGray"/> <!--4am Face-->
-            <Line X1="205" Y1="450" X2="196" Y2="453" StrokeThickness="4" Stroke="LightSlateGray"/> <!--5m Face-->
+            <Line X1="237" Y1="526" X2="228" Y2="531" StrokeThickness="4" Stroke="White"/> <!--4am Face-->
+            <Line X1="205" Y1="450" X2="196" Y2="453" StrokeThickness="4" Stroke="White"/> <!--5m Face-->
             
-            <Line X1="205" Y1="368" X2="185" Y2="368" StrokeThickness="4" Stroke="LightSlateGray"/> <!--6am Face-->
+            <Line X1="205" Y1="368" X2="185" Y2="368" StrokeThickness="4" Stroke="White"/> <!--6am Face-->
             
-            <Line X1="205" Y1="287" X2="196" Y2="284" StrokeThickness="4" Stroke="LightSlateGray"/> <!--7am Face-->
-            <Line X1="237" Y1="211" X2="228" Y2="206" StrokeThickness="4" Stroke="LightSlateGray"/> <!--8am Face-->
+            <Line X1="205" Y1="287" X2="196" Y2="284" StrokeThickness="4" Stroke="White"/> <!--7am Face-->
+            <Line X1="237" Y1="211" X2="228" Y2="206" StrokeThickness="4" Stroke="White"/> <!--8am Face-->
             
-            <Line X1="294" Y1="153" X2="280" Y2="139" StrokeThickness="4" Stroke="LightSlateGray"/> <!--9am Face-->
+            <Line X1="294" Y1="153" X2="280" Y2="139" StrokeThickness="4" Stroke="White"/> <!--9am Face-->
             
-            <Line X1="352" Y1="96" X2="347" Y2="87" StrokeThickness="4" Stroke="LightSlateGray"/> <!--12pm Face-->
-            <Line X1="428" Y1="64" X2="425" Y2="55" StrokeThickness="4" Stroke="LightSlateGray"/> <!--12pm Face-->
+            <Line X1="352" Y1="96" X2="347" Y2="87" StrokeThickness="4" Stroke="White"/> <!--12pm Face-->
+            <Line X1="428" Y1="64" X2="425" Y2="55" StrokeThickness="4" Stroke="White"/> <!--12pm Face-->
             
             <TextBlock
                 Canvas.Left="475" Canvas.Top="63" 

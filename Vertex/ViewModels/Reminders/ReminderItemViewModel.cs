@@ -11,27 +11,25 @@ public class ReminderItemViewModel : ViewModelBase
     public ReminderEntry? EntryData { get; }
     
     public RelayCommand OnDeleteReminder { get; }
-    public RelayCommand OnReminderDone { get; }
     public RelayCommand OnRestoreReminder { get; }
     public RelayCommand OnEditReminder { get; }
     public ReminderItemViewModel(ReminderEntry  entry)
     {
         EntryData = entry;
         OnDeleteReminder = new RelayCommand(_ => DeleteReminder());
-        OnReminderDone = new RelayCommand(_ => MarkReminderAsDone());
         OnRestoreReminder = new RelayCommand(_ => RestoreReminder());
         OnEditReminder = new RelayCommand(_ => EditReminder());
         
-        CreatedAt = EntryData.CreatedAt.ToString("yyyy-MM-dd hh:mm tt");
-        SetFor = EntryData.SetFor.ToString("yyyy-MM-dd hh:mm tt");
-        DoneAt = EntryData.DoneAt.ToString("yyyy-MM-dd hh:mm tt");
+        SetFor = $"Set for: {EntryData.SetFor:yyyy-MM-dd} / {EntryData.SetFor:hh:mm tt} ";
+        
+        _isDone = EntryData.Done;
     }
     
     private void DeleteReminder()
         => WeakReferenceMessenger.Default.Send(new DeleteReminderMessage(EntryData!.Id));
 
     private void MarkReminderAsDone()
-        => WeakReferenceMessenger.Default.Send(new MarkReminderAsDoneMessage(EntryData!.Id));
+        => WeakReferenceMessenger.Default.Send(new ChangeReminderStateMessage((EntryData!.Id, IsDone)));
     
     private void RestoreReminder()
         => WeakReferenceMessenger.Default.Send(new RestoreReminderMessage(EntryData!.Id));
@@ -52,30 +50,17 @@ public class ReminderItemViewModel : ViewModelBase
         }
     }
 
-    
-    private string _cretedAt;
+    private bool _isDone;
 
-    public string CreatedAt
+    public bool IsDone
     {
-        get => _cretedAt;
+        get => _isDone;
         set
         {
-            _cretedAt = value;
-            OnPropertyChanged(nameof(EntryData));
+            _isDone = value;
+            OnPropertyChanged();
+            MarkReminderAsDone();
         }
     }
 
-    private string _doneAt;
-
-    public string DoneAt
-    {
-        get => _doneAt;
-        set
-        {
-            _doneAt = value;
-            OnPropertyChanged(nameof(EntryData));
-        }
-    }
-
-    
 }

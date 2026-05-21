@@ -18,9 +18,9 @@
     <!--Reminders Tab Tittle-->
     <Style x:Key="ReminderTabTitle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="FontSize" Value="24"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
@@ -34,90 +34,28 @@
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
             </Trigger>
         </Style.Triggers>
         
     </Style>
 
-    <!--Reminder History ToggleButton-->
     <Style x:Key="ReminderHistoryToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
-        <Setter Property="Width" Value="35"/>
-        <Setter Property="Height" Value="35"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
-    </Style>
-    
-    <!--Sort Reminders Button-->
-    <Style x:Key="SortButton" TargetType="{x:Type Button}" BasedOn="{StaticResource AddReminderButton}">
-    </Style>
-    
-    <!--Reminders Not Done Placeholder Message-->
-    <Style x:Key="RemindersNotDonePlaceholderMessage" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReminderTabTitle}">
-        <Setter Property="Foreground" Value="{StaticResource LightBackgroundBrush}"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="Visibility" Value="Visible"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Reminders Done Placeholder Message-->
-    <Style x:Key="RemindersDonePlaceholderMessage" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReminderTabTitle}">
-        <Setter Property="Foreground" Value="{StaticResource LightBackgroundBrush}"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="Visibility" Value="Hidden"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Reminders ScrollViewer-->
-    <Style x:Key="ReminderHistoryIsOff" TargetType="{x:Type ScrollViewer}">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Reminders History ScrollViewer-->
-    <Style x:Key="ReminderHistoryIsOn" TargetType="{x:Type ScrollViewer}">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="35"/>
+            
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+            
+        </Style>
     
     <!--Add Reminder icon-->
     <Style x:Key="AddIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
         <Setter Property="Data" Value="{StaticResource Add}"/>
+        <Setter Property="Fill" Value="{StaticResource DarkTextBrush}"/>
         
         <!--On Hover-->
         <Style.Triggers>
@@ -128,54 +66,5 @@
         
     </Style>
     
-    <!--Reminders History Icon-->
-    <Style x:Key="HistoryIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource History}"/>
-        
-        <!--On Hover-->
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=Tag}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
-    </Style>
-    
-    <!-- Sort Reminders Icon -->
-    <Style x:Key="SortIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource Closest}"/>
-        <Setter Property="Height" Value="25"/>
-        <Setter Property="Width" Value="25"/>
-        
-        <!--Icon Change--><!--On Hover-->
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="Closest">
-                <Setter Property="Data" Value="{StaticResource Closest}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="Created">
-                <Setter Property="Data" Value="{StaticResource Created}"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
-    </Style>
-    
-    <!--Reminders Done Placeholder Message-->
-    <Style x:Key="CurrentDayActivityPlaceholderMessage" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource RemindersDonePlaceholderMessage}">
-        <Setter Property="Margin" Value="0,0,0,200"/>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
     
 </ResourceDictionary>

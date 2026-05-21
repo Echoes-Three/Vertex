@@ -96,8 +96,8 @@ public class ActivitiesViewModel : ViewModelBase
         WeakReferenceMessenger.Default.Register<EditActivityMessage>(this, (r, msg) =>
             EditActivity(msg.Value));
 
-        WeakReferenceMessenger.Default.Register<MarkActivityAsDoneMessage>(this, (r, msg) =>
-            MarkActivityAsDone(msg.Value));
+        WeakReferenceMessenger.Default.Register<ChangeActivityStateMessage>(this, (r, msg) =>
+            MarkActivityAsDone(msg.Value.Item1, msg.Value.Item2));
         
         OnAddActivityView = new RelayCommand(_ => ActivityWindow());
         OnColorGroupSwap = new RelayCommand(_ => SwapColorGroup());
@@ -194,13 +194,15 @@ public class ActivitiesViewModel : ViewModelBase
     
     
     /*Actions on CurrentDayActivities*/
-    private void MarkActivityAsDone(string activityId)
+    private void MarkActivityAsDone(string id, bool done)
     {
-        var activityEntry = ActivitiesData.Activities!.FirstOrDefault(x => x.Id == activityId);
+        var activityEntry = ActivitiesData.Activities!.FirstOrDefault(x => x.Id == id);
         if (activityEntry == null) return;
-        activityEntry.Done = true;
+        activityEntry.Done = done;
 
+        ActivitiesData.Serialize();
         ReloadCollection();
+        
     }
     private void EditActivity(string activityId)
     {
@@ -267,7 +269,7 @@ public class ActivitiesViewModel : ViewModelBase
     private void CountContentLimit(int length) =>
        ContentLimitCounter = (500 - length).ToString();
     private void CountTitleLimit(int length) => 
-        TitleLimitCounter = (22 - length).ToString();
+        TitleLimitCounter = (29 - length).ToString();
     
     /*Color Picking on ActivityViewWindow*/
     private void SwapColorGroup()

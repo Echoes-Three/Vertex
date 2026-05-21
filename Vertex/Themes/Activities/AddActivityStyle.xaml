@@ -9,7 +9,7 @@
     
     <!--Activity Content Input Placeholder-->
     <Style x:Key="ActivityContentInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="15"/>
@@ -36,7 +36,7 @@
     
     <!--Activity Title Input Placeholder-->
     <Style x:Key="ActivityTitleInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="18"/>
@@ -60,15 +60,15 @@
         <Style.Triggers>
             
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
             </Trigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
             </DataTrigger>
             
         </Style.Triggers>
@@ -99,13 +99,13 @@
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
     
     <Style x:Key="ColorSelectionHighlight" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource TextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LightTextBrush}"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Visibility" Value="Hidden"/>
         
@@ -123,10 +123,10 @@
         
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
             </Trigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
                 <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"></Setter>
             </DataTrigger>
         </Style.Triggers>

@@ -16,7 +16,7 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/MainWindowStyle.xaml"/>
                 <!--Reminders-->
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersTabStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderNotDoneStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersItemStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderDoneStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderWindowView.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/Calendar.xaml"/>

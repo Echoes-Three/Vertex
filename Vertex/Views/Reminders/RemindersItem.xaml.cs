@@ -5,11 +5,10 @@ using Vertex.ViewModels.Reminders;
 
 namespace Vertex.Views.Reminders;
 
-public partial class ReminderDoneView : UserControl
+public partial class RemindersItem : UserControl
 {
-    public ReminderDoneView()
+    public RemindersItem()
     {
         InitializeComponent();
     }
-    
 }

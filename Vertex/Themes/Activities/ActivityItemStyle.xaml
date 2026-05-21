@@ -1,56 +1,107 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
+    <!--Styles Present Here-->
     
-    <Style x:Key="ActivitiesMessage" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource RemindersDonePlaceholderMessage}">
-    </Style>
+    <!--
+    Activity Title
+    Activity Content
+    Delete Activity Button
+    Edit Activity Button
+    Mark Activity As Done Button
+    Delete Activity Icon
+    Edit Activity Icon
+    Activity CheckBox Icon-->
     
-    <Style x:Key="ActivityTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ActivitiesTabTitle}">
+    <!--Activity Title-->
+    <Style x:Key="ActivityTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="20"/>
-        <Setter Property="TextWrapping" Value="NoWrap"/>
-    </Style>
-    
-    <Style x:Key="ActivityContent" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReminderContent}">
-        <Setter Property="Margin" Value="0"/>
-        <Setter Property="MinHeight" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
-    </Style>
-    
-    <Style x:Key="EditActivityButton" TargetType="{x:Type Button}" BasedOn="{StaticResource EditReminderButton}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
         
     </Style>
     
-    <Style x:Key="DeleteActivityButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DeleteReminderButton}">
+    <!--Activity Content-->
+    <Style x:Key="ActivityContent" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="5,15,0,15"/>
         
     </Style>
     
-    <Style x:Key="MarkActivityAsDoneButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MarkReminderAsDoneButton}">
+    <!--Edit Activity Button-->
+    <Style x:Key="EditActivityButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
         
-        
-    </Style>
-    
-    <!--Current Day Activities ScrollViewer-->
-    <Style x:Key="ShowAllActivitiesIsOff" TargetType="{x:Type ScrollViewer}">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
+            <!--On Hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+            </Trigger>
         </Style.Triggers>
     </Style>
     
-    <!--All Activities ScrollViewer-->
-    <Style x:Key="ShowAllActivitiesIsOn" TargetType="{x:Type ScrollViewer}">
+    <!--Delete Activity Button-->
+    <Style x:Key="DeleteActivityButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-                <Setter Property="Visibility" Value="Hidden"/>
+            <!--On Hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Mark Activity As Done Button-->
+    <Style x:Key="MarkActivityAsDoneButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Delete Activity Icon-->
+    <Style x:Key="DeleteActivityIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource Bin}"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
+        
+    </Style>
+    
+    <!--Edit Activity Icon-->
+    <Style x:Key="EditActivityIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource Edit}"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
+        
+    </Style>
+    
+    <!--Activity CheckBox Icon-->
+    <Style x:Key="ActivityCheckBoxIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
+        <Setter Property="Data" Value="{StaticResource EmptyCheckBox}"/>
+        <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
+        
+        <Style.Triggers>
+            <!--Binding-->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource UltraLightBackgroundBrush}"/>
+                <Setter Property="Data" Value="{StaticResource SelectedCheckBox}"/>
             </DataTrigger>
         </Style.Triggers>
+        
     </Style>
 </ResourceDictionary>

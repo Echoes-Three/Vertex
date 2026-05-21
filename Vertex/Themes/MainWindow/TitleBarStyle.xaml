@@ -10,11 +10,11 @@
     
     <!--Minimize Button-->
     <Style x:Key="MinimizeButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        
+        <Setter Property="Background" Value="{StaticResource ChartreuseBrush}"></Setter>
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
             </Trigger>
         </Style.Triggers>
         
@@ -22,11 +22,11 @@
     
     <!--Close Button-->
     <Style x:Key="CloseButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        
+        <Setter Property="Background" Value="{StaticResource ChartreuseBrush}"></Setter>
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
             </Trigger>
         </Style.Triggers>
         

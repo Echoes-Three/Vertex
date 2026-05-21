@@ -14,33 +14,18 @@ public class RemindersViewModel : ViewModelBase
 {
     private RemindersHandler RemindersData;
     
-    private ObservableCollection<ReminderItemViewModel> _remindersNotDone;
+    private ObservableCollection<ReminderItemViewModel> _reminders;
 
-    public ObservableCollection<ReminderItemViewModel> RemindersNotDone
+    public ObservableCollection<ReminderItemViewModel> Reminders
     {
-        get => _remindersNotDone;
+        get => _reminders;
         set
         {
-            _remindersNotDone = value;
+            _reminders = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<ReminderItemViewModel> _remindersDone;
-
-    public ObservableCollection<ReminderItemViewModel> RemindersDone
-    {
-        get => _remindersDone;
-        set
-        {
-            _remindersDone = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private readonly List<string> _icons = ["Closest", "Created"];
-    private int _currentIconIndex;
-
+    
     private readonly List<string> _meridiem = ["AM", "PM"];
     private int _currentMeridiemIndex;
     private int _currentHourCount = 12;
@@ -49,7 +34,6 @@ public class RemindersViewModel : ViewModelBase
     private WindowMode _windowMode = WindowMode.Add;
     
     private Window? ReminderWindowView { get; set; }
-    public RelayCommand OnSortIcon { get; }
     public RelayCommand OnAddNewReminder { get; }
     public RelayCommand OnSaveAction { get; }
 
@@ -57,32 +41,32 @@ public RemindersViewModel(RemindersHandler remindersHandler)
     {
         RemindersData = remindersHandler;
         
-        RemindersNotDone = new ObservableCollection<ReminderItemViewModel>(
-            remindersHandler.Reminders!.Where(x => !x.Done).Select(x => new ReminderItemViewModel(x)));
-
-        RemindersDone = new ObservableCollection<ReminderItemViewModel>(
-            remindersHandler.Reminders!.Where(x => x.Done).Select(x => new ReminderItemViewModel(x)));
+        Reminders = new ObservableCollection<ReminderItemViewModel>(
+            RemindersData.Reminders!
+                .Select(x => new ReminderItemViewModel(x))
+                .OrderBy(r => r.IsDone)
+                .ToList());
         
         remindersHandler.Reminders!.CollectionChanged += (s, e) =>
         {
             if (e.NewItems != null)
                 foreach (ReminderEntry entry in e.NewItems)
-                    RemindersNotDone.Add(new ReminderItemViewModel(entry));
+                    Reminders.Add(new ReminderItemViewModel(entry));
 
             if (e.OldItems != null)
                 foreach (ReminderEntry entry in e.OldItems)
                 {
-                    var vm = RemindersNotDone.FirstOrDefault(x => x.EntryData!.Id == entry.Id);
+                    var vm = Reminders.FirstOrDefault(x => x.EntryData!.Id == entry.Id);
                     if (vm != null)
-                        RemindersNotDone.Remove(vm);
+                        Reminders.Remove(vm);
                 }
         };
         
         WeakReferenceMessenger.Default.Register<DeleteReminderMessage>(this, (r, msg) =>
             DeleteReminder(msg.Value));
 
-        WeakReferenceMessenger.Default.Register<MarkReminderAsDoneMessage>(this, (r, msg) =>
-            MarkReminderAsDone(msg.Value));
+        WeakReferenceMessenger.Default.Register<ChangeReminderStateMessage>(this, (r, msg) =>
+            MarkReminderAsDone(msg.Value.Item1, msg.Value.Item2));
 
         WeakReferenceMessenger.Default.Register<RestoreReminderMessage>(this, (r, msg) =>
             RestoreReminder(msg.Value));
@@ -90,7 +74,6 @@ public RemindersViewModel(RemindersHandler remindersHandler)
         WeakReferenceMessenger.Default.Register<EditReminderMessage>(this, (r, msg) =>
             EditReminder(msg.Value));
         
-        OnSortIcon = new RelayCommand(_ => UpdateSortIcon());
         OnAddNewReminder = new RelayCommand(_ => ReminderWindow());
         OnSaveAction = new RelayCommand(_ => SaveAction(), _ => CanSaveAction());
     }
@@ -138,9 +121,7 @@ public RemindersViewModel(RemindersHandler remindersHandler)
         reminderEntry.Content = ReminderContent;
         reminderEntry.SetFor = ConvertDateTime();
         reminderEntry.Done = false;
-        reminderEntry.DoneAt = default;
-      
-
+        
         RemindersData.Serialize();
         ReminderWindowView!.Close();
         
@@ -154,8 +135,6 @@ public RemindersViewModel(RemindersHandler remindersHandler)
             Content = ReminderContent,
             SetFor = ConvertDateTime(),
             Done = false,
-            CreatedAt = DateTime.Now,
-            DoneAt = default,
             Id = Guid.NewGuid().ToString()
         };
 
@@ -167,16 +146,13 @@ public RemindersViewModel(RemindersHandler remindersHandler)
    
     
     /*Actions on RemindersNotDoneView*/
-    private void MarkReminderAsDone(string reminderId)
+    private void MarkReminderAsDone(string id, bool done)
     {
-        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == reminderId);
+        var reminderEntry = RemindersData.Reminders!.FirstOrDefault(x => x.Id == id);
         if (reminderEntry == null) return;
         
-        reminderEntry!.Done = true;
-        reminderEntry!.DoneAt = DateTime.Now;
-        
+        reminderEntry!.Done = done;
         RemindersData.Serialize();
-
         ReloadCollections();
     }
     private void DeleteReminder(string reminderId)
@@ -219,33 +195,11 @@ public RemindersViewModel(RemindersHandler remindersHandler)
         if (reminderEntry == null) return;
         
         reminderEntry!.Done = false;
-        reminderEntry!.DoneAt = default;
         
         RemindersData.Serialize();
 
         ReloadCollections();
     }
-    private void SortReminders(string orderby)
-    {
-        RemindersDone = orderby switch
-        {
-            "Created" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersDone.OrderBy(x => x.EntryData!.CreatedAt)),
-
-            "Closest" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersDone.OrderBy(x => x.EntryData!.SetFor))
-        };
-        
-        RemindersNotDone = orderby switch
-        {
-            "Created" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersNotDone.OrderBy(x => x.EntryData!.CreatedAt)),
-
-            "Closest" => new ObservableCollection<ReminderItemViewModel>(
-                RemindersNotDone.OrderBy(x => x.EntryData!.SetFor))
-        };
-    }
-    
     
     /*Helper methods*/
     public void CleanReminderWindowFields()
@@ -257,14 +211,13 @@ public RemindersViewModel(RemindersHandler remindersHandler)
         (_currentMinuteCount, CurrentRemindMinute) = (59, "59");
         (_currentMeridiemIndex, CurrentRemindMeridiem) = (0, "AM");
     }
-    private void ReloadCollections()
-    {
-        RemindersNotDone = new ObservableCollection<ReminderItemViewModel>(
-            RemindersData.Reminders!.Where(x => !x.Done).Select(x => new ReminderItemViewModel(x)));
-
-        RemindersDone = new ObservableCollection<ReminderItemViewModel>(
-            RemindersData.Reminders!.Where(x => x.Done).Select(x => new ReminderItemViewModel(x)));
-    }
+    private void ReloadCollections() =>
+        Reminders = new ObservableCollection<ReminderItemViewModel>(
+            RemindersData.Reminders!
+                .Select(x => new ReminderItemViewModel(x))
+                .OrderBy(r => r.IsDone)
+                .ToList());
+        
     private DateTime ConvertDateTime()
     {
         switch (_currentRemindMeridiem)
@@ -289,8 +242,6 @@ public RemindersViewModel(RemindersHandler remindersHandler)
 
     
     /*HourPicker scroll behavior on ReminderViewWindow*/
-    private void UpdateSortIcon() => 
-        CurrentIcon = _icons[_currentIconIndex = (_currentIconIndex + 1) % 2];
     public void UpdateMeridiem() => 
         CurrentRemindMeridiem = _meridiem[_currentMeridiemIndex = (_currentMeridiemIndex + 1) % 2];
     
@@ -345,20 +296,6 @@ public RemindersViewModel(RemindersHandler remindersHandler)
             OnPropertyChanged();
         }
     }
-
-    
-    private bool _isRemindersHistoryOn;
-
-    public bool IsRemindersHistoryOn
-    {
-        get => _isRemindersHistoryOn;
-        set
-        {
-            _isRemindersHistoryOn = value;
-            OnPropertyChanged();
-        }
-    }
-
     
     private string _currentRemindMeridiem = "AM";
 
@@ -369,20 +306,6 @@ public RemindersViewModel(RemindersHandler remindersHandler)
         {
             _currentRemindMeridiem = value;
             OnPropertyChanged();
-        }
-    }
-
-    
-    private string _currentIcon = "Closest";
-
-    public string CurrentIcon
-    {
-        get => _currentIcon;
-        set
-        {
-            _currentIcon = value;
-            OnPropertyChanged();
-            SortReminders(value);
         }
     }
     

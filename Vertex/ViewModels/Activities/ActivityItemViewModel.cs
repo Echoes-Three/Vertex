@@ -14,7 +14,6 @@ public class ActivityItemViewModel : ViewModelBase
     
     public RelayCommand OnDeleteActivity { get; }
     public RelayCommand OnEditActivity { get; }
-    public RelayCommand OnMarkActivityAsDone { get; }
     
     public ActivityItemViewModel(ActivityEntry entry)
     {
@@ -23,8 +22,8 @@ public class ActivityItemViewModel : ViewModelBase
         
         OnDeleteActivity = new RelayCommand(_ => DeleteActivity());
         OnEditActivity = new RelayCommand(_ => EditActivity());
-        OnMarkActivityAsDone = new RelayCommand(_ => MarkActivityAsDone());
-        
+
+        _isDone = EntryData.Done;
     }
 
     private void DeleteActivity() =>
@@ -34,7 +33,7 @@ public class ActivityItemViewModel : ViewModelBase
         WeakReferenceMessenger.Default.Send(new EditActivityMessage(EntryData!.Id));
 
     private void MarkActivityAsDone() =>
-        WeakReferenceMessenger.Default.Send(new MarkActivityAsDoneMessage(EntryData!.Id));
+        WeakReferenceMessenger.Default.Send(new ChangeActivityStateMessage((EntryData!.Id, IsDone)));
     
     
     private Brush? _activityColor;
@@ -46,6 +45,19 @@ public class ActivityItemViewModel : ViewModelBase
         {
             _activityColor = value;
             OnPropertyChanged();
+        }
+    }
+
+    private bool _isDone;
+
+    public bool IsDone
+    {
+        get => _isDone;
+        set
+        {
+            _isDone = value;
+            OnPropertyChanged();
+            MarkActivityAsDone();
         }
     }
 

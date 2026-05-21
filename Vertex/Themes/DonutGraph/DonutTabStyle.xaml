@@ -8,7 +8,7 @@
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="150"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
@@ -45,7 +45,7 @@
         
     </Style>
     
-    <Style x:Key="MarkDonutActivityAsDoneButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MarkActivityAsDoneButton}">
+    <Style x:Key="MarkDonutActivityAsDoneButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MarkActivityAsDoneButton}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>
@@ -53,7 +53,7 @@
         </Style.Triggers>
     </Style>
     
-    <Style x:Key="RestoreDonutActivityAsDoneButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MarkActivityAsDoneButton}">
+    <Style x:Key="RestoreDonutActivityAsDoneButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MarkActivityAsDoneButton}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>

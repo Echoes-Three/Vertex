@@ -1,0 +1,105 @@
+<UserControl x:Class="Vertex.Views.Activities.ActivitiesTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding ActivitiesVM}"
+             xmlns:activitiesView="clr-namespace:Vertex.Views.Activities"
+             xmlns:activities="clr-namespace:Vertex.ViewModels.Activities"
+             mc:Ignorable="d"
+             d:DesignHeight="513" d:DesignWidth="504"
+             d:DataContext="{d:DesignInstance Type=activities:ActivitiesViewModel}">
+    
+    <Border 
+        Background="{StaticResource ExtraLightBackgroundBrush}"
+        CornerRadius="10">
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/> <!--Tab-->
+                <RowDefinition Height="2*"/> <!--Spacer-->
+                <RowDefinition Height="84*"/> <!--Activities Content-->
+                <RowDefinition Height="2*"/> <!--Spacer-->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="96*"/> <!--Tab Title & Activities Content-->
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="82*"/> <!--Tab Tittle-->
+                    <ColumnDefinition Width="1*"/> <!--Spacer-->
+                    <ColumnDefinition Width="8*"/> <!--Show All Activities Toggle Button-->
+                    <ColumnDefinition Width="1*"/> <!--Spacer-->
+                    <ColumnDefinition Width="8*"/> <!--Add New Activity Button-->
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock
+                    Grid.Column="0"
+                    Text="ACTIVITIES"
+                    Style="{StaticResource ActivitiesTabTitle}"/> <!--Tab Tittle-->
+                
+                <ToggleButton 
+                    Grid.Column="2"
+                    IsChecked="{Binding ShowAllActivities}"
+                    Style="{StaticResource ShowAllActivitiesToggleButton}"
+                    Tag="{Binding ShowAllActivities}">
+                    <Path Style="{StaticResource ShowAllIconActivities}"/>
+                </ToggleButton> <!--Show All Activities Toggle Button-->
+                
+                <Button 
+                    Grid.Column="4"
+                    Style="{StaticResource AddNewActivityButton}"
+                    Command="{Binding OnAddActivityView}">
+                    <Path Style="{StaticResource AddNewActivityIcon}"/>
+                </Button> <!--Add New Reminder Button-->
+                
+            </Grid> <!--Tab Buttons-->
+        
+            <!--Today's Activities-->
+            <ScrollViewer Grid.Row="2" Grid.Column="1" 
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Style="{StaticResource ShowAllActivitiesIsOff}"
+                          Tag="{Binding ShowAllActivities}">
+                
+                <ScrollViewer.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
+                </ScrollViewer.Resources>
+                
+                <ItemsControl ItemsSource="{Binding ActivitiesForToday}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <activitiesView:TodaysActivitiesItem/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+            </ScrollViewer>
+            
+            <!--All Activities-->
+            <ScrollViewer Grid.Row="2" Grid.Column="1" 
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Style="{StaticResource ShowAllActivitiesIsOn}"
+                          Tag="{Binding ShowAllActivities}">
+                
+                <ScrollViewer.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
+                </ScrollViewer.Resources>
+                
+                <ItemsControl ItemsSource="{Binding ActivitiesNotForToday}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <activitiesView:AllActivitiesItem/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+            </ScrollViewer>
+        </Grid>
+        
+    </Border>
+</UserControl>

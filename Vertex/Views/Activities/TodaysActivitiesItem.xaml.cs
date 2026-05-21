@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace Vertex.Views.Activities;
 
-public partial class CurrentDayActivitiesView : UserControl
+public partial class TodaysActivitiesItem : UserControl
 {
-    public CurrentDayActivitiesView()
+    public TodaysActivitiesItem()
     {
         InitializeComponent();
     }

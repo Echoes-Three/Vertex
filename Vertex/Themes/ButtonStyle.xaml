@@ -6,7 +6,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         
         <!--Removes Default Style-->
         <Setter Property="Template">
@@ -43,7 +43,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         
         <!--Removes Default Style-->
         <Setter Property="Template">
@@ -77,7 +77,7 @@
         <Style.Triggers>
             
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
             </Trigger>
             
             <Trigger Property="IsMouseOver" Value="True">

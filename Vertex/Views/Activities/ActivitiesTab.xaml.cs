@@ -3,9 +3,9 @@ using System.Windows.Input;
 
 namespace Vertex.Views.Activities;
 
-public partial class ActivitiesTabView : UserControl
+public partial class ActivitiesTab : UserControl
 {
-    public ActivitiesTabView()
+    public ActivitiesTab()
     {
         InitializeComponent();
     }

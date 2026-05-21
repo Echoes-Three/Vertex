@@ -11,7 +11,7 @@
     
     <!--Reminder Content Input Placeholder-->
     <Style x:Key="ReminderContentInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="15"/>
@@ -32,7 +32,7 @@
     <!--Reminder Content Input-->
     <Style x:Key="ReminderContentInput" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="15"/>
@@ -51,19 +51,19 @@
         <Style.Triggers>
             
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
             </Trigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
             </DataTrigger>
             
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=MeridiemScroll}" Value="True">
-                <Setter Property="Background" Value="{StaticResource TextBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
             </DataTrigger>
             
         </Style.Triggers>
@@ -73,7 +73,7 @@
     <Style x:Key="TimePicker" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Center"></Setter>

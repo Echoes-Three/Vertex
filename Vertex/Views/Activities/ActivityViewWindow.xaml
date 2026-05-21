@@ -141,7 +141,7 @@
                 
                 <Border 
                     Grid.Column="{Binding CurrentColorIndex}"
-                    BorderBrush="{StaticResource TextBrush}"
+                    BorderBrush="{StaticResource LightTextBrush}"
                     BorderThickness="2"></Border> <!--Selected Color Highlighter-->
                 
                 <Button

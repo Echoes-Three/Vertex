@@ -4,10 +4,10 @@ using Vertex.Data.Handlers;
 
 namespace Vertex.Data.Services;
 
-public class DataService
+public class FileInitializer
 {
     private readonly string _dataPath;
-    public DataService()
+    public FileInitializer()
     {
         _dataPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -20,7 +20,7 @@ public class DataService
         InitializeFile<RemindersHandler>("Reminders.json");
     }
 
-    public void InitializeFile<T>(string fileNeme) where T : new()
+    private void InitializeFile<T>(string fileNeme) where T : new()
     {
         var fullPath = Path.Combine(_dataPath, fileNeme);
         if (File.Exists(fullPath) && new FileInfo(fullPath).Length > 0) return;

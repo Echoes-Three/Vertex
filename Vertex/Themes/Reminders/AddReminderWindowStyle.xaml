@@ -1,0 +1,133 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!--Styles Present Here-->
+    
+    <!--
+    Reminder Content Input Placeholder
+    Reminder Content Input
+    Time Picker Scroll Background
+    Time Picker
+    Tooltip Body
+    Tooltip Header-->
+    
+    <!--Reminder Content Input Placeholder-->
+    <Style x:Key="ReminderContentInputPlaceholder" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Text, ElementName=ReminderInput}" Value="">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Reminder Content Input-->
+    <Style x:Key="ReminderContentInput" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+    </Style>
+    
+    <!--Time Picker-->
+    <Style x:Key="TimePicker" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="65"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        
+    </Style>
+    
+    <!--Cancel Reminder Entry Button-->
+    <Style x:Key="CancelReminderEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="3,0,0,3">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Save Reminder Entry Button-->
+    <Style x:Key="SaveReminderEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Content Limit Counter-->
+    <Style x:Key="ReminderContentLimitCounter" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="Margin" Value="0,0,5,5"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="12"/>
+        
+    </Style>
+    
+    <!--Tooltip Body-->
+    <Style x:Key="ReminderTooltipBody" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="LineHeight" Value="20"/>
+    </Style>
+    
+    <!--Tooltip Header-->
+    <Style x:Key="ReminderTooltipHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="left"/>
+    </Style>
+</ResourceDictionary>

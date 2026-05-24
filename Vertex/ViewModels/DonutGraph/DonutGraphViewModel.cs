@@ -16,7 +16,8 @@ namespace Vertex.ViewModels.DonutGraph;
 
 public class DonutGraphViewModel : ViewModelBase
 {
-    public ActivitiesHandler ActivitiesData { get; set; }
+    private readonly ActivitiesHandler _activitiesData;
+    private readonly RemindersHandler _remindersData;
     
     private ObservableCollection<SliceViewModel> _slices;
 
@@ -30,15 +31,29 @@ public class DonutGraphViewModel : ViewModelBase
         }
     }
     
+    private ObservableCollection<OrbiterViewModel> _orbiters;
+
+    public ObservableCollection<OrbiterViewModel> Orbiters
+    {
+        get => _orbiters;
+        set
+        {
+            _orbiters = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public int TodayIndex => (int)DateTime.Today.DayOfWeek;
 
     private DispatcherTimer _clock;
     
-    public DonutGraphViewModel(ActivitiesHandler activitiesHandler)
+    public DonutGraphViewModel(ActivitiesHandler activitiesHandler, RemindersHandler remindersHandler)
     {
-        ActivitiesData = activitiesHandler;
+        _activitiesData = activitiesHandler;
+        _remindersData = remindersHandler;
 
         BuildSlices();
+        LaunchOrbiters();
             
         activitiesHandler.Activities!.CollectionChanged += (s, e) =>
         {
@@ -64,38 +79,59 @@ public class DonutGraphViewModel : ViewModelBase
             }
             
         };
+        
+        remindersHandler.Reminders!.CollectionChanged += (s, e) =>
+        {
+            if (e.NewItems != null)
+                foreach (ReminderEntry entry in e.NewItems)
+                {
+                    Orbiters.Add(new OrbiterViewModel(entry));
+                    LaunchOrbiters();
+                }
 
+            if (e.OldItems != null)
+                foreach (ReminderEntry entry in e.OldItems)
+                {
+                    var vm = Orbiters.FirstOrDefault(x => x.EntryData!.Id == entry.Id);
+                    if (vm != null)
+                        Orbiters.Remove(vm);
+                    LaunchOrbiters();
+                }
+        };
         WeakReferenceMessenger.Default.Register<RebuildSlicesMessage> (this, (r, m) => 
             { BuildSlices();});
+        WeakReferenceMessenger.Default.Register<RelaunchOrbitersMessage> (this, (r, m) => 
+            { LaunchOrbiters();});
         
         StartClock();
     }
 
     public void PopulateActivityInfo(object id)
     {
-        var entry = ActivitiesData.Activities!.FirstOrDefault(x => x.Id == (string)id);
+        var entry = _activitiesData.Activities!.FirstOrDefault(x => x.Id == (string)id);
         if (entry == null) return;
 
         var todayIndex = (int)DateTime.Now.DayOfWeek;
-
+        var completion = entry.Done ? "DONE" : "NOT DONE";
+        
+        RingColor = ActivityColors.Palette[entry.Color];
+        TitleInfo = entry.Title;
+        UpperInfo = "<| STARTS |>";
         (ClockHour, ClockMinute, ClockMeridiem) = FromAngleToHour(entry.StartAngle[todayIndex]);
-
-        RingColor = ActivityColors.Categories[entry.Color.GroupIndex][entry.Color.ColorIndex];
-        UpperInfo = "Activity starts at:";
-        LowerInfo = entry.Title;
-        ShowMarkActivityAsDoneButton = !entry.Done;
+        LowerInfo = $"STATUS ->> ->> {completion}";
+        
     }
 
     public void CleanActivityInfo()
     {
-        ShowActivityInfo = false;
-        ShowMarkActivityAsDoneButton = false;
+        RingColor = Brushes.Transparent;
+        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek} ";
         LowerInfo = "";
-        
+        TitleInfo = "";
         ClockHour = DateTime.Now.ToString("hh");
         ClockMinute = DateTime.Now.ToString("mm");
         ClockMeridiem = DateTime.Now.ToString("tt");
-        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek} ";
+        
     }
     private void StartClock()
     {
@@ -140,12 +176,17 @@ public class DonutGraphViewModel : ViewModelBase
         
     }
 
-    private void BuildSlices()
-    {
+    private void LaunchOrbiters() =>
+        Orbiters = new ObservableCollection<OrbiterViewModel>(
+            _remindersData.Reminders!
+                .Where(r => r.SetFor.Date == DateTime.Today)
+                .Select(r => new OrbiterViewModel(r)));
+    
+    private void BuildSlices() =>
         Slices = new ObservableCollection<SliceViewModel>(
-            ActivitiesData.Activities!.Where(x => x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
+            _activitiesData.Activities!.Where(x => x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
                 .Select(x => new SliceViewModel(x)));
-    }
+    
     
     private void AddSlice(ActivityEntry entry)
     {
@@ -208,9 +249,7 @@ public class DonutGraphViewModel : ViewModelBase
         
         activity.StartAngle[TodayIndex] = DragSlice.StartAngle;
 
-        ActivitiesData.Serialize();
-        
-        IsOverlapping = HasOverlap(DragSlice);
+        _activitiesData.Serialize();
         
         IsDragging = false;
         DragSlice = null;
@@ -222,7 +261,7 @@ public class DonutGraphViewModel : ViewModelBase
         
     }
 
-    public static (string, string, string) FromAngleToHour(double angle)
+    private static (string, string, string) FromAngleToHour(double angle)
     {
         var adjustedAngle = (180 - angle + 360) % 360;
         var totalHours = adjustedAngle / 15.0;
@@ -237,19 +276,19 @@ public class DonutGraphViewModel : ViewModelBase
         return (correctHour.ToString("D2"), minutes.ToString("D2"), meridiem);
     }
     
-    private bool HasOverlap(SliceViewModel dragged)
-    {
-        foreach (var slice in Slices)
-        {
-            if (slice == dragged) continue;
-            
-            if (dragged.StartAngle > slice.EndAngle && dragged.StartAngle < slice.StartAngle) return true;
-            if (dragged.EndAngle > slice.EndAngle && dragged.EndAngle < slice.StartAngle) return true;
-        }
-        return false;
-        
-    }
     /*Full Properties*/
+
+    private string _titleInfo;
+
+    public string TitleInfo
+    {
+        get => _titleInfo;
+        set
+        {
+            _titleInfo = value;
+            OnPropertyChanged();
+        }
+    }
 
     private string _lowerInfo;
 
@@ -262,19 +301,7 @@ public class DonutGraphViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private bool _showActivityInfo;
-
-    public bool ShowActivityInfo
-    {
-        get => _showActivityInfo;
-        set
-        {
-            _showActivityInfo = value;
-            OnPropertyChanged();
-        }
-    }
-
+    
     private Brush? _ringColor;
 
     public Brush? RingColor
@@ -286,19 +313,7 @@ public class DonutGraphViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private bool _showMarkActivityAsDoneButton;
-
-    public bool ShowMarkActivityAsDoneButton
-    {
-        get => _showMarkActivityAsDoneButton;
-        set
-        {
-            _showMarkActivityAsDoneButton = value;
-            OnPropertyChanged();
-        }
-    }
-
+    
     private string _upperInfo;
 
     public string UpperInfo
@@ -395,19 +410,7 @@ public class DonutGraphViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private bool _isOverlapping;
-
-    public bool IsOverlapping
-    {
-        get => _isOverlapping;
-        set
-        {
-            _isOverlapping = value;
-            OnPropertyChanged();
-        }
-    }
-
+    
     private double _lastClockDegree;
 
     public double LastClockDegree

@@ -1,22 +1,50 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
+    <!--Styles Present Here-->
+    
+    <!--
+    Title Limit Counter
+    Content Limit Counter
+    Activity Title Input
+    Activity Title Input Placeholder
+    Activity Content Input
+    Activity Content Input Placeholder
+    Weekday Toggle Button
+    Duration Picker
+    Cancel Activity Entry Button
+    Save Activity Entry Button
+    Color Picker Border
+    Color Picker Hover Animation
+    Hover Animation Corners
+    Duration / Color Header
+    Tooltip Body
+    Tooltip Header-->
     
     <!--Activity Content Input-->
-    <Style x:Key="ActivityContentInput" TargetType="{x:Type TextBox}" BasedOn="{StaticResource ReminderContentInput}">
-  
+    <Style x:Key="ActivityContentInput" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
     </Style>
     
     <!--Activity Content Input Placeholder-->
     <Style x:Key="ActivityContentInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="MinHeight" Value="100"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="5"/>
         <Setter Property="Visibility" Value="Hidden"/>
         
         <Style.Triggers>
@@ -28,21 +56,28 @@
     </Style>
     
     <!--Activity Title Input-->
-    <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}" BasedOn="{StaticResource ReminderContentInput}">
+    <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Margin" Value="10,10,10,5"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="AcceptsReturn" Value="False"/>
     </Style>
     
     <!--Activity Title Input Placeholder-->
     <Style x:Key="ActivityTitleInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="Visibility" Value="Hidden"/>
       
         <Setter Property="MinHeight" Value="0"></Setter>
@@ -54,81 +89,211 @@
         
     </Style>
     
-    <!--Time Picker Scroll Background-->
-    <Style x:Key="DurationPickerScrollBackground" TargetType="{x:Type Border}" BasedOn="{StaticResource TimePickerScrollBackground}">
+    <!--Duration Picker-->
+    <Style x:Key="DurationPicker" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="65"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
         
-        <Style.Triggers>
-            
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
-            </Trigger>
-            
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
-            </DataTrigger>
-            
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"></Setter>
-            </DataTrigger>
-            
-        </Style.Triggers>
     </Style>
     
-    <!--Time Picker-->
-    <Style x:Key="DurationPicker" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TimePicker}">
-        
-        <Style.Triggers>
-            
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=DurationPickerBackground}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-            
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=HourScroll}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-            
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinuteScroll}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-            
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="SwapColourGroup" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        
-        <!--On Hover-->
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="ColorSelectionHighlight" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource LightTextBrush}"/>
-        <Setter Property="BorderThickness" Value="3"/>
-        <Setter Property="Visibility" Value="Hidden"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border, AncestorLevel=1}}" Value="True">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
+    <!--Weekday Toggle Button-->
     <Style x:Key="WeekDayToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
         
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
             </Trigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"></Setter>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True"/>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Cancel Activity Entry Button-->
+    <Style x:Key="CancelActivityEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="3,0,0,3">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--Save Activity Entry Button-->
+    <Style x:Key="SaveActivityEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        
+        <Style.Triggers>
+            <!--On Hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Title Limit Counter-->
+    <Style x:Key="TitleLimitCounter" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="Margin" Value="0,0,5,5"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="12"/>
+        
+    </Style>
+    
+    <!--Content Limit Counter-->
+    <Style x:Key="ContentLimitCounter" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TitleLimitCounter}">
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    
+    <!--Color Picker Border-->
+    <Style x:Key="ColorPickerBorder" TargetType="{x:Type Border}">
+        <Setter Property="Cursor" Value="ScrollNS"/>
+        <Setter Property="Margin" Value="24,22"/>
+        
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Margin" Value="0,0,0,0"/> 
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Color Picker Hover Animation-->
+    <Style x:Key="ColorPickerHoverAnimation" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="{StaticResource MediumTextBrush}"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="25"/>
+    </Style>
+    
+    <!--Hover Animation Corners-->
+    <Style x:Key="TopLeft" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="2,2,0,0"/>
+        <Setter Property="Background" Value="{StaticResource MediumTextBrush}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Background" Value="Transparent"/>
             </DataTrigger>
         </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="TopRight" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0,2,2,0"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="BottomLeft" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="2,0,0,2"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="BottomRight" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0,0,2,2"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Duration / Color Header-->
+    <Style x:Key="Header" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    
+    <!--Tooltip Body-->
+    <Style x:Key="ActivityTooltipBody" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="LineHeight" Value="20"/>
+    </Style>
+    
+    <!--Tooltip Header-->
+    <Style x:Key="ActivityTooltipHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="left"/>
     </Style>
 </ResourceDictionary>

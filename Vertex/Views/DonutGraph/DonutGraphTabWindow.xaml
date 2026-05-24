@@ -8,278 +8,305 @@
              d:DesignHeight="820" d:DesignWidth="1040"
              d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}">
     
-    <Grid Background="{StaticResource ElectricAquaBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="6*"/> <!--Tab-->
-            <RowDefinition Height="2*"/> <!--Spacer-->
-            <RowDefinition Height="90*"/> <!--Donut Graph Content-->
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/> <!--Spacer-->
-            <ColumnDefinition Width="98*"/> <!--Tab Title & Donut Graph Content-->
-            <ColumnDefinition Width="1*"/> <!--Spacer-->
-        </Grid.ColumnDefinitions>
-        <Border Grid.Row="2" Grid.Column="1" Background="Transparent"/>
-
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource LightTextBrush}"></Border>
-
-        <TextBlock
-            Grid.Column="1"
-            Grid.Row="0" 
-            Text="DONUT GRAPH"
-            Foreground="{StaticResource DarkTextBrush}"
-            Style="{StaticResource DonutGraphTabTitle}"/>
-        <Canvas
-            x:Name="DonutCanvas"
-            Grid.Row="2" Grid.Column="1" 
-            Width="1020" Height="738"
-            Background="Transparent"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            MouseMove="OnMouseMove"
-            MouseLeftButtonUp="OnMouseUp">
+    <Border 
+        Background="{StaticResource ElectricAquaBrush}"
+        CornerRadius="10">
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*"/> <!--Tab-->
+                <RowDefinition Height="2*"/> <!--Spacer-->
+                <RowDefinition Height="90*"/> <!--Donut Graph Content-->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/> <!--Spacer-->
+                <ColumnDefinition Width="98*"/> <!--Tab Title & Donut Graph Content-->
+                <ColumnDefinition Width="1*"/> <!--Spacer-->
+            </Grid.ColumnDefinitions>
             
-            <Grid 
+            <Border 
+                Grid.Row="0" 
+                Grid.Column="0" 
+                Grid.ColumnSpan="3" 
+                CornerRadius="10,10,0,0"
+                Background="{StaticResource ExtraLightBackgroundBrush}"/> <!--Title Background-->
+
+            <TextBlock
+                Grid.Column="1"
+                Grid.Row="0" 
+                Text="DONUT GRAPH"
+                Foreground="{StaticResource DarkTextBrush}"
+                Style="{StaticResource DonutGraphTabTitle}"/> <!--Title-->
+            
+            <Canvas
+                x:Name="DonutCanvas"
+                Grid.Row="2" Grid.Column="1" 
+                Width="1020" Height="738"
                 Background="Transparent"
-                Canvas.Top="261" Canvas.Left="385" 
-                Height="216" Width="250">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70*"/> <!--Hour-->
-                    <ColumnDefinition Width="30*"/> <!--Minute/Meridiem-->
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20*"/> <!--Upper Info-->
-                    <RowDefinition Height="30*"/> <!--Minute-->
-                    <RowDefinition Height="30*"/> <!--Meridiem-->
-                    <RowDefinition Height="20*"/> <!--Lower Info-->
-                </Grid.RowDefinitions>
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                MouseMove="OnMouseMove"
+                MouseLeftButtonUp="OnMouseUp">
                 
-                <!--<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="Azure" Opacity="0.5"/>
-                <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Background="Azure" Opacity="0.4"/>
-                <Border Grid.Row="1" Grid.Column="1" Background="Azure" Opacity="0.3"/>
-                <Border Grid.Row="2" Grid.Column="1" Background="Azure" Opacity="0.2"/>
-                <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="Azure" Opacity="0.5"/>-->
+                <Grid 
+                    Background="Transparent"
+                    Canvas.Top="261" Canvas.Left="385" 
+                    Height="216" Width="250">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70*"/> <!--Hour-->
+                        <ColumnDefinition Width="30*"/> <!--Minute/Meridiem-->
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15*"/> <!--Title-->
+                        <RowDefinition Height="15*"/> <!--Upper Info-->
+                        <RowDefinition Height="26*"/> <!--Minute-->
+                        <RowDefinition Height="26*"/> <!--Meridiem-->
+                        <RowDefinition Height="15*"/> <!--Lower Info-->
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Text="{Binding DonutGraphVM.TitleInfo, FallbackValue=ACTIVITY NAME}"
+                        Style="{StaticResource TitleInfo}"/> <!--Title Info-->
+                    
+                    <TextBlock
+                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Text="{Binding DonutGraphVM.UpperInfo, FallbackValue=STARTS}"
+                        Style="{StaticResource UpperInfo}"/> <!--Upper Info-->
+                    
+                    <TextBlock 
+                        Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" 
+                        Text="{Binding DonutGraphVM.ClockHour, FallbackValue=12}"
+                        Style="{StaticResource Hour}"/> <!--Hour-->
+                    
+                    <TextBlock 
+                        Grid.Row="2" Grid.Column="1"
+                        Text="{Binding DonutGraphVM.ClockMinute, FallbackValue=59}"
+                        Style="{StaticResource Minute}"/> <!--Minute-->
+                    
+                    <TextBlock 
+                        Grid.Row="3" Grid.Column="1"
+                        Text="{Binding DonutGraphVM.ClockMeridiem, FallbackValue=AM}"
+                        Style="{StaticResource Meridiem}"/> <!--Meridiem-->
+                    
+                    <TextBlock
+                        Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Text="{Binding DonutGraphVM.LowerInfo, FallbackValue=STATUS NOT DONE}"
+                        Style="{StaticResource LowerInfo}"/> <!--Lower Info-->
+                    
+                </Grid> <!--Middle Clock / Activity Info-->
+                
+                <Border 
+                    BorderBrush="{Binding DonutGraphVM.RingColor, FallbackValue=Chartreuse}" 
+                    BorderThickness="6"
+                    Canvas.Left="310" Canvas.Top="169"
+                    Height="400" Width="400"
+                    CornerRadius="620">
+                </Border> <!--Activity Color Ring-->
+                
+                <Border 
+                    BorderBrush="{StaticResource LightTextBrush}" 
+                    Opacity="0.2"
+                    BorderThickness="60"
+                    Canvas.Left="235" Canvas.Top="94"
+                    Height="550" Width="550"
+                    CornerRadius="550"/> <!--Slices Track-->
+                
+                <Border 
+                    BorderBrush="{StaticResource LightTextBrush}" 
+                    BorderThickness="4"
+                    Opacity="1"
+                    Canvas.Left="185" Canvas.Top="44"
+                    Height="650" Width="650"
+                    CornerRadius="620"/> <!--Clock Outer Ring-->
+                
+                <Path Stroke="{StaticResource LightTextBrush}"
+                      StrokeThickness="4"
+                      StrokeDashArray="0 3.436"
+                      StrokeDashCap="Round">
+                    <Path.Data>
+                        <EllipseGeometry Center="510,369" RadiusX="315" RadiusY="315" />
+                    </Path.Data>
+                </Path> <!--Clock Minutes-->
+                
+                <Border 
+                    BorderBrush="{StaticResource LightTextBrush}" 
+                    BorderThickness="4"
+                    Opacity="0.2"
+                    Canvas.Left="150" Canvas.Top="9"
+                    Height="720" Width="720"
+                    CornerRadius="720"/> <!--Orbiters Track-->
+                
                 
                 <TextBlock
-                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                    x:Name="ClockUpperInfo"
-                    Text="{Binding DonutGraphVM.UpperInfo}"
-                    Style="{StaticResource UpperInfo}"/>
-                
-                <TextBlock 
-                    Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" 
-                    Text="{Binding DonutGraphVM.ClockHour}"
-                    Style="{StaticResource Hour}"/>
-                
-                <TextBlock 
-                    Grid.Row="1" Grid.Column="1"
-                    Text="{Binding DonutGraphVM.ClockMinute}"
-                    Style="{StaticResource Minute}"/>
-                
-                <TextBlock 
-                    Grid.Row="2" Grid.Column="1"
-                    Text="{Binding DonutGraphVM.ClockMeridiem}"
-                    Style="{StaticResource Meridiem}"/>
-                
+                    Canvas.Left="475" Canvas.Top="63" 
+                    Width="75" Height="28"
+                    Text="12 PM"
+                    Style="{StaticResource MainClockFace}"/> <!--12pm-->
                 <TextBlock
-                    Grid.Row="3" Grid.Column="0"
-                    x:Name="ClockLowerInfo"
-                    Text="{Binding DonutGraphVM.LowerInfo}"
-                    Style="{StaticResource LowerInfo}"/>
+                    Canvas.Left="708" Canvas.Top="150" 
+                    Width="20" Height="28"
+                    Text="3"
+                    Style="{StaticResource MainClockFace}"/> <!--3pm-->
+                <TextBlock
+                    Canvas.Left="790" Canvas.Top="350" 
+                    Width="20" Height="28"
+                    Text="6"
+                    Style="{StaticResource MainClockFace}"/> <!--6pm-->
+                <TextBlock
+                    Canvas.Left="708" Canvas.Top="558" 
+                    Width="20" Height="28"
+                    Text="9"
+                    Style="{StaticResource MainClockFace}"/> <!--9pm-->
+                <TextBlock
+                    Canvas.Left="475" Canvas.Top="645" 
+                    Width="75" Height="28"
+                    Text="12 AM"
+                    Style="{StaticResource MainClockFace}"/> <!--12am-->
+                <TextBlock
+                    Canvas.Left="298" Canvas.Top="558" 
+                    Width="20" Height="28"
+                    Text="3"
+                    Style="{StaticResource MainClockFace}"/> <!--3am-->
+                <TextBlock
+                    Canvas.Left="215" Canvas.Top="350" 
+                    Width="20" Height="28"
+                    Text="6"
+                    Style="{StaticResource MainClockFace}"/> <!--6am-->
+                <TextBlock
+                    Canvas.Left="298" Canvas.Top="150" 
+                    Width="20" Height="28"
+                    Text="9"
+                    Style="{StaticResource MainClockFace}"/> <!--9am-->
                 
-                <!--<Button 
-                    Grid.Row="3" Grid.Column="1"
-                    Style="{StaticResource RestoreDonutActivityAsDoneButton}"
-                    Content="Restore"
-                    Tag="{Binding DonutGraphVM.ShowActivityInfo}">
-                </Button> ~1~Done Button@1@
                 
-                <Button 
-                    Grid.Row="3" Grid.Column="1"
-                    Style="{StaticResource MarkDonutActivityAsDoneButton}"
-                    Content="Done"
-                    Tag="{Binding DonutGraphVM.ShowMarkActivityAsDoneButton}">
-                </Button> ~1~Done Button@1@-->
+                <ItemsControl ItemsSource="{Binding DonutGraphVM.Slices}"
+                              Canvas.Left="510" Canvas.Top="369"
+                              Width="0" Height="0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Path
+                                Stroke="{Binding SliceColor}" StrokeThickness="60"
+                                Cursor="Hand"
+                                Data="{Binding PathData}"
+                                MouseLeftButtonDown="OnMouseLeftButtonDown"
+                                MouseEnter="OnHoverPath"
+                                MouseLeave="OnLeavePath"
+                                FocusVisualStyle="{x:Null}"
+                                Tag="{Binding EntryData.Id}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl> <!--Slices-->
                 
-            </Grid>
+                <ItemsControl ItemsSource="{Binding DonutGraphVM.Orbiters}"
+                              Canvas.Left="510" Canvas.Top="369"
+                              Width="0" Height="0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <Ellipse
+                                    Height="20"
+                                    Width="20"
+                                    Canvas.Left="{Binding InnerCanvasLeft}"
+                                    Canvas.Top="{Binding InnerCanvasTop}"
+                                    Fill="{StaticResource LightTextBrush}"/>
+                                <Ellipse/>
+                            
+                                <Ellipse
+                                    Height="30"
+                                    Width="30"
+                                    Fill="Transparent"
+                                    Canvas.Left="{Binding OuterCanvasLeft}"
+                                    Canvas.Top="{Binding OuterCanvasTop}"
+                                    Stroke="{StaticResource LightTextBrush}" StrokeThickness="1"
+                                    Tag="{Binding EntryData.Id}"
+                                    ToolTipService.InitialShowDelay="0">
+                                    <Ellipse.ToolTip>
+                                        <ToolTip 
+                                                Background="Transparent" 
+                                                Placement="Top"
+                                                BorderBrush="Transparent">
+                                            
+                                            <Grid Height="120" Width="270">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="25*"/>
+                                                    <RowDefinition Height="50*"/>
+                                                    <RowDefinition Height="25*"/>
+                                                </Grid.RowDefinitions>
+                                                    
+                                                <Border 
+                                                    Grid.Row="1" 
+                                                    Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                                                
+                                                <Border 
+                                                    Grid.Row="0" 
+                                                    Background="{StaticResource LightBackgroundBrush}"/><!--Reminder Hour Background-->
+                                                <Border 
+                                                    Grid.Row="2" 
+                                                    Background="{StaticResource LightBackgroundBrush}"/><!--Reminder Status Background-->
+                                                    
+                                                <TextBlock 
+                                                    Grid.Row="0"
+                                                    Text="{Binding ReminderSetForHour}"
+                                                    FontFamily="{StaticResource JetBrainsMono}"
+                                                    Foreground="{StaticResource LightTextBrush}"
+                                                    FontSize="15"
+                                                    FontWeight="Bold"
+                                                    Margin="10,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Stretch"/>
+                                                
+                                                    
+                                                <TextBlock 
+                                                    Grid.Row="2"
+                                                    Text="{Binding ReminderStatus}"
+                                                    FontFamily="{StaticResource JetBrainsMono}"
+                                                    Foreground="{StaticResource LightTextBrush}"
+                                                    FontSize="15"
+                                                    FontWeight="Bold"
+                                                    Margin="10,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"/>
+                                                    
+                                                <TextBlock 
+                                                    Grid.Row="1"
+                                                    Text="{Binding ReminderContent}"
+                                                    FontFamily="{StaticResource JetBrainsMono}"
+                                                    Foreground="{StaticResource DarkTextBrush}"
+                                                    FontSize="10"
+                                                    FontWeight="SemiBold"
+                                                    Margin="10"
+                                                    TextWrapping="Wrap"
+                                                    LineHeight="10"/>
+                                                    
+                                                </Grid>
+                                                
+                                            </ToolTip>
+                                    </Ellipse.ToolTip>
+                                </Ellipse>
+                                <Ellipse/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl> <!--Orbiters-->
+                
+                <Line X1="{Binding DonutGraphVM.X1}" 
+                      Y1="{Binding DonutGraphVM.Y1}" 
+                      X2="{Binding DonutGraphVM.X2}" 
+                      Y2="{Binding DonutGraphVM.Y2}"
+                      StrokeThickness="4" Stroke="{StaticResource LipstickRedBrush}"/> <!--12pm Face-->
+            </Canvas><!--Tab Tittle-->
             
-            <Border 
-                BorderBrush="{Binding DonutGraphVM.RingColor}" 
-                BorderThickness="4"
-                Canvas.Left="310" Canvas.Top="169"
-                Height="400" Width="400"
-                CornerRadius="620">
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding DonutGraphVM.ShowActivityInfo}" Value="False">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-            </Border>
-
-            <Border 
-                BorderBrush="White" 
-                Opacity="0.1"
-                BorderThickness="60"
-                Canvas.Left="235" Canvas.Top="94"
-                Height="550" Width="550"
-                CornerRadius="550"/>
-            
-            <Border 
-                BorderBrush="White" 
-                BorderThickness="4"
-                Opacity="0.2"
-                Canvas.Left="185" Canvas.Top="44"
-                Height="650" Width="650"
-                CornerRadius="620"/>
-            
-            <Path Stroke="White"
-                  StrokeThickness="4"
-                  StrokeDashArray="0 3.436"
-                  StrokeDashCap="Round">
-                <Path.Data>
-                    <EllipseGeometry Center="510,369" RadiusX="315" RadiusY="315" />
-                </Path.Data>
-            </Path>
-            
-            
-            
-            <Line X1="510" Y1="64" X2="510" Y2="44" StrokeThickness="4" Stroke="White"/> <!--12pm Face-->
-            
-            <Line X1="591" Y1="64" X2="594" Y2="55" StrokeThickness="4" Stroke="White"/> <!--1pm Face-->
-            <Line X1="667" Y1="96" X2="672" Y2="87" StrokeThickness="4" Stroke="White"/> <!--2pm Face-->
-            
-            <Line X1="725" Y1="153" X2="739" Y2="139" StrokeThickness="4" Stroke="White"/> <!--3pm Face-->
-            
-            <Line X1="782" Y1="211" X2="791" Y2="206" StrokeThickness="4" Stroke="White"/> <!--4pm Face-->
-            <Line X1="814" Y1="287" X2="823" Y2="284" StrokeThickness="4" Stroke="White"/> <!--5pm Face-->
-            
-            <Line X1="815" Y1="369" X2="835" Y2="369" StrokeThickness="4" Stroke="White"/> <!--6pm Face-->
-            
-            <Line X1="814" Y1="450" X2="823" Y2="453" StrokeThickness="4" Stroke="White"/> <!--7pm Face-->
-            <Line X1="782" Y1="526" X2="791" Y2="531" StrokeThickness="4" Stroke="White"/> <!--8pm Face-->
-            
-            <Line X1="725" Y1="584" X2="739" Y2="598" StrokeThickness="4" Stroke="White"/> <!--9pm Face-->
-            
-            <Line X1="667" Y1="641" X2="672" Y2="650" StrokeThickness="4" Stroke="White"/> <!--10pm Face-->
-            <Line X1="591" Y1="673" X2="594" Y2="682" StrokeThickness="4" Stroke="White"/> <!--11pm Face-->
-            
-            <Line X1="509" Y1="674" X2="509" Y2="694" StrokeThickness="4" Stroke="White"/> <!--12am Face-->
-            
-            <Line X1="428" Y1="673" X2="425" Y2="682" StrokeThickness="4" Stroke="White"/> <!--1am Face-->
-            <Line X1="352" Y1="641" X2="347" Y2="650" StrokeThickness="4" Stroke="White"/> <!--2am Face-->
-            
-            <Line X1="294" Y1="584" X2="280" Y2="598" StrokeThickness="4" Stroke="White"/> <!--3am Face-->
-            
-            <Line X1="237" Y1="526" X2="228" Y2="531" StrokeThickness="4" Stroke="White"/> <!--4am Face-->
-            <Line X1="205" Y1="450" X2="196" Y2="453" StrokeThickness="4" Stroke="White"/> <!--5m Face-->
-            
-            <Line X1="205" Y1="368" X2="185" Y2="368" StrokeThickness="4" Stroke="White"/> <!--6am Face-->
-            
-            <Line X1="205" Y1="287" X2="196" Y2="284" StrokeThickness="4" Stroke="White"/> <!--7am Face-->
-            <Line X1="237" Y1="211" X2="228" Y2="206" StrokeThickness="4" Stroke="White"/> <!--8am Face-->
-            
-            <Line X1="294" Y1="153" X2="280" Y2="139" StrokeThickness="4" Stroke="White"/> <!--9am Face-->
-            
-            <Line X1="352" Y1="96" X2="347" Y2="87" StrokeThickness="4" Stroke="White"/> <!--12pm Face-->
-            <Line X1="428" Y1="64" X2="425" Y2="55" StrokeThickness="4" Stroke="White"/> <!--12pm Face-->
-            
-            <TextBlock
-                Canvas.Left="475" Canvas.Top="63" 
-                Width="75" Height="28"
-                Text="12 PM"
-                Style="{StaticResource MainClockFace}"/>
-            
-            <TextBlock
-                Canvas.Left="475" Canvas.Top="645" 
-                Width="75" Height="28"
-                Text="12 AM"
-                Style="{StaticResource MainClockFace}"/>
-            
-            <TextBlock
-                Canvas.Left="790" Canvas.Top="350" 
-                Width="20" Height="28"
-                Text="6"
-                Style="{StaticResource MainClockFace}"/>
-            
-            <TextBlock
-                Canvas.Left="215" Canvas.Top="350" 
-                Width="20" Height="28"
-                Text="6"
-                Style="{StaticResource MainClockFace}"/>
-            
-            <TextBlock
-                Canvas.Left="298" Canvas.Top="150" 
-                Width="20" Height="28"
-                Text="9"
-                Style="{StaticResource MainClockFace}"/>
-            
-            <TextBlock
-                Canvas.Left="708" Canvas.Top="150" 
-                Width="20" Height="28"
-                Text="3"
-                Style="{StaticResource MainClockFace}"/>
-            
-            <TextBlock
-                Canvas.Left="708" Canvas.Top="558" 
-                Width="20" Height="28"
-                Text="9"
-                Style="{StaticResource MainClockFace}"/>
-            
-            <TextBlock
-                Canvas.Left="298" Canvas.Top="558" 
-                Width="20" Height="28"
-                Text="3"
-                Style="{StaticResource MainClockFace}"/>
-            
-            
-            
-            
-            <!--var angle = (180 + 45) * (Math.PI / 180);
-            var x1 = 510 + 285 * Math.Cos(angle);
-            var y1 = 369 + 285 * Math.Sin(angle);
-		
-            var x2 = 510 + 305 * Math.Cos(angle);
-            var y2 = 369 + 305 * Math.Sin(angle);
-		
-            Console.WriteLine($"X1=\"{Math.Truncate(x1)}\" Y1=\"{Math.Truncate(Math.Abs(y1 - 738))}\" X2=\"{Math.Truncate(x2)}\" Y2=\"{Math.Truncate(Math.Abs(y2 - 738))}\"");-->
-            
-            <ItemsControl ItemsSource="{Binding DonutGraphVM.Slices}"
-                          Canvas.Left="510" Canvas.Top="369"
-                          Width="0" Height="0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Path
-                            x:Name="SliceFocus"
-                            Stroke="{Binding SliceColor}" StrokeThickness="60"
-                            Cursor="Hand"
-                            Data="{Binding PathData}"
-                            MouseLeftButtonDown="OnMouseLeftButtonDown"
-                            MouseRightButtonDown="OnMouseRightButtonDown"
-                            Focusable="True"
-                            FocusVisualStyle="{x:Null}"
-                            GotFocus="GotFocus"
-                            LostFocus="LostFocus"
-                            Tag="{Binding EntryData.Id}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            
-            <Line X1="{Binding DonutGraphVM.X1}" 
-                  Y1="{Binding DonutGraphVM.Y1}" 
-                  X2="{Binding DonutGraphVM.X2}" 
-                  Y2="{Binding DonutGraphVM.Y2}"
-                  StrokeThickness="3" Stroke="Firebrick"/> <!--12pm Face-->
-        </Canvas><!--Tab Tittle-->
-
-
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

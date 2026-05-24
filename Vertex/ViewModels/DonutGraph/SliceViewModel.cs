@@ -9,7 +9,6 @@ namespace Vertex.ViewModels.DonutGraph;
 public class SliceViewModel : ViewModelBase
 {
     public ActivityEntry? EntryData { get; }
-    public DonutGraphViewModel Vm { get; }
     
     private const double Radius = 245;
     
@@ -27,7 +26,37 @@ public class SliceViewModel : ViewModelBase
         StartAngle = EntryData.StartAngle[today];
         EndAngle = EntryData.EndAngle[today] = EntryData.StartAngle[today] - durationSpam * 15;
         
-        SliceColor = ActivityColors.Categories[EntryData.Color.GroupIndex][EntryData.Color.ColorIndex];
+        SliceColor = ActivityColors.Palette[EntryData.Color];
+    }
+    
+    public Geometry PathData
+    {
+        get
+        {
+            var p1 = GetPointOnCircle(StartAngle);
+            var p2 = GetPointOnCircle(EndAngle);
+            
+            var figure = new PathFigure { StartPoint = p1, IsClosed = false };
+            figure.Segments.Add(new ArcSegment
+            {
+                Point = p2,
+                Size = new Size(Radius, Radius),
+                SweepDirection = SweepDirection.Clockwise,
+                IsLargeArc = SpanAngle > 180
+            });
+
+            var geometry = new PathGeometry();
+            geometry.Figures.Add(figure);
+            return geometry;
+        }
+    }
+    
+    private static Point GetPointOnCircle(double clockAngle)
+    {
+        var radians = clockAngle * Math.PI / 180;
+        var x = Radius * Math.Cos(radians);
+        var y = -Radius * Math.Sin(radians);
+        return new Point(x, y);
     }
     
     private int _sliceOrder;
@@ -89,36 +118,6 @@ public class SliceViewModel : ViewModelBase
             if (span < 0) span += 360;
             return span;
         }
-    }
-    
-    public Geometry PathData
-    {
-        get
-        {
-            var p1 = GetPointOnCircle(StartAngle);
-            var p2 = GetPointOnCircle(EndAngle);
-            
-            var figure = new PathFigure { StartPoint = p1, IsClosed = false };
-            figure.Segments.Add(new ArcSegment
-            {
-                Point = p2,
-                Size = new Size(Radius, Radius),
-                SweepDirection = SweepDirection.Clockwise,
-                IsLargeArc = SpanAngle > 180
-            });
-
-            var geometry = new PathGeometry();
-            geometry.Figures.Add(figure);
-            return geometry;
-        }
-    }
-    
-    private static Point GetPointOnCircle(double clockAngle)
-    {
-        var radians = clockAngle * Math.PI / 180;
-        var x = Radius * Math.Cos(radians);
-        var y = -Radius * Math.Sin(radians);
-        return new Point(x, y);
     }
     
 }

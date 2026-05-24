@@ -4,18 +4,13 @@
     <Color x:Key="Black" >#020204</Color>
     <Color x:Key="CarbonBlack" >#1B1D21</Color>
     <Color x:Key="CharcoalBlue" >#464954</Color>
-    <Color x:Key="LavenderGray" >#8b8f9c</Color>
-    <Color x:Key="PaleSlate" >#a7abb3</Color>
-    
+    <Color x:Key="LavenderGray" >#aaabb8</Color>
+    <Color x:Key="PaleSlate" >#c1c2cb</Color>
     <Color x:Key="AlabasterGray" >#e6e6ea</Color>
-    <Color x:Key="RosyGranite" >#8b8d95</Color>
-    
-    <Color x:Key="LightAccentColor">#a2bfbd</Color>
-    <Color x:Key="MediumAccentColor" >#6A9490</Color>
-    <Color x:Key="DarkAccentColor">#1A2222</Color>
     
     <Color x:Key="Chartreuse">#C3FE0C</Color>
     <Color x:Key="ElectricAqua">#0c4af7</Color>
+    <Color x:Key="LipstickRed">#ea163b</Color>
     
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource Black}"/>
     <SolidColorBrush x:Key="MediumBackgroundBrush" Color="{StaticResource CarbonBlack}"/>
@@ -28,9 +23,7 @@
     <SolidColorBrush x:Key="DarkTextBrush" Color="{StaticResource CarbonBlack}"/>
     <SolidColorBrush x:Key="ExtraDarkTextBrush" Color="{StaticResource Black}"/>
     
-    <SolidColorBrush x:Key="LightAccentColorBrush" Color="{StaticResource LightAccentColor}"/>
-    <SolidColorBrush x:Key="AccentColor1Brush" Color="{StaticResource MediumAccentColor}"/>
-    <SolidColorBrush x:Key="DarkAccentColorBrush" Color="{StaticResource MediumAccentColor}"/>
     <SolidColorBrush x:Key="ElectricAquaBrush" Color="{StaticResource ElectricAqua}"/>
     <SolidColorBrush x:Key="ChartreuseBrush" Color="{StaticResource Chartreuse}"/>
+    <SolidColorBrush x:Key="LipstickRedBrush" Color="{StaticResource LipstickRed}"/>
 </ResourceDictionary>

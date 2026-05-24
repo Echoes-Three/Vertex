@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Vertex.Models.Contracts;
 using Vertex.Models.Entities.Entry;
 using Vertex.MVVM;
@@ -40,17 +41,30 @@ public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
 
     public void Load()
     {
-        var file = File.ReadAllText(_fullPath);
-        
-        var options = new JsonSerializerOptions
+        if (!File.Exists(_fullPath))
         {
-            IncludeFields = true
-        };
-        
-        var handler = JsonSerializer.Deserialize<ActivitiesHandler>(file, options);
+            Activities = new ObservableCollection<ActivityEntry>();
+            return;
+        }
 
-        if (handler == null) return;
-        
-        Activities = handler.Activities;
+        try
+        {
+            var file = File.ReadAllText(_fullPath);
+
+            var options = new JsonSerializerOptions
+            {
+                IncludeFields = true,
+                AllowTrailingCommas = true,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement
+            };
+
+            var handler = JsonSerializer.Deserialize<ActivitiesHandler>(file, options);
+            Activities = handler?.Activities ?? new ObservableCollection<ActivityEntry>();
+        }
+        catch (JsonException)
+        {
+            Activities = new ObservableCollection<ActivityEntry>();
+        }
     }
 }

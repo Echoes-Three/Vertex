@@ -1,0 +1,223 @@
+<UserControl x:Class="Vertex.Views.Reminders.AddReminderWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d"
+             d:DesignHeight="550" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderFormViewModel}">
+    
+    <Border 
+            Background="{StaticResource ExtraLightBackgroundBrush}"
+            MouseLeftButtonDown="OnDrag"
+            CornerRadius="10">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/> <!--Spacer-->
+                    <RowDefinition Height="32*"/> <!--Content-->
+                    <RowDefinition Height="2*"/> <!--Spacer-->
+                    <RowDefinition Height="62*"/> <!--Action Buttons-->
+                    <RowDefinition Height="2*"/> <!--Spacer-->
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                    <ColumnDefinition Width="96*"/> <!--Controls-->
+                    <ColumnDefinition Width="2*"/> <!--Spacer-->
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock 
+                    Grid.Row="1" Grid.Column="1" 
+                    Style="{StaticResource ReminderContentInputPlaceholder}"
+                    Text="Content..."/><!-- Reminder Content Placeholder-->
+                
+                <TextBox
+                    Grid.Row="1" Grid.Column="1" 
+                    x:Name="ReminderInput"
+                    Style="{StaticResource ReminderContentInput}"
+                    Text="{Binding ReminderContent, UpdateSourceTrigger=PropertyChanged}"/> <!--Reminder Content Input-->
+                        
+                <TextBlock
+                    Grid.Row="1" Grid.Column="1" 
+                    Style="{StaticResource ReminderContentLimitCounter}"
+                    Text="{Binding ContentLimitCounter, FallbackValue=250}"/> <!--Content Character Limit Count-->
+                
+                <Border
+                    Grid.Column="0" Grid.ColumnSpan="3"
+                    Grid.Row="3" Grid.RowSpan="2"
+                    CornerRadius="0,0,10,10"
+                    Background="{StaticResource UltraLightBackgroundBrush}"/> <!--Color Division-->
+                
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37*"/> <!---->
+                        <RowDefinition Height="5*"/> <!--Spacer-->
+                        <RowDefinition Height="30*"/> <!--Hour Picker-->
+                        <RowDefinition Height="5*"/> <!--Spacer-->
+                        <RowDefinition Height="8*"/> <!--Date Picker-->
+                        <RowDefinition Height="5*"/> <!--Spacer-->
+                        <RowDefinition Height="10*"/> <!--Buttons-->
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="31*"/> <!--HH-->
+                            <ColumnDefinition Width="5*"/><!--:-->
+                            <ColumnDefinition Width="31*"/><!--MM-->
+                            <ColumnDefinition Width="31*"/><!--AA-->
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="19"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="80*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Border  
+                            x:Name="TimePickerBackground"
+                            Grid.Row="2"
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="4"
+                            CornerRadius="3"
+                            Background="{StaticResource LightBackgroundBrush}"/> <!--Time Picker Background-->
+                            
+                        <Border
+                            Grid.Row="2" 
+                            Grid.Column="0" 
+                            x:Name="HourScroll"
+                            Background="Transparent" 
+                            PreviewMouseWheel="OnHourScroll"/><!--HH Scroll-->
+                            
+                        <Border  
+                            Grid.Row="2"
+                            Grid.Column="2" 
+                            x:Name="MinuteScroll"
+                            Background="Transparent" 
+                            PreviewMouseWheel="OnMinuteScroll"/><!--MM Scroll-->
+                            
+                        <Border  
+                            Grid.Row="2"
+                            Grid.Column="3" 
+                            x:Name="MeridiemScroll"
+                            Background="Transparent" 
+                            PreviewMouseWheel="OnMeridiemScroll"/><!--AA Scroll-->
+                            
+                        <TextBlock
+                            Grid.Row="2" 
+                            Grid.Column="0"
+                            Style="{StaticResource TimePicker}"
+                            IsHitTestVisible="False"
+                            Text="{Binding CurrentHour, FallbackValue=12}"/>
+                            
+                        <TextBlock
+                            Grid.Row="2" 
+                            Grid.Column="1"
+                            Style="{StaticResource TimePicker}"
+                            IsHitTestVisible="False"
+                            Text=":"></TextBlock>
+                        
+                        <TextBlock
+                            Grid.Row="2" 
+                            Grid.Column="2"
+                            Style="{StaticResource TimePicker}"
+                            IsHitTestVisible="False"
+                            Text="{Binding CurrentMinute, FallbackValue=59}"/>
+                            
+                        <TextBlock
+                            Grid.Row="2" 
+                            Grid.Column="3"
+                            Style="{StaticResource TimePicker}"
+                            IsHitTestVisible="False"
+                            Text="{Binding CurrentMeridiem, FallbackValue=AM}"/>
+                        
+                        <TextBlock 
+                            Grid.Row="0" 
+                            Grid.Column="0"
+                            Text="Hour Picker"
+                            Style="{StaticResource Header}"></TextBlock> <!--Hour Picker Header-->
+                        
+                        
+                    </Grid> <!--Hour Picker-->
+                    
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/> <!--Sun-->
+                        </Grid.ColumnDefinitions>
+                        
+                        <DatePicker 
+                            Grid.Column="0"
+                            FirstDayOfWeek="Sunday"
+                            DisplayDateStart="{x:Static sys:DateTime.Today}"
+                            x:Name="ReminderDatePicker"
+                            SelectedDate="{Binding ReminderSetFor, Mode=TwoWay}"/> <!--DatePicker-->
+                       
+                    </Grid> <!--Date Picker-->
+                    
+                    <Grid Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="49*"/> <!--Cancel Button-->
+                            <ColumnDefinition Width="0.5*"/> <!--Spacer-->
+                            <ColumnDefinition Width="47*"/> <!--Save Button-->
+                            <ColumnDefinition Width="0.5*"/> <!--Spacer-->
+                            <ColumnDefinition Width="2*"/> <!--Can Save Indicator-->
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button 
+                            Grid.Column="0"
+                            Content="CANCEL"
+                            Style="{StaticResource CancelReminderEntry}" 
+                            Click="OnCancel"/> <!--Cancel Button-->
+            
+                        <Button 
+                            Grid.Column="2"
+                            Content="SAVE"
+                            Style="{StaticResource SaveReminderEntry}"
+                            Command="{Binding OnSaveAction}"/> <!--Save Button-->
+                        
+                        <Border 
+                            Grid.Column="4" 
+                            CornerRadius="0,3,3,0"
+                            Background="{Binding WarningColor, FallbackValue={StaticResource LipstickRedBrush}}"
+                            ToolTipService.InitialShowDelay="0">
+                            <Border.ToolTip>
+                                <ToolTip 
+                                    Background="Transparent" 
+                                    Placement="Top"
+                                    BorderBrush="Transparent">
+                                    
+                                    <Grid Height="120" Width="270">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35*"/> <!--Header-->
+                                            <RowDefinition Height="65*"/> <!--Body-->
+                                        </Grid.RowDefinitions>
+                                        
+                                        <Border 
+                                            Grid.Row="1" 
+                                            Background="{StaticResource ElectricAquaBrush}"/> <!--Body Background-->
+                                        <Border 
+                                            Grid.Row="0" 
+                                            Background="{StaticResource MediumTextBrush}"/> <!--Header Background-->
+                                        
+                                        <TextBlock 
+                                            Grid.Row="0"
+                                            Text="WARNING"
+                                            Style="{StaticResource ReminderTooltipHeader}"/> <!--Header-->
+                                        
+                                        <TextBlock 
+                                            Grid.Row="1"
+                                            Text="{Binding WarningMessages}"
+                                            Style="{StaticResource ActivityTooltipBody}"/> <!--Warning Body-->
+                                        
+                                    </Grid>
+                                    
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
+                        
+                    </Grid> <!--Cancel/Save Button-->
+                    
+                </Grid>
+                
+            </Grid>
+        </Border>
+</UserControl>

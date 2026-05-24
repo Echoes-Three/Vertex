@@ -34,7 +34,7 @@
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
             </Trigger>
         </Style.Triggers>
         
@@ -55,12 +55,11 @@
     <!--Add Reminder icon-->
     <Style x:Key="AddIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
         <Setter Property="Data" Value="{StaticResource Add}"/>
-        <Setter Property="Fill" Value="{StaticResource DarkTextBrush}"/>
         
         <!--On Hover-->
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
             </DataTrigger>
         </Style.Triggers>
         

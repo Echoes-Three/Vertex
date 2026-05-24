@@ -18,7 +18,7 @@ public class ActivityItemViewModel : ViewModelBase
     public ActivityItemViewModel(ActivityEntry entry)
     {
         EntryData =  entry;
-        ActivityColor = ActivityColors.Categories[EntryData.Color.GroupIndex][EntryData.Color.ColorIndex];
+        ActivityColor = ActivityColors.Palette[EntryData.Color];
         
         OnDeleteActivity = new RelayCommand(_ => DeleteActivity());
         OnEditActivity = new RelayCommand(_ => EditActivity());

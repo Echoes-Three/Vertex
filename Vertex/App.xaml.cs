@@ -20,7 +20,7 @@ public partial class App : Application
     public static IServiceProvider ServiceProvider { get; private set; }
     protected override void OnStartup(StartupEventArgs e)
     {
-        var dataService = new DataService();
+        var dataService = new FileInitializer();
         
         var services = new ServiceCollection();
         

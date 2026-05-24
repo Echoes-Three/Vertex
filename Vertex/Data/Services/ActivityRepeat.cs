@@ -11,8 +11,6 @@ public static class ActivityRepeat
         public bool Thu;
         public bool Fri;
         public bool Sat;
-       
-        
     }
     
     public static List<DayOfWeek>? ToDayOfWeek(this List<bool> daysOfWeek)
@@ -40,7 +38,5 @@ public static class ActivityRepeat
             
         };
     }
-    
-    public static bool HasMinimumValue(List<bool> daysOfWeek) => daysOfWeek.Contains(true);
     
 }

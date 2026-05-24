@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Vertex.Models.Contracts;
 using Vertex.Models.Entities.Entry;
 
@@ -37,12 +38,30 @@ public class RemindersHandler : IFileHandler<ReminderEntry>
 
     public void Load()
     {
-        var file = File.ReadAllText(_fullPath);
-        
-        var handler = JsonSerializer.Deserialize<RemindersHandler>(file);
-        
-        if (handler == null) return;
-        
-        Reminders = handler.Reminders;
+        if (!File.Exists(_fullPath))
+        {
+            Reminders = new ObservableCollection<ReminderEntry>();
+            return;
+        }
+
+        try
+        {
+            var file = File.ReadAllText(_fullPath);
+
+            var options = new JsonSerializerOptions
+            {
+                IncludeFields = true,
+                AllowTrailingCommas = true,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement
+            };
+
+            var handler = JsonSerializer.Deserialize<RemindersHandler>(file, options);
+            Reminders = handler?.Reminders ?? new ObservableCollection<ReminderEntry>();
+        }
+        catch (JsonException)
+        {
+            Reminders = new ObservableCollection<ReminderEntry>();
+        }
     }
 }

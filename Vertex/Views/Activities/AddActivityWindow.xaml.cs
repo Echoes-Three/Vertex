@@ -6,11 +6,11 @@ using Vertex.ViewModels.Reminders;
 
 namespace Vertex.Views.Activities;
 
-public partial class ActivityViewWindow : UserControl
+public partial class AddActivityWindow : UserControl
 {
-    private ActivitiesViewModel? Vm => DataContext as ActivitiesViewModel;
+    private ActivityFormViewModel? Vm => DataContext as ActivityFormViewModel;
     
-    public ActivityViewWindow()
+    public AddActivityWindow()
     {
         InitializeComponent();
     }
@@ -18,7 +18,7 @@ public partial class ActivityViewWindow : UserControl
     private void OnCancel(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)?.Close();
-        Vm.CleanActivityWindowFields();
+        Vm.CleanFields();
     }
 
     private void OnDrag(object sender, MouseButtonEventArgs e) => Window.GetWindow(this)?.DragMove();
@@ -37,5 +37,13 @@ public partial class ActivityViewWindow : UserControl
             Vm.DurationMinuteUp();
         else
             Vm.DurationMinuteDown();
+    }
+    
+    private void OnColorsScroll(object sender, MouseWheelEventArgs e)
+    {
+        if (e.Delta > 0)
+            Vm.ColorIndexUp();
+        else
+            Vm.ColorIndexDown();
     }
 }

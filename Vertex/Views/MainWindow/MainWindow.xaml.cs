@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Vertex.ViewModels;
 
-namespace Vertex.Views;
+namespace Vertex.Views.MainWindow;
 
 public partial class MainWindow : Window
 {

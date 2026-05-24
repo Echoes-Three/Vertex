@@ -5,11 +5,11 @@ using Vertex.ViewModels.Reminders;
 
 namespace Vertex.Views.Reminders;
 
-public partial class ReminderViewWindow : UserControl
+public partial class AddReminderWindow : UserControl
 {
-    private RemindersViewModel? Vm => DataContext as RemindersViewModel;
+    private ReminderFormViewModel? Vm => DataContext as ReminderFormViewModel;
     
-    public ReminderViewWindow()
+    public AddReminderWindow()
     {
         InitializeComponent();
     }
@@ -17,7 +17,7 @@ public partial class ReminderViewWindow : UserControl
     private void OnCancel(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)?.Close();
-        Vm.CleanReminderWindowFields();
+        Vm.CleanFields();
         
     }
 

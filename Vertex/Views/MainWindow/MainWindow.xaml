@@ -1,4 +1,4 @@
-﻿<Window x:Class="Vertex.Views.MainWindow"
+﻿<Window x:Class="Vertex.Views.MainWindow.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,6 +8,7 @@
         xmlns:reminders="clr-namespace:Vertex.Views.Reminders"
         xmlns:activities="clr-namespace:Vertex.Views.Activities"
         xmlns:donutGraph="clr-namespace:Vertex.Views.DonutGraph"
+        xmlns:mainWindow="clr-namespace:Vertex.Views.MainWindow"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -16,7 +17,7 @@
         Title="MainWindow"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
-    <Viewbox Stretch="Uniform">
+    <Viewbox Stretch="Uniform" x:Name="BackgroundContent">
         
         <Grid Width="1600" Height="900" 
             Background="{DynamicResource DarkBackgroundBrush}">
@@ -25,7 +26,7 @@
                    <RowDefinition Height="95*"/> <!--Main Body-->
                </Grid.RowDefinitions>
             
-            <consistency:TitleBarView Grid.Row="0"/><!--TitleBar-->
+            <mainWindow:TitleBarView Grid.Row="0"/><!--TitleBar-->
             
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -55,6 +56,14 @@
                     
                 </Grid> <!--Side Panel Activities/Reminders/Consistency-->
             </Grid>
+            
+            <!--<Border 
+                Grid.Row="0" 
+                Grid.RowSpan="2" 
+                Background="{StaticResource MediumTextBrush}" 
+                Opacity="0.5"
+                IsHitTestVisible="False"></Border>-->
+            
         </Grid><!--Main Body-->
     </Viewbox>
 </Window>

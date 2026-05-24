@@ -11,13 +11,11 @@ public class ReminderItemViewModel : ViewModelBase
     public ReminderEntry? EntryData { get; }
     
     public RelayCommand OnDeleteReminder { get; }
-    public RelayCommand OnRestoreReminder { get; }
     public RelayCommand OnEditReminder { get; }
     public ReminderItemViewModel(ReminderEntry  entry)
     {
         EntryData = entry;
         OnDeleteReminder = new RelayCommand(_ => DeleteReminder());
-        OnRestoreReminder = new RelayCommand(_ => RestoreReminder());
         OnEditReminder = new RelayCommand(_ => EditReminder());
         
         SetFor = $"Set for: {EntryData.SetFor:yyyy-MM-dd} / {EntryData.SetFor:hh:mm tt} ";
@@ -31,9 +29,6 @@ public class ReminderItemViewModel : ViewModelBase
     private void MarkReminderAsDone()
         => WeakReferenceMessenger.Default.Send(new ChangeReminderStateMessage((EntryData!.Id, IsDone)));
     
-    private void RestoreReminder()
-        => WeakReferenceMessenger.Default.Send(new RestoreReminderMessage(EntryData!.Id));
-
     private void EditReminder()
         => WeakReferenceMessenger.Default.Send(new EditReminderMessage(EntryData!.Id));
     

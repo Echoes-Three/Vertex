@@ -20,6 +20,7 @@ public class ActivityFormViewModel : ViewModelBase
     private int _currentMinuteCount = 00;
     
     private int _colorIndex = 0;
+    
     private readonly int _lastIndex = ActivityColors.Palette.Count - 1;
     
     private Action? _closeWindow;
@@ -109,6 +110,7 @@ public class ActivityFormViewModel : ViewModelBase
         if (activityEntry == null) return;
     
         _colorIndex = activityEntry.Color;
+        ColorNumber = $"{activityEntry.Color + 1}";
         SetColors();
     
         ActivityId = activityEntry.Id;
@@ -135,6 +137,7 @@ public class ActivityFormViewModel : ViewModelBase
         ActivityTitle = "";
         ActivityContent = "";
         _colorIndex = 0;
+        ColorNumber = "1";
         SetColors();
         (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) =
             (true, true, true, true, true, true, true);
@@ -155,6 +158,7 @@ public class ActivityFormViewModel : ViewModelBase
         else
             _colorIndex++;
 
+        ColorNumber = $"{_colorIndex + 1}";
         SetColors();
     }
     public void ColorIndexDown()
@@ -164,6 +168,7 @@ public class ActivityFormViewModel : ViewModelBase
         else
             _colorIndex--;
 
+        ColorNumber = $"{_colorIndex + 1}";
         SetColors();
     }
     private void SetColors() =>
@@ -209,6 +214,18 @@ public class ActivityFormViewModel : ViewModelBase
     }
     
     /*Full Properties*/
+    
+    private string _colorNumber = "0";
+
+    public string ColorNumber
+    {
+        get => _colorNumber;
+        set
+        {
+            _colorNumber = value;
+            OnPropertyChanged();
+        }
+    }
     private bool _sunday = true;
 
     public bool Sunday

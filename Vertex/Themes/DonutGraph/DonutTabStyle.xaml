@@ -6,7 +6,9 @@
     <!--
     Donut Graph Tab Title
     Middle Clock Styles
-    Clock Face-->
+    Clock Face
+    Tooltip Body
+    Tooltip Header-->
     
     <!--Donut Graph TabTitle-->
     <Style x:Key="DonutGraphTabTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReminderTabTitle}">
@@ -36,6 +38,7 @@
     <Style x:Key="TitleInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
         <Setter Property="FontWeight" Value="ExtraBold"/>
         <Setter Property="FontSize" Value="22"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
     
     <Style x:Key="LowerInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource UpperInfo}">
@@ -44,5 +47,27 @@
     <!--Clock Face-->
     <Style x:Key="MainClockFace" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
         <Setter Property="FontSize" Value="25"/>
+    </Style>
+    
+    <!--Tooltip Body-->
+    <Style x:Key="OrbitersTooltipBody" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="LineHeight" Value="15"/>
+        <Setter Property="MinHeight" Value="50"></Setter>
+    </Style>
+    
+    <!--Tooltip Header-->
+    <Style x:Key="OrbitersTooltipHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 </ResourceDictionary>

@@ -16,10 +16,10 @@ public class OrbiterViewModel : ViewModelBase
     {
         HourToAngle();
         ReminderContent = EntryData.Content;
-        ReminderSetForHour = $"SET FOR TODAY AT : " +
+        ReminderSetForHour = $"SET FOR TODAY AT: " +
                              $"{EntryData.SetFor:hh}:{EntryData.SetFor:mm} {EntryData.SetFor:tt}";
         var status = EntryData.Done ? "DONE" : "NOT DONE";
-        ReminderStatus = $"STATUS ->> ->> {status}";
+        ReminderStatus = $"STATUS -> -> {status}";
     }
 
     private void HourToAngle()

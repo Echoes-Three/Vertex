@@ -267,6 +267,30 @@
         </Style.Triggers>
     </Style>
     
+    <Style x:Key="ColorNumberBackground" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+        <Setter Property="CornerRadius" Value="3,0,0,0"></Setter>
+        <Setter Property="Visibility" Value="Hidden"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="ColorNumber" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+    
     <!--Duration / Color Header-->
     <Style x:Key="Header" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>

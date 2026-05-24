@@ -10,6 +10,8 @@
     
     <Color x:Key="Chartreuse">#C3FE0C</Color>
     <Color x:Key="ElectricAqua">#0c4af7</Color>
+    <Color x:Key="CrayolaBlue">#2777E6</Color>
+    <Color x:Key="PersianBlue">#1138C8</Color>
     <Color x:Key="LipstickRed">#ea163b</Color>
     
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource Black}"/>
@@ -23,7 +25,9 @@
     <SolidColorBrush x:Key="DarkTextBrush" Color="{StaticResource CarbonBlack}"/>
     <SolidColorBrush x:Key="ExtraDarkTextBrush" Color="{StaticResource Black}"/>
     
+    <SolidColorBrush x:Key="PersianBlueBrush" Color="{StaticResource PersianBlue}"/>
     <SolidColorBrush x:Key="ElectricAquaBrush" Color="{StaticResource ElectricAqua}"/>
+    <SolidColorBrush x:Key="CrayolaBlueBrush" Color="{StaticResource CrayolaBlue}"/>
     <SolidColorBrush x:Key="ChartreuseBrush" Color="{StaticResource Chartreuse}"/>
     <SolidColorBrush x:Key="LipstickRedBrush" Color="{StaticResource LipstickRed}"/>
 </ResourceDictionary>

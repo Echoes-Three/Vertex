@@ -113,12 +113,15 @@ public class DonutGraphViewModel : ViewModelBase
 
         var todayIndex = (int)DateTime.Now.DayOfWeek;
         var completion = entry.Done ? "DONE" : "NOT DONE";
-        
+
         RingColor = ActivityColors.Palette[entry.Color];
-        TitleInfo = entry.Title;
+        TitleInfo = entry.Title.Length > 16 
+            ? $"{entry.Title[..16]}..." 
+            : entry.Title;
+        
         UpperInfo = "<| STARTS |>";
         (ClockHour, ClockMinute, ClockMeridiem) = FromAngleToHour(entry.StartAngle[todayIndex]);
-        LowerInfo = $"STATUS ->> ->> {completion}";
+        LowerInfo = $"STATUS -> -> {completion}";
         
     }
 
@@ -147,7 +150,7 @@ public class DonutGraphViewModel : ViewModelBase
         ClockHour = DateTime.Now.ToString("hh");
         ClockMinute = DateTime.Now.ToString("mm");
         ClockMeridiem = DateTime.Now.ToString("tt");
-        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek} ";
+        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek.ToString().ToUpper()}";
         UpdateClockHand();
     }
 
@@ -239,7 +242,7 @@ public class DonutGraphViewModel : ViewModelBase
 
         (ClockHour, ClockMinute, ClockMeridiem) = FromAngleToHour(DragSlice.StartAngle);
         
-        UpperInfo = "Starts at:";
+        UpperInfo = "<| STARTS |>";
     }
     public void OnMouseUp()
     {
@@ -257,7 +260,7 @@ public class DonutGraphViewModel : ViewModelBase
         ClockHour = DateTime.Now.ToString("hh");
         ClockMinute = DateTime.Now.ToString("mm");
         ClockMeridiem = DateTime.Now.ToString("tt");
-        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek} ";
+        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek.ToString().ToUpper()}";
         
     }
 

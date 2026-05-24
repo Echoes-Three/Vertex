@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
 using Vertex.Data.Services;
@@ -92,6 +93,7 @@ public RemindersViewModel(RemindersHandler remindersHandler)
         reminderEntry!.Done = done;
         RemindersData.Serialize();
         ReloadCollection();
+        WeakReferenceMessenger.Default.Send(new RelaunchOrbitersMessage());
     }
     private void DeleteReminder(string reminderId)
     {
@@ -99,12 +101,12 @@ public RemindersViewModel(RemindersHandler remindersHandler)
         if (reminderEntry == null) return;
         RemindersData.Delete(reminderEntry!);
     }
-     private void ReloadCollection() =>
-            Reminders = new ObservableCollection<ReminderItemViewModel>(
-                RemindersData.Reminders!
-                    .Select(x => new ReminderItemViewModel(x))
-                    .OrderBy(r => r.IsDone)
-                    .ToList());
+     private void ReloadCollection() => 
+         Reminders = new ObservableCollection<ReminderItemViewModel>(
+            RemindersData.Reminders!
+                .Select(x => new ReminderItemViewModel(x))
+                .OrderBy(r => r.IsDone)
+                .ToList());
     
      private void OpenFormWindow()
      {
@@ -120,11 +122,11 @@ public RemindersViewModel(RemindersHandler remindersHandler)
              WindowStartupLocation = WindowStartupLocation.CenterScreen,
              Width = 400,
              Height = 550,
-             Content = new AddReminderWindow()
+             Content = new AddReminderWindow(),
+             Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Assets/Icon/VertexIcon.ico"))
          }; 
          
          _form.SetCloseAction(() => window.Close());
          window.ShowDialog();
      }
-    
 }

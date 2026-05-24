@@ -49,6 +49,32 @@
                     CornerRadius="0,0,10,10"
                     Background="{StaticResource UltraLightBackgroundBrush}"/> <!--Color Division-->
                 
+                <Canvas Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="3" >
+                    <Grid
+                        Canvas.Top="195"
+                        Width="400" Height="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="20*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                        <Border Grid.Column="2" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                        <Border Grid.Column="3" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                        <Border Grid.Column="4" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                        <Border Grid.Column="5" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                    </Grid>
+                </Canvas> <!--Visual Element-->
+
+                
                 <Grid Grid.Row="3" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="37*"/> <!---->
@@ -80,12 +106,13 @@
                             Grid.ColumnSpan="4"
                             CornerRadius="3"
                             Background="{StaticResource LightBackgroundBrush}"/> <!--Time Picker Background-->
-                            
+                        
                         <Border
                             Grid.Row="2" 
                             Grid.Column="0" 
                             x:Name="HourScroll"
                             Background="Transparent" 
+                            Cursor="ScrollNS"
                             PreviewMouseWheel="OnHourScroll"/><!--HH Scroll-->
                             
                         <Border  
@@ -93,6 +120,7 @@
                             Grid.Column="2" 
                             x:Name="MinuteScroll"
                             Background="Transparent" 
+                            Cursor="ScrollNS"
                             PreviewMouseWheel="OnMinuteScroll"/><!--MM Scroll-->
                             
                         <Border  
@@ -100,6 +128,7 @@
                             Grid.Column="3" 
                             x:Name="MeridiemScroll"
                             Background="Transparent" 
+                            Cursor="ScrollNS"
                             PreviewMouseWheel="OnMeridiemScroll"/><!--AA Scroll-->
                             
                         <TextBlock
@@ -193,7 +222,7 @@
                                         
                                         <Border 
                                             Grid.Row="1" 
-                                            Background="{StaticResource ElectricAquaBrush}"/> <!--Body Background-->
+                                            Background="{StaticResource LipstickRedBrush}"/> <!--Body Background-->
                                         <Border 
                                             Grid.Row="0" 
                                             Background="{StaticResource MediumTextBrush}"/> <!--Header Background-->
@@ -202,6 +231,13 @@
                                             Grid.Row="0"
                                             Text="WARNING"
                                             Style="{StaticResource ReminderTooltipHeader}"/> <!--Header-->
+                                        
+                                        <TextBlock 
+                                            Grid.Row="0"
+                                            Text="//////////"
+                                            Margin="150,0,0,0"
+                                            FontSize="50"
+                                            Style="{StaticResource ReminderTooltipHeader}"/> <!--Visual Element-->
                                         
                                         <TextBlock 
                                             Grid.Row="1"

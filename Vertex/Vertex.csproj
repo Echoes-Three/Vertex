@@ -6,8 +6,9 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+      <ApplicationIcon>Assets\Icon\VertexIcon.ico</ApplicationIcon>
     </PropertyGroup>
-
+  
     <ItemGroup>
       <Page Update="Views\Consistency\ConsistencyView.xaml">
         <Generator>MSBuild:Compile</Generator>
@@ -84,7 +85,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Assets\Icons\" />
       <Folder Include="Assets\Typeface\" />
       <Folder Include="Data\" />
     </ItemGroup>
@@ -170,6 +170,8 @@
       <Page Remove="Assets\Icons\History.xaml" />
       <None Remove="Views\Consistency\**" />
       <None Remove="ViewModels\Consistency\**" />
+      <None Remove="Assets\Icon\VertexIcon.ico" />
+      <Resource Include="Assets\Icon\VertexIcon.ico" />
     </ItemGroup>
 
     <ItemGroup>

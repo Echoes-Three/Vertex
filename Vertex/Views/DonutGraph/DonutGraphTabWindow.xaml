@@ -30,7 +30,68 @@
                 Grid.ColumnSpan="3" 
                 CornerRadius="10,10,0,0"
                 Background="{StaticResource ExtraLightBackgroundBrush}"/> <!--Title Background-->
+            
+            <Path 
+                Grid.Row="1" Grid.RowSpan="2" 
+                Grid.Column="0" Grid.ColumnSpan="3" 
+                Data="{StaticResource Background}"
+                Width="2020" Height="1738"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Fill="{StaticResource CrayolaBlueBrush}"
+                Opacity="0.4"
+                Stretch="Uniform"></Path> <!--Visual Elements-->
+            
+            <TextBlock
+                Grid.Row="1" Grid.RowSpan="2" 
+                Grid.Column="0" Grid.ColumnSpan="3" 
+                Text=" +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003;&#x0A;+&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003;&#x0A;+&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003;&#x0A;"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="30"
+                FontWeight="Regular"
+                Opacity="1"
+                Foreground="{StaticResource CrayolaBlueBrush}"
+                LineHeight="100"></TextBlock> <!--Visual Elements-->
 
+            <TextBlock
+                Grid.Row="1" Grid.RowSpan="2" 
+                Grid.Column="0" Grid.ColumnSpan="3" 
+                Text="&#x0A;&#x0A;&#x0A;&#x0A;&#x0A;&#x0A;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;+ &#x2003;&#x2003;+&#x2003;&#x2003; +&#x2003;&#x2003; + &#x2003;&#x2003;+&#x2003;&#x2003; +&#x2003;&#x2003; +&#x0A;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;+&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +&#x2003;&#x2003; +"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="30"
+                FontWeight="Regular"
+                Opacity="1"
+                Foreground="{StaticResource CrayolaBlueBrush}"
+                LineHeight="100"></TextBlock> <!--Visual Elements-->
+            
+            <Rectangle 
+                Grid.Row="1" Grid.RowSpan="2" 
+                Grid.Column="0" Grid.ColumnSpan="3" 
+                Width="1040" Height="780"
+                Opacity="0.15">
+                <Rectangle.Fill>
+                    <DrawingBrush TileMode="Tile"
+                                  Viewport="0,0,70,70"
+                                  ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{StaticResource PersianBlueBrush}" Thickness="2"/>
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <GeometryGroup>
+                                        <!-- Right edge = vertical line -->
+                                        <LineGeometry StartPoint="40,0" EndPoint="40,40"/>
+                                        <!-- Bottom edge = horizontal line -->
+                                        <LineGeometry StartPoint="0,40" EndPoint="40,40"/>
+                                    </GeometryGroup>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Rectangle.Fill>
+            </Rectangle> <!--Visual Element-->
+            
             <TextBlock
                 Grid.Column="1"
                 Grid.Row="0" 
@@ -237,60 +298,41 @@
                                                 Placement="Top"
                                                 BorderBrush="Transparent">
                                             
-                                            <Grid Height="120" Width="270">
+                                            <Grid>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="25*"/>
-                                                    <RowDefinition Height="50*"/>
-                                                    <RowDefinition Height="25*"/>
+                                                    <RowDefinition Height="30"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="30"/>
                                                 </Grid.RowDefinitions>
                                                     
                                                 <Border 
                                                     Grid.Row="1" 
-                                                    Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                                                    Background="{StaticResource ElectricAquaBrush}"/>
                                                 
                                                 <Border 
                                                     Grid.Row="0" 
-                                                    Background="{StaticResource LightBackgroundBrush}"/><!--Reminder Hour Background-->
+                                                    Background="{StaticResource MediumTextBrush}"/><!--Reminder Hour Background-->
                                                 <Border 
                                                     Grid.Row="2" 
-                                                    Background="{StaticResource LightBackgroundBrush}"/><!--Reminder Status Background-->
+                                                    Background="{StaticResource MediumTextBrush}"/><!--Reminder Status Background-->
                                                     
                                                 <TextBlock 
                                                     Grid.Row="0"
                                                     Text="{Binding ReminderSetForHour}"
-                                                    FontFamily="{StaticResource JetBrainsMono}"
-                                                    Foreground="{StaticResource LightTextBrush}"
-                                                    FontSize="15"
-                                                    FontWeight="Bold"
-                                                    Margin="10,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Stretch"/>
+                                                    Style="{StaticResource OrbitersTooltipHeader}"/>
                                                 
-                                                    
                                                 <TextBlock 
                                                     Grid.Row="2"
                                                     Text="{Binding ReminderStatus}"
-                                                    FontFamily="{StaticResource JetBrainsMono}"
-                                                    Foreground="{StaticResource LightTextBrush}"
-                                                    FontSize="15"
-                                                    FontWeight="Bold"
-                                                    Margin="10,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"/>
-                                                    
+                                                    Style="{StaticResource OrbitersTooltipHeader}"/>
+                                                
                                                 <TextBlock 
                                                     Grid.Row="1"
                                                     Text="{Binding ReminderContent}"
-                                                    FontFamily="{StaticResource JetBrainsMono}"
-                                                    Foreground="{StaticResource DarkTextBrush}"
-                                                    FontSize="10"
-                                                    FontWeight="SemiBold"
-                                                    Margin="10"
-                                                    TextWrapping="Wrap"
-                                                    LineHeight="10"/>
+                                                    Style="{StaticResource OrbitersTooltipBody}"/>
                                                     
                                                 </Grid>
-                                                
+                                            
                                             </ToolTip>
                                     </Ellipse.ToolTip>
                                 </Ellipse>

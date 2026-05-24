@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
 using Vertex.Data.Services;
@@ -144,7 +145,8 @@ public class ActivitiesViewModel : ViewModelBase
             WindowStartupLocation = WindowStartupLocation.CenterScreen,
             Width = 400,
             Height = 550,
-            Content = new AddActivityWindow()
+            Content = new AddActivityWindow(),
+            Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Assets/Icon/VertexIcon.ico"))
         };
 
         _form.SetCloseAction(() => window.Close());

@@ -57,7 +57,16 @@
                 </Button> <!--Add New Reminder Button-->
                 
             </Grid> <!--Tab Buttons-->
-        
+            <TextBlock 
+                Grid.Row="2" Grid.Column="1" 
+                Text="///"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="300"
+                FontWeight="bold"
+                Margin="0,370,0,0"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Foreground="{StaticResource LightBackgroundBrush}"
+                Opacity="0.1"></TextBlock>
             <!--Today's Activities-->
             <ScrollViewer Grid.Row="2" Grid.Column="1" 
                           VerticalScrollBarVisibility="Auto"

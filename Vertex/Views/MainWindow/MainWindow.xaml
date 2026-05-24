@@ -13,14 +13,16 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         SizeToContent="Manual"
+        WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Title="MainWindow"
+        Icon="/Assets/Icon/VertexIcon.ico"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
     <Viewbox Stretch="Uniform" x:Name="BackgroundContent">
         
         <Grid Width="1600" Height="900" 
-            Background="{DynamicResource DarkBackgroundBrush}">
+            Background="{DynamicResource MediumBackgroundBrush}">
                <Grid.RowDefinitions>
                    <RowDefinition Height="5*"/> <!--TitleBar-->
                    <RowDefinition Height="95*"/> <!--Main Body-->

@@ -6,7 +6,7 @@ public static class ValidateReminder
 {
     public static (bool IsValid, string Message) Content(string title)
     {
-        var isValid = !string.IsNullOrEmpty(title);
+        var isValid = !string.IsNullOrWhiteSpace(title);
         var warning = isValid ? "" : "- Content must not be empty." ;
         
         return  (isValid, warning);

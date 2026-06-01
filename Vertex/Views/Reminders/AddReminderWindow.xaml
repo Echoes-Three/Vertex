@@ -6,13 +6,11 @@
              xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d"
-             d:DesignHeight="550" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderFormViewModel}">
-    
-    <Border 
-            Background="{StaticResource ExtraLightBackgroundBrush}"
-            MouseLeftButtonDown="OnDrag"
-            CornerRadius="10">
+    <Viewbox Stretch="Uniform">
+        <Border Width="400" Height="550"
+                Background="{StaticResource ExtraDarkBackgroundBrush}"
+                MouseLeftButtonDown="OnDrag">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/> <!--Spacer-->
@@ -37,22 +35,21 @@
                     x:Name="ReminderInput"
                     Style="{StaticResource ReminderContentInput}"
                     Text="{Binding ReminderContent, UpdateSourceTrigger=PropertyChanged}"/> <!--Reminder Content Input-->
-                        
-                <TextBlock
+                
+                <Border 
                     Grid.Row="1" Grid.Column="1" 
-                    Style="{StaticResource ReminderContentLimitCounter}"
-                    Text="{Binding ContentLimitCounter, FallbackValue=250}"/> <!--Content Character Limit Count-->
+                    Background="{Binding ContentLimitIndicator, FallbackValue=chartreuse}"
+                    Style="{StaticResource ReminderContentLimitIndicator}"/> <!--Content Character Limit Indicator-->
                 
                 <Border
                     Grid.Column="0" Grid.ColumnSpan="3"
                     Grid.Row="3" Grid.RowSpan="2"
-                    CornerRadius="0,0,10,10"
-                    Background="{StaticResource UltraLightBackgroundBrush}"/> <!--Color Division-->
+                    Background="{StaticResource DarkBackgroundBrush}"/> <!--Color Division-->
                 
                 <Canvas Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="3" >
                     <Grid
                         Canvas.Top="195"
-                        Width="400" Height="20">
+                        Width="400" Height="25">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -65,12 +62,12 @@
                             <ColumnDefinition Width="10*"/>
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="2" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="3" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="4" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="5" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="2" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="3" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="4" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="5" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
                     </Grid>
                 </Canvas> <!--Visual Element-->
 
@@ -177,6 +174,7 @@
                             Grid.Column="0"
                             FirstDayOfWeek="Sunday"
                             DisplayDateStart="{x:Static sys:DateTime.Today}"
+                            DisplayDateEnd="2029-12-31"
                             x:Name="ReminderDatePicker"
                             SelectedDate="{Binding ReminderSetFor, Mode=TwoWay}"/> <!--DatePicker-->
                        
@@ -205,7 +203,6 @@
                         
                         <Border 
                             Grid.Column="4" 
-                            CornerRadius="0,3,3,0"
                             Background="{Binding WarningColor, FallbackValue={StaticResource LipstickRedBrush}}"
                             ToolTipService.InitialShowDelay="0">
                             <Border.ToolTip>
@@ -216,8 +213,8 @@
                                     
                                     <Grid Height="120" Width="270">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="35*"/> <!--Header-->
-                                            <RowDefinition Height="65*"/> <!--Body-->
+                                            <RowDefinition Height="25*"/> <!--Header-->
+                                            <RowDefinition Height="75*"/> <!--Body-->
                                         </Grid.RowDefinitions>
                                         
                                         <Border 
@@ -225,7 +222,7 @@
                                             Background="{StaticResource LipstickRedBrush}"/> <!--Body Background-->
                                         <Border 
                                             Grid.Row="0" 
-                                            Background="{StaticResource MediumTextBrush}"/> <!--Header Background-->
+                                            Background="{StaticResource DarkTextBrush}"/> <!--Header Background-->
                                         
                                         <TextBlock 
                                             Grid.Row="0"
@@ -234,9 +231,9 @@
                                         
                                         <TextBlock 
                                             Grid.Row="0"
-                                            Text="//////////"
-                                            Margin="150,0,0,0"
-                                            FontSize="50"
+                                            Text="❮❮❮❮❮"
+                                            Margin="120,0,0,0"
+                                            FontSize="60"
                                             Style="{StaticResource ReminderTooltipHeader}"/> <!--Visual Element-->
                                         
                                         <TextBlock 
@@ -256,4 +253,5 @@
                 
             </Grid>
         </Border>
+    </Viewbox>    
 </UserControl>

@@ -6,27 +6,27 @@
     <!--
     Activities Tab Tittle
     Add Reminder Button
-    Show All Activities ToggleButton
+    Show Remaining Activities ToggleButton
     Add New Activity Button
     Today's Activities ScrollViewer
-    All Activities ScrollViewer
+    Remaining Activities ScrollViewer
     Show All Activities Icon
     Add Activity Icon-->
     
     <!--Activities Tab Tittle-->
     <Style x:Key="ActivitiesTabTitle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="28"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ExtraDarkTextBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         
     </Style>
     
-    <!--Show All Activities ToggleButton-->
-    <Style x:Key="ShowAllActivitiesToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+    <!--Show All Remaining ToggleButton-->
+    <Style x:Key="ShowRemainingActivitiesToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
         <Setter Property="Width" Value="35"/>
         <Setter Property="Height" Value="35"/>
         
@@ -69,8 +69,8 @@
         </Style.Triggers>
     </Style>
     
-    <!--All Activities ScrollViewer-->
-    <Style x:Key="ShowAllActivitiesIsOn" TargetType="{x:Type ScrollViewer}">
+    <!--Remaining Activities ScrollViewer-->
+    <Style x:Key="ShowRemainingActivitiesIsOn" TargetType="{x:Type ScrollViewer}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
                 <Setter Property="Visibility" Value="Visible"/>
@@ -81,32 +81,17 @@
         </Style.Triggers>
     </Style>
     
-    <!--Show All Activities Icon-->
-    <Style x:Key="ShowAllIconActivities" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource All}"/>
-        
-        <Style.Triggers>
-            <!--On Hover-->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
-            </DataTrigger>
-            <!--Binding-->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=Tag}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
+    <!--Add New Activity icon-->
+    <Style x:Key="AddNewActivityIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="45"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
     </Style>
     
-    <!--Add New Activity icon-->
-    <Style x:Key="AddNewActivityIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource Add}"/>
-        <Style.Triggers>
-            <!--On Hover-->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
+    <!--Show All Activities Icon-->
+    <Style x:Key="ShowAllIconActivities" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AddNewActivityIcon}">
     </Style>
 </ResourceDictionary>

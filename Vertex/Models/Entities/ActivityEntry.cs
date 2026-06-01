@@ -1,5 +1,5 @@
 
-namespace Vertex.Models.Entities.Entry;
+namespace Vertex.Models.Entities;
 
 public class ActivityEntry
 {
@@ -7,10 +7,8 @@ public class ActivityEntry
     public int Color { get; set; } = 0;
     public string Title { get; set; } = "";
     public string Content { get; set; } = "";
-    public bool Done { get; set; } = false;
     public List<DayOfWeek>? RepeatOn { get; set; } = null;
     public TimeSpan Duration { get; set; } = TimeSpan.Zero;
-    public List<int> Order { get; set; } = [0,0,0,0,0,0,0];
     public List<double> StartAngle { get; set; } = [0,0,0,0,0,0,0];
     public List<double> EndAngle { get; set; } = [0,0,0,0,0,0,0];
 }

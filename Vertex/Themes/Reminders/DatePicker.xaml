@@ -9,7 +9,7 @@
         <Setter Property="FontSize" Value="10"></Setter>
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="SelectedDateFormat" Value="Short" />
-        <Setter Property="Background" Value="{StaticResource MediumTextBrush}" /> <!--Whole Element Background EDITABLE-->
+        <Setter Property="Background" Value="{StaticResource DarkTextBrush}" /> <!--Whole Element Background EDITABLE-->
         <Setter Property="Padding" Value="2,2,0,0"/>
         <Setter Property="BorderBrush" Value="Transparent" /> <!-- Select a Date Border EDITABLE-->
         <Setter Property="BorderThickness" Value="1" />
@@ -82,7 +82,7 @@
                                             </VisualStateManager.VisualStateGroups>
 
                                             <!--Start UI-->
-                                            <Grid Height="18" Width="19" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Background="{StaticResource DarkTextBrush}" FlowDirection="LeftToRight"> <!--Calendar Icon Whole Background EDITABLE-->
+                                            <Grid Height="18" Width="19" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Background="{StaticResource ExtraDarkTextBrush}" FlowDirection="LeftToRight"> <!--Calendar Icon Whole Background EDITABLE-->
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="20*"/>
                                                     <ColumnDefinition Width="20*"/>

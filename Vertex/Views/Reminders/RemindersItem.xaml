@@ -5,23 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
-             d:DesignHeight="333" d:DesignWidth="476"
+             d:DesignHeight="100" d:DesignWidth="476"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderItemViewModel}">
     <Border
-        Background="{StaticResource UltraLightBackgroundBrush}"
         Margin="0,0,0,20">
-        
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/> <!--Content-->
-                <RowDefinition Height="25"/> <!--Set For / Buttons-->
-                <RowDefinition Height="13"/> <!--Spacer-->
+                <RowDefinition Height="80*"/> <!--Content-->
+                <RowDefinition Height="10*"/> <!--Set For / Buttons-->
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/> <!--Spacer-->
                 <ColumnDefinition Width="96*"/> <!--Content-->
                 <ColumnDefinition Width="2*"/> <!--Spacer-->
             </Grid.ColumnDefinitions>
+            
+            <!--<Border 
+                Grid.Column="0" 
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Grid.RowSpan="3"
+                CornerRadius="0,5,5,0"
+                Background="{StaticResource DarkBackgroundBrush}"/> ~1~Reminder Background@1@-->
             
             <TextBlock 
                 Grid.Row="0"
@@ -31,14 +36,13 @@
             
             <Grid Grid.Row="1" Grid.Column="1" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="64*"/> <!--Reminder Date Info-->
-                    <ColumnDefinition Width="14*"/> <!--Spacer-->
+                    <ColumnDefinition Width="44*"/> <!--Reminder Date Info-->
+                    <ColumnDefinition Width="34*"/> <!--Spacer-->
                     <ColumnDefinition Width="6*"/> <!--Delete Button-->
                     <ColumnDefinition Width="2*"/> <!--Spacer-->
                     <ColumnDefinition Width="6*"/> <!--Edit Button-->
-                    <ColumnDefinition Width="2*"/> <!--Spacer-->
-                    <ColumnDefinition Width="6*"/> <!--Done Button-->
                 </Grid.ColumnDefinitions>
+                
                 
                 <Border 
                     Grid.Column="0" 
@@ -47,32 +51,28 @@
                 
                 <TextBlock
                     Grid.Column="0"
-                    Text="{Binding SetFor, FallbackValue=yyyy-MM-dd / hh:mm tt}"
+                    Text="{Binding SetFor, FallbackValue=In 5 Day(s)}"
                     Style="{StaticResource ReminderSetForLabel}"/> <!--Set For Date-->
                 
                 <Button 
                     Grid.Column="2"
                     Style="{StaticResource DeleteReminderButton}"
                     Command="{Binding OnDeleteReminder}">
-                    <Path Style="{StaticResource DeleteReminderIcon}"/>
+                    <TextBlock 
+                        Style="{StaticResource DeleteReminderIcon}"
+                        Text="✗"/>
                 </Button> <!--Delete Button-->
                 
                 <Button 
                     Grid.Column="4"
                     Style="{StaticResource EditReminderButton}"
                     Command="{Binding OnEditReminder}">
-                    <Path Style="{StaticResource EditReminderIcon}"/>
+                    <TextBlock 
+                        Style="{StaticResource EditReminderIcon}"
+                        Text="⎋"/>
                 </Button> <!--Edit Button-->
-                
-                <ToggleButton 
-                    Grid.Column="6"
-                    Style="{StaticResource MarkReminderAsDoneButton}"
-                    IsChecked="{Binding IsDone, FallbackValue=False}">
-                    <Path Style="{StaticResource ReminderCheckBoxIcon}"/>
-                </ToggleButton> <!--Done Button-->
                 
             </Grid>
         </Grid>
     </Border>
-    
 </UserControl>

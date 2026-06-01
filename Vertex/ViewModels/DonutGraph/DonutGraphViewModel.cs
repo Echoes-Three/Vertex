@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -7,10 +8,11 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
+using Vertex.Data.Services;
 using Vertex.Models.Entities;
-using Vertex.Models.Entities.Entry;
 using Vertex.MVVM;
 using Vertex.ViewModels.Activities;
+using Colors = Vertex.Data.Services.Colors;
 
 namespace Vertex.ViewModels.DonutGraph;
 
@@ -18,32 +20,27 @@ public class DonutGraphViewModel : ViewModelBase
 {
     private readonly ActivitiesHandler _activitiesData;
     private readonly RemindersHandler _remindersData;
-    
-    private ObservableCollection<SliceViewModel> _slices;
 
     public ObservableCollection<SliceViewModel> Slices
     {
-        get => _slices;
+        get;
         set
         {
-            _slices = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-    
-    private ObservableCollection<OrbiterViewModel> _orbiters;
-
     public ObservableCollection<OrbiterViewModel> Orbiters
     {
-        get => _orbiters;
+        get;
         set
         {
-            _orbiters = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-    
-    public int TodayIndex => (int)DateTime.Today.DayOfWeek;
+
+    private int TodayIndex => (int)DateTime.Today.DayOfWeek;
 
     private DispatcherTimer _clock;
     
@@ -98,99 +95,18 @@ public class DonutGraphViewModel : ViewModelBase
                     LaunchOrbiters();
                 }
         };
+        
         WeakReferenceMessenger.Default.Register<RebuildSlicesMessage> (this, (r, m) => 
             { BuildSlices();});
         WeakReferenceMessenger.Default.Register<RelaunchOrbitersMessage> (this, (r, m) => 
             { LaunchOrbiters();});
         
         StartClock();
+        ActivityColor = Colors.GetBrush("#e6e6ea");
     }
-
-    public void PopulateActivityInfo(object id)
-    {
-        var entry = _activitiesData.Activities!.FirstOrDefault(x => x.Id == (string)id);
-        if (entry == null) return;
-
-        var todayIndex = (int)DateTime.Now.DayOfWeek;
-        var completion = entry.Done ? "DONE" : "NOT DONE";
-
-        RingColor = ActivityColors.Palette[entry.Color];
-        TitleInfo = entry.Title.Length > 16 
-            ? $"{entry.Title[..16]}..." 
-            : entry.Title;
-        
-        UpperInfo = "<| STARTS |>";
-        (ClockHour, ClockMinute, ClockMeridiem) = FromAngleToHour(entry.StartAngle[todayIndex]);
-        LowerInfo = $"STATUS -> -> {completion}";
-        
-    }
-
-    public void CleanActivityInfo()
-    {
-        RingColor = Brushes.Transparent;
-        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek} ";
-        LowerInfo = "";
-        TitleInfo = "";
-        ClockHour = DateTime.Now.ToString("hh");
-        ClockMinute = DateTime.Now.ToString("mm");
-        ClockMeridiem = DateTime.Now.ToString("tt");
-        
-    }
-    private void StartClock()
-    {
-        _clock = new DispatcherTimer();
-        _clock.Interval = TimeSpan.FromMinutes(1);
-        _clock.Tick += (s, e) => UpdateClock();
-        _clock.Start();
-        UpdateClock();
-    }
-
-    private void UpdateClock()
-    {
-        ClockHour = DateTime.Now.ToString("hh");
-        ClockMinute = DateTime.Now.ToString("mm");
-        ClockMeridiem = DateTime.Now.ToString("tt");
-        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek.ToString().ToUpper()}";
-        UpdateClockHand();
-    }
-
-    private void UpdateClockHand()
-    {
-        var hour = DateTime.Now.Hour;
-        var minute = DateTime.Now.Minute;
-
-        var angle = 270 - (15 * hour + 0.25 * minute);
-
-        angle = angle % 360;
-        if (angle < 0) angle += 360;
-
-        var radian = angle * (Math.PI / 180);
-
-        var x1 = 510 + 215 * Math.Cos(radian);
-        var y1 = 369 + 215 * Math.Sin(radian);
-
-        var x2 = 510 + 325 * Math.Cos(radian);
-        var y2 = 369 + 325 * Math.Sin(radian);
-
-        X1 = Math.Truncate(x1);
-        Y1 = Math.Truncate(Math.Abs(y1 - 738));
-        X2 = Math.Truncate(x2);
-        Y2 = Math.Truncate(Math.Abs(y2 - 738));
-        
-    }
-
-    private void LaunchOrbiters() =>
-        Orbiters = new ObservableCollection<OrbiterViewModel>(
-            _remindersData.Reminders!
-                .Where(r => r.SetFor.Date == DateTime.Today)
-                .Select(r => new OrbiterViewModel(r)));
-    
-    private void BuildSlices() =>
-        Slices = new ObservableCollection<SliceViewModel>(
-            _activitiesData.Activities!.Where(x => x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
-                .Select(x => new SliceViewModel(x)));
     
     
+    /*Objects Creation & Initialization*/
     private void AddSlice(ActivityEntry entry)
     {
         var durationSpam = entry!.Duration.Hours + entry.Duration.Minutes / 60.0;
@@ -203,10 +119,168 @@ public class DonutGraphViewModel : ViewModelBase
             entry.StartAngle[i] = startAngle;
             entry.EndAngle[i] = endAngle;
         }
-        
     }
+    private void LaunchOrbiters() =>
+        Orbiters = new ObservableCollection<OrbiterViewModel>(
+            _remindersData.Reminders!
+                .Where(r => r.SetFor.Date == DateTime.Today)
+                .Select(r => new OrbiterViewModel(r)));
+    private void BuildSlices() =>
+        Slices = new ObservableCollection<SliceViewModel>(
+            _activitiesData.Activities!.Where(x => x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
+                .Select(x => new SliceViewModel(x)));
+    
+    
+    /*Clock;*/
+    private void StartClock()
+    {
+        _clock = new DispatcherTimer();
+        _clock.Interval = TimeSpan.FromMinutes(1);
+        _clock.Tick += (s, e) => UpdateClock();
+        _clock.Start();
+        UpdateClock();
+    }
+    private void UpdateClock()
+    {
+        var today = DateTime.Now;
 
+        ClockTime = $"{today:hh:mm tt}";
+        ClockDate = $"{today:yyyy-MM-dd}";
+        ClockDayOfTheWeek = $"{today.DayOfWeek.ToString().ToUpper()}";
+        
+        UpdateClockHand();
+    }
+    private void UpdateClockHand()
+    {
+        var hour = DateTime.Now.Hour;
+        var minute = DateTime.Now.Minute;
 
+        var angle = 270 - (15 * hour + 0.25 * minute);
+
+        angle = angle % 360;
+        if (angle < 0) angle += 360;
+
+        var radian = angle * (Math.PI / 180);
+
+        var x1 = 510 + 305 * Math.Cos(radian);
+        var y1 = 377 + 305 * Math.Sin(radian);
+
+        var x2 = 510 + 325 * Math.Cos(radian);
+        var y2 = 377 + 325 * Math.Sin(radian);
+
+        X1 = Math.Truncate(x1);
+        Y1 = Math.Truncate(Math.Abs(y1 - 754));
+        X2 = Math.Truncate(x2);
+        Y2 = Math.Truncate(Math.Abs(y2 - 754));
+        
+        OnPropertyChanged(nameof(PathData));
+    }
+    private static Point GetPointOnCircle(double clockAngle)
+    {
+        var radians = clockAngle * Math.PI / 180;
+        var x = 315 * Math.Cos(radians);
+        var y = -315 * Math.Sin(radians);
+        return new Point(x, y);
+    }
+    
+    public Geometry PathData
+    {
+        get
+        {
+            var hour = DateTime.Now.Hour;
+            var minute = DateTime.Now.Minute;
+
+            var angle = 270 - (15 * hour + 0.25 * minute);
+
+            angle = angle % 360;
+            if (angle < 0) angle += 360;
+            
+            var p1 = GetPointOnCircle(180);
+            var p2 = GetPointOnCircle(angle);
+            
+            var spanAngle = 180 - angle;
+            if (spanAngle < 0) spanAngle += 360;
+            
+            var figure = new PathFigure { StartPoint = p1, IsClosed = false };
+            figure.Segments.Add(new ArcSegment
+            {
+                Point = p2,
+                Size = new Size(315, 315),
+                SweepDirection = SweepDirection.Clockwise,
+                IsLargeArc = spanAngle > 180
+            });
+
+            var geometry = new PathGeometry();
+            geometry.Figures.Add(figure);
+            return geometry;
+        }
+    }
+    public double X1
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public double Y1
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public double X2
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public double Y2
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public string ClockDayOfTheWeek
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public string ClockDate
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public string ClockTime
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    
+    /*Dragging Slice*/
     public void OnMouseDown(object sender, MouseButtonEventArgs e, Canvas donutCanvas)
     {
         var path = sender as Path;
@@ -215,7 +289,7 @@ public class DonutGraphViewModel : ViewModelBase
 
         var mouse = e.GetPosition(donutCanvas);
         var dx = mouse.X - 510;
-        var dy = mouse.Y - 369;
+        var dy = mouse.Y - 377;
         var angle = Math.Atan2(dy, dx) * (180 / Math.PI);
         if (angle < 0) angle += 360;
         LastClockDegree = (angle - 180 + 360) % 360;
@@ -226,7 +300,7 @@ public class DonutGraphViewModel : ViewModelBase
 
         var mouse = e.GetPosition(donutCanvas);
         var dx = mouse.X - 510;
-        var dy = mouse.Y - 369;
+        var dy = mouse.Y - 377;
         var angle = Math.Atan2(dy, dx) * (180 / Math.PI);
         if (angle < 0) angle += 360;
         var clockDegrees = (angle - 180 + 360) % 360;
@@ -239,10 +313,20 @@ public class DonutGraphViewModel : ViewModelBase
         DragSlice.EndAngle = (DragSlice.EndAngle - delta + 360) % 360;
 
         LastClockDegree = clockDegrees;
-
-        (ClockHour, ClockMinute, ClockMeridiem) = FromAngleToHour(DragSlice.StartAngle);
         
-        UpperInfo = "<| STARTS |>";
+
+        var entry = DragSlice.EntryData;
+        var time = FromAngleToHour(DragSlice.StartAngle);
+        var hour = $"{(int)entry!.Duration.TotalHours}H";
+        var minute = entry.Duration.Minutes == 0
+            ? ""
+            : $"{entry.Duration.Minutes}MIN";
+        var title = entry.Title.Length > 16 ? entry.Title[..10] : entry.Title;
+            
+        ActivityColor = Colors.Palette[entry.Color];
+        ClockTime = $"{time.Hour}:{time.Minute} {time.Meridiem}";
+        ClockDayOfTheWeek = $"{title}... -> {hour}{minute}";
+        ClockDate = "↑↑↑ STARTS ↑↑↑";
     }
     public void OnMouseUp()
     {
@@ -250,21 +334,16 @@ public class DonutGraphViewModel : ViewModelBase
             
         var activity = DragSlice.EntryData;
         
-        activity.StartAngle[TodayIndex] = DragSlice.StartAngle;
+        activity!.StartAngle[TodayIndex] = DragSlice.StartAngle;
 
         _activitiesData.Serialize();
+
+        CleanActivityInfo();
         
         IsDragging = false;
         DragSlice = null;
-        
-        ClockHour = DateTime.Now.ToString("hh");
-        ClockMinute = DateTime.Now.ToString("mm");
-        ClockMeridiem = DateTime.Now.ToString("tt");
-        UpperInfo = $"{ DateTime.Now:yyyy-MM-dd} {DateTime.Now.DayOfWeek.ToString().ToUpper()}";
-        
     }
-
-    private static (string, string, string) FromAngleToHour(double angle)
+    private static (string Hour, string Minute, string Meridiem) FromAngleToHour(double angle)
     {
         var adjustedAngle = (180 - angle + 360) % 360;
         var totalHours = adjustedAngle / 15.0;
@@ -278,174 +357,65 @@ public class DonutGraphViewModel : ViewModelBase
         
         return (correctHour.ToString("D2"), minutes.ToString("D2"), meridiem);
     }
-    
-    /*Full Properties*/
-
-    private string _titleInfo;
-
-    public string TitleInfo
+    public void PopulateActivityInfo(object pathTag)
     {
-        get => _titleInfo;
+        var entry = _activitiesData.Activities!.FirstOrDefault(x => x.Id == (string)pathTag);
+        if (entry == null) return;
+        
+        var today = (int)DateTime.Today.DayOfWeek;
+        var time = FromAngleToHour(entry.StartAngle[today]);
+        var hour = (int)entry!.Duration.TotalHours == 0
+            ? ""
+            : $"{(int)entry!.Duration.TotalHours}H";
+        var minute = entry.Duration.Minutes == 0
+            ? ""
+            : $"{entry.Duration.Minutes}MIN";
+        var title = entry.Title.Length > 16 ? entry.Title[..10] : entry.Title;
+            
+        ActivityColor = Colors.Palette[entry.Color];
+        ClockTime = $"{time.Hour}:{time.Minute} {time.Meridiem}";
+        ClockDayOfTheWeek = $"{title}... -> {hour}{minute}";
+        ClockDate = "↑↑↑ STARTS ↑↑↑";
+    }
+    public void CleanActivityInfo()
+    {
+        UpdateClock();
+        ActivityColor = Colors.GetBrush("#e6e6ea");
+    }
+
+    private double LastClockDegree
+    {
+        get;
         set
         {
-            _titleInfo = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _lowerInfo;
-
-    public string LowerInfo
+    private SliceViewModel? DragSlice
     {
-        get => _lowerInfo;
+        get;
         set
         {
-            _lowerInfo = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-    
-    private Brush? _ringColor;
-
-    public Brush? RingColor
+    private bool IsDragging
     {
-        get => _ringColor;
+        get;
         set
         {
-            _ringColor = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-    
-    private string _upperInfo;
-
-    public string UpperInfo
+    public Brush? ActivityColor
     {
-        get => _upperInfo;
+        get;
         set
         {
-            _upperInfo = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private double _x1;
-
-    public double X1
-    {
-        get => _x1;
-        set
-        {
-            _x1 = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private double _y1;
-
-    public double Y1
-    {
-        get => _y1;
-        set
-        {
-            _y1 = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private double _x2;
-
-    public double X2
-    {
-        get => _x2;
-        set
-        {
-            _x2 = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private double _y2;
-
-    public double Y2
-    {
-        get => _y2;
-        set
-        {
-            _y2 = value;
-            OnPropertyChanged();
-        }
-    }
-
-    
-    private string _clockHour;
-
-    public string ClockHour
-    {
-        get => _clockHour;
-        set
-        {
-            _clockHour = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _clockMinute;
-
-    public string ClockMinute
-    {
-        get => _clockMinute;
-        set
-        {
-            _clockMinute = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _clockMeridiem;
-
-    public string ClockMeridiem
-    {
-        get => _clockMeridiem;
-        set
-        {
-            _clockMeridiem = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    private double _lastClockDegree;
-
-    public double LastClockDegree
-    {
-        get => _lastClockDegree;
-        set
-        {
-            _lastClockDegree = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private SliceViewModel? _dragSlice;
-
-    public SliceViewModel? DragSlice
-    {
-        get => _dragSlice;
-        set
-        {
-            _dragSlice = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isDragging;
-
-    public bool IsDragging
-    {
-        get => _isDragging;
-        set
-        {
-            _isDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }

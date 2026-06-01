@@ -2,9 +2,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Vertex.Data.Services;
+using Vertex.Models.Entities;
 using Vertex.ViewModels;
 using Vertex.ViewModels.DonutGraph;
+using Colors = Vertex.Data.Services.Colors;
 
 namespace Vertex.Views.DonutGraph;
 
@@ -15,7 +19,7 @@ public partial class DonutGraphTabWindow : UserControl
     public DonutGraphTabWindow()
     {
         InitializeComponent();
-        GenerateClockTicks(DonutCanvas, new Point(510, 369), 320, 15);
+        GenerateClockTicks(DonutCanvas, new Point(510, 377), 320, 15);
     }
 
     private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => Vm.OnMouseDown(sender, e, DonutCanvas);
@@ -24,19 +28,11 @@ public partial class DonutGraphTabWindow : UserControl
     
     private void OnMouseUp(object sender, MouseButtonEventArgs e) => Vm.OnMouseUp();
     
-    private void OnHoverPath(object sender, RoutedEventArgs e)
-    {
-        if (sender is Path path) 
-            Vm.PopulateActivityInfo(path.Tag);
-    }
-
-    private void OnLeavePath(object sender, RoutedEventArgs e) => Vm.CleanActivityInfo();
-    
     private static void GenerateClockTicks(Canvas canvas, Point center, double faceRadius, double tickLength)
     {
         for (var hour = 0; hour < 24; hour++)
         {
-            var angle = (hour / 24.0) * 2 * Math.PI - Math.PI / 2;
+            var angle = hour / 24.0 * 2 * Math.PI - Math.PI / 2;
 
             var outerX = center.X + faceRadius * Math.Cos(angle);
             var outerY = center.Y + faceRadius * Math.Sin(angle);
@@ -47,12 +43,20 @@ public partial class DonutGraphTabWindow : UserControl
             {
                 X1 = outerX, Y1 = outerY,
                 X2 = innerX, Y2 = innerY,
-                StrokeThickness = 4,
-                Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString("#e6e6ea")!
+                StrokeThickness = 6,
+                Stroke = Colors.GetBrush("#26282E")
             };
 
             canvas.Children.Add(line);
         }
     }
+
+    private void EnterSlice(object sender, MouseEventArgs e)
+    {
+        if (sender is Path path)
+            Vm.PopulateActivityInfo(path.Tag);
+    }
+
+    private void LeaveSlice(object sender, MouseEventArgs e) => Vm.CleanActivityInfo();
     
 }

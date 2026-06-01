@@ -3,9 +3,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
 using Vertex.Data.Services;
 using Vertex.Models.Entities;
-using Vertex.Models.Entities.Entry;
-using Vertex.Models.Enums;
 using Vertex.MVVM;
+using Colors = Vertex.Data.Services.Colors;
 
 namespace Vertex.ViewModels.Reminders;
 
@@ -32,6 +31,7 @@ public class ReminderFormViewModel : ViewModelBase
         OnSaveAction = new RelayCommand(_ => SaveAction(), _ => CanSaveAction());
     }
     
+    /*Saving Reminder*/
     private bool CanSaveAction()
     {
         var isTitleNotEmpty = ValidateReminder.Content(ReminderContent);
@@ -40,7 +40,7 @@ public class ReminderFormViewModel : ViewModelBase
         
         if (isDateNotEmpty.IsValid)
             isHourValid = ReminderSetFor == DateTime.Today 
-                ? ValidateReminder.Hour(_currentHourCount, _currentMinuteCount, _currentMeridiem)
+                ? ValidateReminder.Hour(_currentHourCount, _currentMinuteCount, CurrentMeridiem)
                 : (true, "");
         
         var canAdd = isTitleNotEmpty.IsValid && isHourValid.IsValid && isDateNotEmpty.IsValid;
@@ -50,7 +50,7 @@ public class ReminderFormViewModel : ViewModelBase
         
         WarningMessages = parts.Any() ? string.Join("\n", parts) : "No warning." ;
         
-        WarningColor = canAdd ? ActivityColors.GetBrush("#C3FE0C") : ActivityColors.GetBrush("#ea163b");
+        WarningColor = canAdd ? Colors.GetBrush("#C3FE0C") : Colors.GetBrush("#ea163b");
         
         return canAdd;
     }
@@ -90,7 +90,6 @@ public class ReminderFormViewModel : ViewModelBase
         
         reminderEntry.Content = ReminderContent;
         reminderEntry.SetFor = ConvertDateTime();
-        reminderEntry.Done = false;
         
         _remindersData.Serialize();
         _closeWindow?.Invoke();
@@ -105,7 +104,6 @@ public class ReminderFormViewModel : ViewModelBase
         {
             Content = ReminderContent,
             SetFor = ConvertDateTime(),
-            Done = false,
             Id = Guid.NewGuid().ToString()
         };
 
@@ -115,8 +113,44 @@ public class ReminderFormViewModel : ViewModelBase
         CleanFields();
     }
     
+    private static SolidColorBrush LimitColor(int length, int limit) =>
+        (limit, length) switch
+        {
+            var (lim, len) when lim - len > lim * 0.2 => Colors.GetBrush("#C3FE0C"),
+            var (lim, len) when len == lim => Colors.GetBrush("#ea163b"),
+            _ => Colors.GetBrush("#0c4af7")
+        };
     
-    /*Helper methods*/
+    public string WarningMessages
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public Brush? WarningColor
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public Brush? ContentLimitIndicator
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    
+    /*Helper Methods*/
     public void CleanFields()
     {
         _windowMode = WindowMode.Add;
@@ -128,7 +162,7 @@ public class ReminderFormViewModel : ViewModelBase
     }
     private DateTime ConvertDateTime()
     {
-        switch (_currentMeridiem)
+        switch (CurrentMeridiem)
         {
             case "PM" when _currentHourCount != 12:
                 _currentHourCount += 12;
@@ -147,14 +181,11 @@ public class ReminderFormViewModel : ViewModelBase
             0
         );
     }
-    private void CountContentLimit(int length) => 
-        ContentLimitCounter = (250 - length).ToString();
     
     
     /*HourPicker scroll behavior on AddReminderWindow*/
     public void UpdateMeridiem() => 
         CurrentMeridiem = _meridiem[_currentMeridiemIndex = (_currentMeridiemIndex + 1) % 2];
-    
     public void RemindHourUp()
     {
         if (_currentHourCount == 12)
@@ -173,7 +204,6 @@ public class ReminderFormViewModel : ViewModelBase
         
         CurrentHour = $"{_currentHourCount:D2}";
     }
-    
     public void RemindMinuteUp()
     {
         if (_currentMinuteCount == 59)
@@ -193,123 +223,69 @@ public class ReminderFormViewModel : ViewModelBase
         CurrentMinute = $"{_currentMinuteCount:D2}";
     }
     
-    
-    /*Full Properties*/
-
-    private string _warningMessages;
-
-    public string WarningMessages
-    {
-        get => _warningMessages;
-        set
-        {
-            _warningMessages = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    private Brush? _warningColor;
-
-    public Brush? WarningColor
-    {
-        get => _warningColor;
-        set
-        {
-            _warningColor = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _contentLimitCounter = "250";
-
-    public string ContentLimitCounter
-    {
-        get => _contentLimitCounter;
-        set
-        {
-            _contentLimitCounter = value;
-            OnPropertyChanged();
-        }
-    }
-
-    
-    private string _editReminderId;
-
-    public string EditReminderId
-    {
-        get => _editReminderId;
-        set
-        {
-            _editReminderId = value;
-            OnPropertyChanged();
-        }
-    }
-    private string _reminderContent = "";
-
-    public string ReminderContent
-    {
-        get => _reminderContent;
-        set
-        {
-            _reminderContent = CharacterLimiter.LimitReminderContent(value);
-            OnPropertyChanged();
-            CountContentLimit(_reminderContent.Length);
-            OnSaveAction.RaiseCanExecuteChanged();
-        }
-    }
-    
-    
-    private DateTime? _reminderSetFor;
-
-    public DateTime? ReminderSetFor
-    {
-        get => _reminderSetFor;
-        set
-        {
-            _reminderSetFor = value;
-            OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
-        }
-    }
-    
-    
-    private string _currentHour = "12";
-
     public string CurrentHour
     {
-        get => _currentHour;
+        get;
         set
         {
-            _currentHour = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
-    
-    
-    private string _currentMinute = "59";
-
+    } = "12";
     public string CurrentMinute
     {
-        get => _currentMinute;
+        get;
         set
         {
-            _currentMinute = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
-    
-    private string _currentMeridiem = "AM";
-
+    } = "59";
     public string CurrentMeridiem
     {
-        get => _currentMeridiem;
+        get;
         set
         {
-            _currentMeridiem = value;
+            field = value;
+            OnPropertyChanged();
+            OnSaveAction.RaiseCanExecuteChanged();
+        }
+    } = "AM";
+    
+    
+    /*Remaining Properties*/
+    private string EditReminderId
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public string ReminderContent
+    {
+        get;
+        set
+        {
+            field = CharacterLimiter.LimitReminderContent(ref value);
+            OnPropertyChanged();
+            ContentLimitIndicator = LimitColor(field.Length, 250);
+            OnSaveAction.RaiseCanExecuteChanged();
+        }
+    } = "";
+    public DateTime? ReminderSetFor
+    {
+        get;
+        set
+        {
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
     }
+ 
+    
 }

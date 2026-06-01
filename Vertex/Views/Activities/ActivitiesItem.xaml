@@ -1,0 +1,137 @@
+<UserControl x:Class="Vertex.Views.Activities.ActivitiesItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:activities="clr-namespace:Vertex.ViewModels.Activities"
+             mc:Ignorable="d"
+             d:DesignHeight="90" d:DesignWidth="476"
+             d:DataContext="{d:DesignInstance Type=activities:ActivityItemViewModel}">
+    
+    <Border Margin="0,0,0,10">
+        <Grid x:Name="ButtonHover" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="1*"/> <!--Activity Color-->
+                <ColumnDefinition Width="1*"/> <!--Spacer-->
+                <ColumnDefinition Width="68*"/> <!--Title-->
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="8*"/> <!--Delete Button-->
+                <ColumnDefinition Width="8*"/> <!--Edit Button-->
+                <ColumnDefinition Width="2*"/> <!--Spacer-->
+            </Grid.ColumnDefinitions>
+            
+            <Button 
+                Grid.Column="5"
+                Width="30"
+                Height="30"
+                Style="{StaticResource DeleteActivityButton}"
+                Command="{Binding OnDeleteActivity}">
+                <TextBlock 
+                    Style="{StaticResource DeleteActivityIcon}"
+                    Text="✗"/>
+            </Button> <!--Delete Button-->
+        
+            <Button 
+                Grid.Column="6"
+                Width="30"
+                Height="30"
+                Style="{StaticResource EditActivityButton}"
+                Command="{Binding OnEditActivity}">
+                <TextBlock 
+                    Style="{StaticResource EditActivityIcon}"
+                    Text="⎋"/>
+            </Button> <!--Edit Button-->
+            
+            <Border 
+                Grid.Column="0"
+                Background="{StaticResource ExtraDarkBackgroundBrush}"
+                ToolTipService.InitialShowDelay="0">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Grid.ColumnSpan" Value="7"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ButtonHover}" Value="True">
+                                <Setter Property="Grid.ColumnSpan" Value="5"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Border.ToolTip>
+                    <ToolTip 
+                        Background="Transparent" 
+                        Placement="Bottom"
+                        HorizontalOffset="10"
+                        BorderBrush="Transparent">
+                            
+                        <Grid Width="200"> 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="80*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="80*"/>
+                                <ColumnDefinition Width="10*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border
+                                Grid.Column="0" Grid.ColumnSpan="3" 
+                                Grid.Row="0" Grid.RowSpan="3"
+                                Background="{StaticResource DarkBackgroundBrush}"/> <!--Body Background-->
+                            
+                            <Border
+                                Height="20"
+                                Width="20"
+                                Grid.Column="0"
+                                Grid.Row="0">
+                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
+                            </Border><!--Visual Element-->
+                            <Border
+                                Height="20"
+                                Width="20"
+                                Grid.Column="2"
+                                Grid.Row="0" >
+                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
+                            </Border><!--Visual Element-->
+                            <Border
+                                Height="20"
+                                Width="20"
+                                Grid.Column="0"
+                                Grid.Row="2">
+                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
+                            </Border><!--Visual Element-->
+                            <Border
+                                Height="20"
+                                Width="20"
+                                Grid.Column="2"
+                                Grid.Row="2">
+                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
+                            </Border><!--Visual Element-->
+                            
+                            <TextBlock 
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Style="{StaticResource ActivityContent}"
+                                Text="{Binding EntryData.Content, FallbackValue=No Content}"/> <!--Content-->
+                        </Grid>
+                            
+                    </ToolTip>
+                </Border.ToolTip>
+            </Border> <!--Title Background-->
+            
+            <Border
+                Grid.Column="1"
+                Background="{Binding ActivityColor, FallbackValue=Chartreuse}"></Border>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="3"
+                IsHitTestVisible="False"
+                Style="{StaticResource ActivityTitle}"
+                Text="{Binding EntryData.Title, FallbackValue=No Title}"/> <!--Title-->
+            
+        </Grid>
+    </Border>
+    
+</UserControl>

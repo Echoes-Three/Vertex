@@ -12,6 +12,13 @@ public partial class AddReminderWindow : UserControl
     public AddReminderWindow()
     {
         InitializeComponent();
+        
+        var screenHeight = SystemParameters.PrimaryScreenHeight;
+        
+        const double widthPercentage = 0.6;
+        
+        Height = screenHeight * widthPercentage;
+        Width = Height * 0.7272;
     }
 
     private void OnCancel(object sender, RoutedEventArgs e)

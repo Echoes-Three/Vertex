@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace Vertex.Views.Activities;
 
-public partial class AllActivitiesItem : UserControl
+public partial class ActivitiesItem : UserControl
 {
-    public AllActivitiesItem()
+    public ActivitiesItem()
     {
         InitializeComponent();
     }

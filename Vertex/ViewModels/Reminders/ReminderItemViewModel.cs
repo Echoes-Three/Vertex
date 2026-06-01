@@ -1,7 +1,5 @@
-using System.Collections.ObjectModel;
-using System.Windows.Media;
 using CommunityToolkit.Mvvm.Messaging;
-using Vertex.Models.Entities.Entry;
+using Vertex.Models.Entities;
 using Vertex.MVVM;
 
 namespace Vertex.ViewModels.Reminders;
@@ -18,44 +16,33 @@ public class ReminderItemViewModel : ViewModelBase
         OnDeleteReminder = new RelayCommand(_ => DeleteReminder());
         OnEditReminder = new RelayCommand(_ => EditReminder());
         
-        SetFor = $"Set for: {EntryData.SetFor:yyyy-MM-dd} / {EntryData.SetFor:hh:mm tt} ";
-        
-        _isDone = EntryData.Done;
+        InitializeReminder();
     }
-    
+
+    private void InitializeReminder()
+    {
+        var dateSpan = (EntryData.SetFor - DateTime.Today).Days;
+
+        SetFor = dateSpan switch
+        {
+            0 => $"Today at {EntryData.SetFor:hh:mm tt}",
+            < 0 =>  $"{Math.Abs(dateSpan)} Day(s) ago",
+            _=> $"In {Math.Abs(dateSpan)} Day(s)"
+        };
+    }
     private void DeleteReminder()
         => WeakReferenceMessenger.Default.Send(new DeleteReminderMessage(EntryData!.Id));
-
-    private void MarkReminderAsDone()
-        => WeakReferenceMessenger.Default.Send(new ChangeReminderStateMessage((EntryData!.Id, IsDone)));
-    
     private void EditReminder()
         => WeakReferenceMessenger.Default.Send(new EditReminderMessage(EntryData!.Id));
-    
-    
-    private string _setFor;
+
 
     public string SetFor
     {
-        get => _setFor;
+        get;
         set
         {
-            _setFor = value;
+            field = value;
             OnPropertyChanged(nameof(EntryData));
         }
     }
-
-    private bool _isDone;
-
-    public bool IsDone
-    {
-        get => _isDone;
-        set
-        {
-            _isDone = value;
-            OnPropertyChanged();
-            MarkReminderAsDone();
-        }
-    }
-
 }

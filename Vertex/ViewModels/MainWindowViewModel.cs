@@ -1,9 +1,5 @@
 using Vertex.MVVM;
-using System.Windows.Media;
 using Vertex.Data.Handlers;
-using Vertex.Models;
-using Vertex.Models.Entities.Entry;
-using Vertex.Models.EnumDefinitions;
 using Vertex.ViewModels.Activities;
 using Vertex.ViewModels.DonutGraph;
 using Vertex.ViewModels.Reminders;

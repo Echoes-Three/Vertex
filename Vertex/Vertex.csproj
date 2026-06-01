@@ -25,7 +25,7 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="Themes\Reminders\AddReminderWindowStyle.xaml">
+      <Page Update="Themes\Reminders\AddReminderStyle.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
@@ -56,11 +56,6 @@
         <SubType>Designer</SubType>
       </Page>
       <Page Update="Themes\Activities\AddActivityStyle.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="Views\Activities\AllActivitiesItem.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
@@ -172,6 +167,8 @@
       <None Remove="ViewModels\Consistency\**" />
       <None Remove="Assets\Icon\VertexIcon.ico" />
       <Resource Include="Assets\Icon\VertexIcon.ico" />
+      <None Remove="Assets\Icon\VERTEX.png" />
+      <Resource Include="Assets\Icon\VERTEX.png" />
     </ItemGroup>
 
     <ItemGroup>

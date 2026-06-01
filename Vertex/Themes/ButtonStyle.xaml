@@ -82,7 +82,7 @@
             </Trigger>
             
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource DarkBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource UltraDarkBackgroundBrush}"/>
             </Trigger>
             
         </Style.Triggers>

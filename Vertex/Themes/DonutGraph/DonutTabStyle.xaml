@@ -7,58 +7,49 @@
     Donut Graph Tab Title
     Middle Clock Styles
     Clock Face
-    Tooltip Body
-    Tooltip Header-->
+    Tooltip Content
+    Tooltip Header
+    Orbiter Icon-->
     
     <!--Donut Graph TabTitle-->
     <Style x:Key="DonutGraphTabTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReminderTabTitle}">
     </Style>
     
     <!--Middle Clock Styles-->
-    <Style x:Key="Hour" TargetType="{x:Type TextBlock}">
+    <Style x:Key="ClockHour" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="150"/>
+        <Setter Property="FontSize" Value="50"/>
         <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-    
-    <Style x:Key="Minute" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
-        <Setter Property="FontSize" Value="50"/>
-    </Style>
-    
-    <Style x:Key="Meridiem" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Minute}">
-    </Style>
-    
-    <Style x:Key="UpperInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
-        <Setter Property="FontSize" Value="20"/>
-    </Style>
-    
-    <Style x:Key="TitleInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
+    <Style x:Key="TitleInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ClockHour}">
         <Setter Property="FontWeight" Value="ExtraBold"/>
         <Setter Property="FontSize" Value="22"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
-    
-    <Style x:Key="LowerInfo" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource UpperInfo}">
+    <Style x:Key="ClockDayOfTheWeek" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ClockHour}">
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+    <Style x:Key="ClockDate" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ClockDayOfTheWeek}">
     </Style>
     
     <!--Clock Face-->
-    <Style x:Key="MainClockFace" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Hour}">
-        <Setter Property="FontSize" Value="25"/>
+    <Style x:Key="MainClockFace" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ClockHour}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Regular"/>
     </Style>
     
-    <!--Tooltip Body-->
-    <Style x:Key="OrbitersTooltipBody" TargetType="{x:Type TextBlock}">
+    <!--Tooltip Content-->
+    <Style x:Key="OrbitersTooltipContent" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Margin" Value="0,10,0,10"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="LineHeight" Value="15"/>
-        <Setter Property="MinHeight" Value="50"></Setter>
+        <Setter Property="MinHeight" Value="20"></Setter>
     </Style>
     
     <!--Tooltip Header-->
@@ -69,5 +60,14 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+    
+    <!--Orbiter Icon-->
+    <Style x:Key="OrbiterIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
     </Style>
 </ResourceDictionary>

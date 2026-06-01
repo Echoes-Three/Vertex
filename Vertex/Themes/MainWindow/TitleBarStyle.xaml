@@ -6,14 +6,16 @@
     <!--
     Minimize Button
     Close Button
-    App Name-->
+    App Name
+    Minimize Window icon
+    Close Window icon-->
     
     <!--App Name-->
     <Style x:Key="ApplicationName" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="30"/>
-        <Setter Property="Foreground" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Margin" Value="20,0,0,0"></Setter>
@@ -21,7 +23,7 @@
     
     <!--Minimize Button-->
     <Style x:Key="MinimizeButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+        <Setter Property="Background" Value="{StaticResource MediumBackgroundBrush}"></Setter>
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -33,13 +35,33 @@
     
     <!--Close Button-->
     <Style x:Key="CloseButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+        <Setter Property="Background" Value="{StaticResource MediumBackgroundBrush}"></Setter>
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ChartreuseBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LipstickRedBrush}"/>
             </Trigger>
         </Style.Triggers>
         
+    </Style>
+    
+    <!--Close Window icon-->
+    <Style x:Key="CloseWindowIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{StaticResource MediumBackgroundBrush}"/>
+    </Style>
+    
+    <!--Minimize Window icon-->
+    <Style x:Key="MinimizeWindowIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{StaticResource MediumBackgroundBrush}"/>
     </Style>
 </ResourceDictionary>

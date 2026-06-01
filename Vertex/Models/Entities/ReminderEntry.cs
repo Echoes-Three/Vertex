@@ -1,11 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Vertex.Models.Entities.Entry;
+namespace Vertex.Models.Entities;
 
 public class ReminderEntry : ObservableObject
 {
     public string Id { get; set; } = "";
     public string Content { get; set; } = "";
-    public bool Done { get; set; } = false;
     public DateTime SetFor { get; set; } = default;
 }

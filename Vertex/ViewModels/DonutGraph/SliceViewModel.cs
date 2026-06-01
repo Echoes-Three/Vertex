@@ -1,8 +1,9 @@
 using System.Windows;
 using System.Windows.Media;
+using Vertex.Data.Services;
 using Vertex.Models.Entities;
-using Vertex.Models.Entities.Entry;
 using Vertex.MVVM;
+using Colors = Vertex.Data.Services.Colors;
 
 namespace Vertex.ViewModels.DonutGraph;
 
@@ -26,7 +27,14 @@ public class SliceViewModel : ViewModelBase
         StartAngle = EntryData.StartAngle[today];
         EndAngle = EntryData.EndAngle[today] = EntryData.StartAngle[today] - durationSpam * 15;
         
-        SliceColor = ActivityColors.Palette[EntryData.Color];
+        SliceColor = Colors.Palette[EntryData.Color];
+    }
+    private static Point GetPointOnCircle(double clockAngle)
+    {
+        var radians = clockAngle * Math.PI / 180;
+        var x = Radius * Math.Cos(radians);
+        var y = -Radius * Math.Sin(radians);
+        return new Point(x, y);
     }
     
     public Geometry PathData
@@ -50,66 +58,35 @@ public class SliceViewModel : ViewModelBase
             return geometry;
         }
     }
-    
-    private static Point GetPointOnCircle(double clockAngle)
-    {
-        var radians = clockAngle * Math.PI / 180;
-        var x = Radius * Math.Cos(radians);
-        var y = -Radius * Math.Sin(radians);
-        return new Point(x, y);
-    }
-    
-    private int _sliceOrder;
-
-    public int SliceOrder
-    {
-        get => _sliceOrder;
-        set
-        {
-            _sliceOrder = value;
-            OnPropertyChanged();
-        }
-    }
-
-    
-    private double _startAngle;
-
     public double StartAngle
     {
-        get => _startAngle;
+        get;
         set
         {
-            _startAngle = value;
+            field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(PathData)); // add this
         }
     }
-
-    private double _endAngle;
-
     public double EndAngle
     {
-        get => _endAngle;
+        get;
         set
         {
-            _endAngle = value;
+            field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(PathData)); // add this
         }
     }
-
-    private  Brush? _sliceColor;
-
-    public  Brush? SliceColor
+    public Brush? SliceColor
     {
-        get => _sliceColor;
+        get;
         set
         {
-            _sliceColor = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
     public double SpanAngle
     {
         get

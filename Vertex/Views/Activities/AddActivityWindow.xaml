@@ -4,15 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:activitiesViewModel="clr-namespace:Vertex.ViewModels.Activities"
-             x:Name="RootWindow"
              mc:Ignorable="d"
-             d:DesignHeight="550" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance Type=activitiesViewModel:ActivityFormViewModel}">
-
-        <Border
-            Background="{StaticResource ExtraLightBackgroundBrush}"
-            MouseLeftButtonDown="OnDrag"
-            CornerRadius="10">
+    <Viewbox Stretch="Uniform">
+        <Border Width="400" Height="550"
+            Background="{StaticResource ExtraDarkBackgroundBrush}"
+            MouseLeftButtonDown="OnDrag">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" /> <!--Spacer-->
@@ -33,19 +30,19 @@
                     Grid.Column="0" Grid.ColumnSpan="3"
                     Grid.Row="2"
                     Height="2"
-                    Fill="{StaticResource LightBackgroundBrush}" /> <!--Separator-->
+                    Fill="{StaticResource DarkBackgroundBrush}" /> <!--Separator-->
 
-                <TextBlock
+                <Border 
                     Grid.Column="1"
                     Grid.Row="3"
-                    Style="{StaticResource ContentLimitCounter}"
-                    Text="{Binding ContentLimitCounter, FallbackValue=500}" /> <!--Content Character Limit Count-->
-                <TextBlock
+                    Background="{Binding ContentLimitIndicator, FallbackValue=chartreuse}"
+                    Style="{StaticResource ActivityContentLimitIndicator}"/> <!--Content Character Limit Indicator-->
+                <Border 
                     Grid.Column="1"
                     Grid.Row="1"
-                    Style="{StaticResource TitleLimitCounter}"
-                    Text="{Binding TitleLimitCounter, FallbackValue=29}" /> <!--Title Character limit Count-->
-
+                    Background="{Binding TitleLimitIndicator, FallbackValue=chartreuse}"
+                    Style="{StaticResource ActivityTitleLimitIndicator}"/> <!--Title Character Limit Indicator-->
+                
                 <TextBlock
                     Grid.Column="1"
                     Grid.Row="1"
@@ -73,13 +70,12 @@
                 <Border
                     Grid.Column="0" Grid.ColumnSpan="3"
                     Grid.Row="5" Grid.RowSpan="2"
-                    CornerRadius="0,0,10,10"
-                    Background="{StaticResource UltraLightBackgroundBrush}" /> <!--Color Division-->
+                    Background="{StaticResource DarkBackgroundBrush}" /> <!--Color Division-->
                 
                 <Canvas Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Grid.ColumnSpan="3" >
                     <Grid
                         Canvas.Top="195"
-                        Width="400" Height="20">
+                        Width="400" Height="25">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -92,12 +88,12 @@
                             <ColumnDefinition Width="10*"/>
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="2" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="3" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="4" Grid.Row="0" Background="{StaticResource ExtraLightBackgroundBrush}"/>
-                        <Border Grid.Column="5" Grid.Row="1" Background="{StaticResource ExtraLightBackgroundBrush}"/>
+                        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="2" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="3" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="4" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="5" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
                     </Grid>
                 </Canvas> <!--Visual Element-->
 
@@ -169,7 +165,7 @@
                             Grid.Column="0"
                             Style="{StaticResource DurationPicker}"
                             IsHitTestVisible="False"
-                            Text="{Binding CurrentDurationHour, FallbackValue=00}" /> <!--HH-->
+                            Text="{Binding DurationHour, FallbackValue=00}" /> <!--HH-->
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="1"
@@ -181,7 +177,7 @@
                             Grid.Column="2"
                             Style="{StaticResource DurationPicker}"
                             IsHitTestVisible="False"
-                            Text="{Binding CurrentDurationMinute, FallbackValue=00}" /> <!--MM-->
+                            Text="{Binding DurationMinute, FallbackValue=00}" /> <!--MM-->
 
                         <Border
                             Grid.Row="2"
@@ -194,7 +190,7 @@
                         <Border
                             Grid.Row="2"
                             Grid.Column="4"
-                            BorderBrush="{StaticResource MediumTextBrush}"
+                            BorderBrush="{StaticResource DarkTextBrush}"
                             BorderThickness="1"
                             Background="Transparent"
                             CornerRadius="3"
@@ -286,7 +282,6 @@
                         
                         <Border
                             Grid.Column="4"
-                            CornerRadius="0,3,3,0"
                             Background="{Binding WarningColor, FallbackValue={StaticResource LipstickRedBrush}}"
                             ToolTipService.InitialShowDelay="0">
                             <Border.ToolTip>
@@ -297,8 +292,8 @@
                                     
                                     <Grid Height="120" Width="270">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="35*"/> <!--Header-->
-                                            <RowDefinition Height="65*"/> <!--Body-->
+                                            <RowDefinition Height="25*"/> <!--Header-->
+                                            <RowDefinition Height="75*"/> <!--Body-->
                                         </Grid.RowDefinitions>
                                         
                                         <Border 
@@ -306,7 +301,7 @@
                                             Background="{StaticResource LipstickRedBrush}"/> <!--Body Background-->
                                         <Border 
                                             Grid.Row="0" 
-                                            Background="{StaticResource MediumTextBrush}"/> <!--Header Background-->
+                                            Background="{StaticResource DarkTextBrush}"/> <!--Header Background-->
                                         
                                         <TextBlock 
                                             Grid.Row="0"
@@ -315,10 +310,10 @@
                                         
                                         <TextBlock 
                                             Grid.Row="0"
-                                            Text="//////////"
-                                            Margin="150,0,0,0"
-                                            FontSize="50"
-                                            Style="{StaticResource ReminderTooltipHeader}"/>
+                                            Text="❮❮❮❮❮"
+                                            Margin="120,0,0,0"
+                                            FontSize="60"
+                                            Style="{StaticResource ReminderTooltipHeader}"/> <!--Visual Element-->
                                         
                                         <TextBlock 
                                             Grid.Row="1"
@@ -338,4 +333,5 @@
 
             </Grid>
         </Border>
+    </Viewbox>
 </UserControl>

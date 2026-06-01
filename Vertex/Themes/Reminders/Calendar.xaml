@@ -39,7 +39,7 @@
                                 FontWeight="Bold" 
                                 FontFamily="Verdana" 
                                 FontSize="9.5" 
-                                Foreground="{StaticResource DarkTextBrush}" 
+                                Foreground="{StaticResource ExtraDarkTextBrush}" 
                                 HorizontalAlignment="Center"
                                 Text="{Binding}"
                                 Margin="0,6,0,6"
@@ -387,7 +387,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="TodayBackground" Opacity="0" Fill="{StaticResource MediumTextBrush}"/>
+                        <Rectangle x:Name="TodayBackground" Opacity="0" Fill="{StaticResource DarkTextBrush}"/>
                         <Rectangle x:Name="SelectedBackground" Opacity="0" Fill="{StaticResource ChartreuseBrush}"/>
                         <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"/>
                         <Rectangle x:Name="HighlightBackground" Opacity="0" Fill="{StaticResource UltraLightBackgroundBrush}"/>

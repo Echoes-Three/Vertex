@@ -3,9 +3,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
 using Vertex.Data.Services;
 using Vertex.Models.Entities;
-using Vertex.Models.Entities.Entry;
-using Vertex.Models.Enums;
 using Vertex.MVVM;
+using Colors = Vertex.Data.Services.Colors;
 
 namespace Vertex.ViewModels.Activities;
 
@@ -16,12 +15,11 @@ public class ActivityFormViewModel : ViewModelBase
     private List<bool> DaysOfWeek => [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday];
     
     private WindowMode _windowMode = WindowMode.Add;
-    private int _currentHourCount = 00;
-    private int _currentMinuteCount = 00;
+    private int _hourCount;
+    private int _minuteCount;
     
-    private int _colorIndex = 0;
-    
-    private readonly int _lastIndex = ActivityColors.Palette.Count - 1;
+    private int _colorIndex;
+    private readonly int _palletLastIndex = Colors.Palette.Count - 1;
     
     private Action? _closeWindow;
     public void SetCloseAction(Action close) => _closeWindow = close;
@@ -34,35 +32,38 @@ public class ActivityFormViewModel : ViewModelBase
         
         OnSaveAction = new RelayCommand(_ => SaveAction(), _ => CanSaveAction());
         
-        SetColors();
+        SetColor();
+        ContentLimitIndicator = Colors.GetBrush("#ea163b");
+        TitleLimitIndicator = Colors.GetBrush("#ea163b");
     }
     
-    private bool CanSaveAction()
+    
+    /*Saving Activity*/
+    public void LoadForEdit(string activityId)
     {
-        var daysOfWeek = DaysOfWeek.ToDayOfWeek();
-        var duration = (_currentHourCount, _currentMinuteCount);
-        
-        var isTitleNotEmpty = ValidateActivity.Title(ActivityTitle);
-        var isWeekDaySelected = ValidateActivity.WeekDay(DaysOfWeek);
-        var isDurationValid = ValidateActivity.Duration(_activitiesData, daysOfWeek, duration, ActivityId);
-       
-        var canAdd = isTitleNotEmpty.IsValid && isWeekDaySelected.IsValid && isDurationValid.IsValid;
-        
-        var parts = new List<string> {isTitleNotEmpty.Message, isWeekDaySelected.Message, isDurationValid.Message}
-            .Where(e => !string.IsNullOrWhiteSpace(e));
-        
-        WarningMessages = parts.Any() ? string.Join("\n", parts) : "No warning." ;
-        
-        WarningColor = canAdd ? ActivityColors.GetBrush("#C3FE0C") : ActivityColors.GetBrush("#ea163b");
+        _windowMode = WindowMode.Edit;
+    
+        var activityEntry = _activitiesData.Activities!.FirstOrDefault(x => x.Id == activityId);
+        if (activityEntry == null) return;
+    
+        _colorIndex = activityEntry.Color;
+        ColorNumber = $"{activityEntry.Color + 1}";
+        SetColor();
+    
+        ActivityId = activityEntry.Id;
+        ActivityTitle = activityEntry.Title;
+        ActivityContent = activityEntry.Content == "No Content" ? "" : activityEntry.Content ;
+    
+        var day = activityEntry.RepeatOn.ToBoolList();
+        (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) = 
+            (day.Sun, day.Mon, day.Tue, day.Wed, day.Thu, day.Fri, day.Sat);
+    
+        (_hourCount, DurationHour) = 
+            (activityEntry.Duration.Hours, activityEntry.Duration.Hours.ToString("D2"));
+        (_minuteCount, DurationMinute) = 
+            (activityEntry.Duration.Minutes, activityEntry.Duration.Minutes.ToString("D2"));
 
-        return canAdd;
-    }
-    private void SaveAction()
-    {
-        if (_windowMode == WindowMode.Add)
-            SaveNewActivity();
-        else
-            SaveEditActivity();
+        OnSaveAction.RaiseCanExecuteChanged();
     }
     
     private void SaveNewActivity()
@@ -71,10 +72,9 @@ public class ActivityFormViewModel : ViewModelBase
         {
             Color = _colorIndex,
             Title = ActivityTitle,
-            Content = ActivityContent,
+            Content = string.IsNullOrWhiteSpace(ActivityContent) ? "No Content" : ActivityContent,
             Id = Guid.NewGuid().ToString(),
-            Done = false,
-            Duration = new TimeSpan(hours: _currentHourCount, minutes: _currentMinuteCount, seconds: 0),
+            Duration = new TimeSpan(hours: _hourCount, minutes: _minuteCount, seconds: 0),
             RepeatOn = DaysOfWeek.ToDayOfWeek()
         };
 
@@ -91,357 +91,297 @@ public class ActivityFormViewModel : ViewModelBase
         activityEntry.Id = ActivityId;
         activityEntry.Color = _colorIndex;
         activityEntry.Title = ActivityTitle;
-        activityEntry.Content = ActivityContent;
-        activityEntry.Done = false;
-        activityEntry.Duration = new TimeSpan(hours: _currentHourCount, minutes: _currentMinuteCount, seconds: 0);
+        activityEntry.Content = string.IsNullOrWhiteSpace(ActivityContent) ? "No Content" : ActivityContent;
+        activityEntry.Duration = new TimeSpan(hours: _hourCount, minutes: _minuteCount, seconds: 0);
         activityEntry.RepeatOn = DaysOfWeek.ToDayOfWeek();
-        
-        _activitiesData.Serialize();
-        _closeWindow?.Invoke();
         
         WeakReferenceMessenger.Default.Send(new ActivityEditedMessage());
         WeakReferenceMessenger.Default.Send(new RebuildSlicesMessage());
+        
+        _activitiesData.Serialize();
+        _closeWindow?.Invoke();
     }
-    public void LoadForEdit(string activityId)
+    
+    private bool CanSaveAction()
     {
-        _windowMode = WindowMode.Edit;
-    
-        var activityEntry = _activitiesData.Activities!.FirstOrDefault(x => x.Id == activityId);
-        if (activityEntry == null) return;
-    
-        _colorIndex = activityEntry.Color;
-        ColorNumber = $"{activityEntry.Color + 1}";
-        SetColors();
-    
-        ActivityId = activityEntry.Id;
-        ActivityTitle = activityEntry.Title;
-        ActivityContent = activityEntry.Content;
-    
-        var day = activityEntry.RepeatOn.ToBoolList();
-        (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) = 
-            (day.Sun, day.Mon, day.Tue, day.Wed, day.Thu, day.Fri, day.Sat);
-    
-        (_currentHourCount, CurrentDurationHour) = 
-            (activityEntry.Duration.Hours, activityEntry.Duration.Hours.ToString("D2"));
-        (_currentMinuteCount, CurrentDurationMinute) = 
-            (activityEntry.Duration.Minutes, activityEntry.Duration.Minutes.ToString("D2"));
+        var daysOfWeek = DaysOfWeek.ToDayOfWeek();
+        var duration = (_currentHourCount: _hourCount, _currentMinuteCount: _minuteCount);
+        
+        var isTitleNotEmpty = ValidateActivity.Title(ActivityTitle);
+        var isWeekDaySelected = ValidateActivity.WeekDay(DaysOfWeek);
+        var isDurationValid = ValidateActivity.Duration(_activitiesData, daysOfWeek, duration, ActivityId);
+       
+        var canAdd = isTitleNotEmpty.IsValid && isWeekDaySelected.IsValid && isDurationValid.IsValid;
+        
+        var parts = new List<string> {isTitleNotEmpty.Message, isWeekDaySelected.Message, isDurationValid.Message}
+            .Where(e => !string.IsNullOrWhiteSpace(e));
+        
+        WarningMessages = parts.Any() ? string.Join("\n", parts) : "No warning." ;
+        
+        WarningColor = canAdd ? Colors.GetBrush("#C3FE0C") : Colors.GetBrush("#ea163b");
 
-        OnSaveAction.RaiseCanExecuteChanged();
+        return canAdd;
     }
+    private void SaveAction()
+    {
+        if (_windowMode == WindowMode.Add)
+            SaveNewActivity();
+        else
+            SaveEditActivity();
+    }
+
+    private static SolidColorBrush LimitColor(int length, int limit) =>
+        (limit, length) switch
+        {
+            var (lim, len) when lim - len > lim * 0.2 => Colors.GetBrush("#C3FE0C"),
+            var (lim, len) when len == lim => Colors.GetBrush("#ea163b"),
+            _ => Colors.GetBrush("#0c4af7")
+        };
+    
+    public string WarningMessages
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public Brush? WarningColor
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    private string ActivityId
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public string ActivityTitle
+    {
+        get;
+        set
+        {
+            field = CharacterLimiter.LimitActivityTitle(ref value);
+            TitleLimitIndicator = LimitColor(field.Length, 25);
+            OnPropertyChanged();
+            OnSaveAction.RaiseCanExecuteChanged();
+        }
+    } = "";
+    public string ActivityContent
+    {
+        get;
+        set
+        {
+            field = CharacterLimiter.LimitActivityContent(ref value);
+            ContentLimitIndicator = LimitColor(field.Length, 500);
+            OnPropertyChanged();
+        }
+    } = "";
+    
     
     /*Helper Methods*/
     public void CleanFields()
     {
-        ActivityId = "";
         _windowMode = WindowMode.Add;
+        
+        ActivityId = "";
         ActivityTitle = "";
         ActivityContent = "";
+        
         _colorIndex = 0;
         ColorNumber = "1";
-        SetColors();
+        
         (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) =
             (true, true, true, true, true, true, true);
-        (_currentHourCount, CurrentDurationHour) = (0, "00");
-        (_currentMinuteCount, CurrentDurationMinute) = (0, "00");
+        (_hourCount, DurationHour) = (0, "00");
+        (_minuteCount, DurationMinute) = (0, "00");
+        
+        SetColor();
     }
-    private void CountContentLimit(int length) =>
-        ContentLimitCounter = (500 - length).ToString();
-    private void CountTitleLimit(int length) => 
-        TitleLimitCounter = (30 - length).ToString();
-    
     
     /*Color Picking on AddActivityWindow*/
     public void ColorIndexUp()
     {
-        if (_colorIndex == _lastIndex)
-            _colorIndex = 0;
-        else
-            _colorIndex++;
-
+        _colorIndex = _colorIndex == _palletLastIndex ? 0 : _colorIndex + 1;
         ColorNumber = $"{_colorIndex + 1}";
-        SetColors();
+        SetColor();
     }
     public void ColorIndexDown()
     { 
-        if (_colorIndex == 0)
-            _colorIndex = _lastIndex;
-        else
-            _colorIndex--;
-
+        _colorIndex = _colorIndex == 0 ? _palletLastIndex : _colorIndex - 1;
         ColorNumber = $"{_colorIndex + 1}";
-        SetColors();
+        SetColor();
     }
-    private void SetColors() =>
-        SelectedColor = ActivityColors.Palette[_colorIndex];
+    private void SetColor() =>
+        SelectedColor = Colors.Palette[_colorIndex];
     
+    public string ColorNumber
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = "0";
+    public Brush SelectedColor
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public Brush? ContentLimitIndicator
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } 
+    public Brush? TitleLimitIndicator
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
     
-    /*Methods responsible for duration scroll behavior*/
+    /*Duration scroll behavior on AddActivityWindow*/
     public void DurationHourUp()
     {
-        if (_currentHourCount == 12)
-            _currentHourCount = 0;
-        else
-            _currentHourCount++;
-
-        CurrentDurationHour = $"{_currentHourCount:D2}";
+        _hourCount = _hourCount == 12 ? 0 : _hourCount + 1;
+        DurationHour = $"{_hourCount:D2}";
     }
     public void DurationHourDown()
     {
-        if (_currentHourCount == 0)
-            _currentHourCount = 12;
-        else
-            _currentHourCount--;
-
-        CurrentDurationHour = $"{_currentHourCount:D2}";
+        _hourCount = _hourCount == 0 ? 12 : _hourCount - 1;
+        DurationHour = $"{_hourCount:D2}";
     }
     public void DurationMinuteUp()
     {
-        if (_currentMinuteCount == 59)
-            _currentMinuteCount = 0;
-        else
-            _currentMinuteCount++;
-
-        CurrentDurationMinute = $"{_currentMinuteCount:D2}";
+        _minuteCount = _minuteCount == 59 ? 0 : _minuteCount + 1;
+        DurationMinute = $"{_minuteCount:D2}";
     }
     public void DurationMinuteDown()
-    {
-        if (_currentMinuteCount == 0)
-            _currentMinuteCount = 59;
-        else
-            _currentMinuteCount--;
-
-        CurrentDurationMinute = $"{_currentMinuteCount:D2}";
+    { 
+        _minuteCount = _minuteCount == 0 ? 59 : _minuteCount - 1; 
+        DurationMinute = $"{_minuteCount:D2}";
     }
     
-    /*Full Properties*/
-    
-    private string _colorNumber = "0";
-
-    public string ColorNumber
+    public string DurationHour
     {
-        get => _colorNumber;
+        get;
         set
         {
-            _colorNumber = value;
-            OnPropertyChanged();
-        }
-    }
-    private bool _sunday = true;
-
-    public bool Sunday
-    {
-        get => _sunday;
-        set
-        {
-            _sunday = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
+    } = "00";
+    public string DurationMinute
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+            OnSaveAction.RaiseCanExecuteChanged();
+        }
+    } = "00";
     
-    private bool _monday = true;
+    
+    /*Remaining Properties*/
+    
+    public bool Sunday
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+            OnSaveAction.RaiseCanExecuteChanged();
+        }
+    } = true;
 
     public bool Monday
     {
-        get => _monday;
+        get;
         set
         {
-            _monday = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
-
-    private bool _tuesday = true;
+    } = true;
 
     public bool Tuesday
     {
-        get => _tuesday;
+        get;
         set
         {
-            _tuesday = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
-
-    private bool _wednesday = true;
+    } = true;
 
     public bool Wednesday
     {
-        get => _wednesday;
+        get;
         set
         {
-            _wednesday = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
-
-    private bool _thursday = true;
+    } = true;
 
     public bool Thursday
     {
-        get => _thursday;
+        get;
         set
         {
-            _thursday = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
-
-    private bool _friday = true;
+    } = true;
 
     public bool Friday
     {
-        get => _friday;
+        get;
         set
         {
-            _friday = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
-
-    private bool _saturday = true;
+    } = true;
 
     public bool Saturday
     {
-        get => _saturday;
+        get;
         set
         {
-            _saturday = value;
+            field = value;
             OnPropertyChanged();
             OnSaveAction.RaiseCanExecuteChanged();
         }
-    }
+    } = true;
     
-    /*Full Properties*/
-
-    private string _warningMessages;
-
-    public string WarningMessages
-    {
-        get => _warningMessages;
-        set
-        {
-            _warningMessages = value;
-            OnPropertyChanged();
-        }
-    }
-
-    
-    private Brush? _warningColor;
-
-    public Brush? WarningColor
-    {
-        get => _warningColor;
-        set
-        {
-            _warningColor = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    private string _contentLimitCounter = "500";
-
-    public string ContentLimitCounter
-    {
-        get => _contentLimitCounter;
-        set
-        {
-            _contentLimitCounter = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _titleLimitCounter = "22";
-
-    public string TitleLimitCounter
-    {
-        get => _titleLimitCounter;
-        set
-        {
-            _titleLimitCounter = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    private Brush _selectedColor;
-
-    public Brush SelectedColor
-    {
-        get => _selectedColor;
-        set
-        {
-            _selectedColor = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    private string _currentDurationHour = "00";
-
-    public string CurrentDurationHour
-    {
-        get => _currentDurationHour;
-        set
-        {
-            _currentDurationHour = value;
-            OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
-        }
-    }
-
-    private string _currentDurationMinute = "00";
-
-    public string CurrentDurationMinute
-    {
-        get => _currentDurationMinute;
-        set
-        {
-            _currentDurationMinute = value;
-            OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
-        }
-    }
-
-    private string _activityId;
-
-    public string ActivityId
-    {
-        get => _activityId;
-        set
-        {
-            _activityId = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    private string _activityTitle = "";
-
-    public string ActivityTitle
-    {
-        get => _activityTitle;
-        set
-        {
-            _activityTitle = CharacterLimiter.LimitActivityTitle(value);
-            CountTitleLimit(_activityTitle.Length);
-            OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
-        }
-    }
-    
-    private string _activityContent = "";
-
-    public string ActivityContent
-    {
-        get => _activityContent;
-        set
-        {
-            _activityContent = CharacterLimiter.LimitActivityContent(value);
-            CountContentLimit(_activityContent.Length);
-            OnPropertyChanged();
-        }
-    }
 }

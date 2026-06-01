@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Vertex.Models.Contracts;
-using Vertex.Models.Entities.Entry;
+using Vertex.Models.Entities;
 
 namespace Vertex.Data.Handlers;
 
@@ -12,6 +12,7 @@ public class RemindersHandler : IFileHandler<ReminderEntry>
     private readonly string _fullPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "Vertex", "Data", "Reminders.json");
+    
     public ObservableCollection<ReminderEntry>? Reminders { get; set; }
     
     public void Save(ReminderEntry entry)

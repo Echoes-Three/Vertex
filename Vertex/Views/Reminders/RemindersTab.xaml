@@ -7,77 +7,76 @@
              xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              DataContext="{Binding RemindersVM}"
              mc:Ignorable="d"
-             d:DesignHeight="333" d:DesignWidth="504"
+             d:DesignHeight="276" d:DesignWidth="504"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:RemindersViewModel}">
     
-    <Border Background="{StaticResource ExtraLightBackgroundBrush}"
-            CornerRadius="10">
-        
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/> <!--Spacer-->
-                <RowDefinition Height="16*"/> <!--Tab-->
-                <RowDefinition Height="2*"/> <!--Spacer-->
-                <RowDefinition Height="78*"/> <!--Reminders Content-->
-                <RowDefinition Height="2*"/> <!--Spacer-->
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/> <!--Spacer-->
+            <RowDefinition Height="16*"/> <!--Tab-->
+            <RowDefinition Height="2*"/> <!--Spacer-->
+            <RowDefinition Height="78*"/> <!--Reminders Content-->
+            <RowDefinition Height="2*"/> <!--Spacer-->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/> <!--Spacer-->
+            <ColumnDefinition Width="96*"/> <!--Tab Title & Reminders Content-->
+            <ColumnDefinition Width="2*"/> <!--Spacer-->
+        </Grid.ColumnDefinitions>
+    
+        <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="96*"/> <!--Tab Title & Reminders Content-->
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
+                <ColumnDefinition Width="76*"/> <!--Tab Tittle-->
+                <ColumnDefinition Width="1*"/> <!--Spacer-->
+                <ColumnDefinition Width="8*"/> <!--Add Reminder Button-->
             </Grid.ColumnDefinitions>
-        
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="76*"/> <!--Tab Tittle-->
-                    <ColumnDefinition Width="1*"/> <!--Spacer-->
-                    <ColumnDefinition Width="8*"/> <!--Add Reminder Button-->
-                </Grid.ColumnDefinitions>
-                
-                <TextBlock
-                    Grid.Column="0"
-                    Text="REMINDERS"
-                    Foreground="{StaticResource DarkTextBrush}"
-                    Style="{StaticResource ReminderTabTitle}"/> <!--Tab Tittle-->
-                
-                <Button 
-                    Grid.Column="2"
-                    Style="{StaticResource AddReminderButton}"
-                    Command="{Binding OnAddNewReminder}">
-                    <Path Style="{StaticResource AddIcon}"/>
-                </Button> <!--Add Reminder Button-->
-                
-            </Grid> <!--Tab Buttons-->
-            <TextBlock 
-                Grid.Row="3" Grid.Column="1" 
-                Text="///"
-                FontFamily="{StaticResource JetBrainsMono}"
-                FontSize="300"
-                FontWeight="bold"
-                Margin="0,200,0,0"
-                VerticalAlignment="Center" HorizontalAlignment="Center"
-                Foreground="{StaticResource LightBackgroundBrush}"
-                Opacity="0.1"></TextBlock>
-            <!--Reminders-->
-            <ScrollViewer Grid.Row="3" Grid.Column="1" 
-                          VerticalScrollBarVisibility="Auto"
-                          HorizontalScrollBarVisibility="Disabled">
-                
-                <ScrollViewer.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
-                </ScrollViewer.Resources>
-                
-                <ItemsControl ItemsSource="{Binding Reminders}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <remindersView:RemindersItem/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                
-            </ScrollViewer>
             
-        </Grid>
+            <TextBlock
+                Grid.Column="0"
+                Text="REMINDERS"
+                Foreground="{StaticResource LightTextBrush}"
+                Style="{StaticResource ReminderTabTitle}"/> <!--Tab Tittle-->
+            
+            <Button 
+                Grid.Column="2"
+                Style="{StaticResource AddReminderButton}"
+                Command="{Binding OnAddNewReminder}">
+                <TextBlock 
+                    Style="{StaticResource AddReminderIcon}"
+                    Text="+"/>
+            </Button> <!--Add Reminder Button-->
+            
+            <!--<TextBlock 
+                Grid.Column="0" 
+                Text="❮❮❮❮"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="100"
+                FontWeight="bold"
+                Margin="180,0,0,0"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                IsHitTestVisible="False"
+                Foreground="{StaticResource LightTextBrush}"/> ~1~Visual Element@1@-->
+            
+        </Grid> <!--Tab Buttons-->
         
-    </Border>
+        
+        <ScrollViewer Grid.Row="3" Grid.Column="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
+            </ScrollViewer.Resources>
+            
+            <ItemsControl ItemsSource="{Binding Reminders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <remindersView:RemindersItem/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+        </ScrollViewer> <!--Reminders-->
+        
+    </Grid>
 </UserControl>

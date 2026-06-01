@@ -13,7 +13,7 @@ public static class ActivityRepeat
         public bool Sat;
     }
     
-    public static List<DayOfWeek>? ToDayOfWeek(this List<bool> daysOfWeek)
+    public static List<DayOfWeek> ToDayOfWeek(this List<bool> daysOfWeek)
     {
         var converted = new List<DayOfWeek>();
         

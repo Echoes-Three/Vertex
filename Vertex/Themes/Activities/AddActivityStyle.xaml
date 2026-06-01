@@ -16,6 +16,8 @@
     Save Activity Entry Button
     Color Picker Border
     Color Picker Hover Animation
+    Title Limit Indicator
+    Content Limit Indicator
     Hover Animation Corners
     Duration / Color Header
     Tooltip Body
@@ -24,7 +26,7 @@
     <!--Activity Content Input-->
     <Style x:Key="ActivityContentInput" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
@@ -34,11 +36,12 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource LightTextBrush}"/>
     </Style>
     
     <!--Activity Content Input Placeholder-->
     <Style x:Key="ActivityContentInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
@@ -58,7 +61,7 @@
     <!--Activity Title Input-->
     <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -67,11 +70,12 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="AcceptsReturn" Value="False"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource LightTextBrush}"/>
     </Style>
     
     <!--Activity Title Input Placeholder-->
     <Style x:Key="ActivityTitleInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="18"/>
@@ -105,7 +109,6 @@
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
         
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -128,7 +131,7 @@
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
                     <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
-                    <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
                 </MultiTrigger.Setters>
             </MultiTrigger>
         </Style.Triggers>
@@ -136,18 +139,6 @@
     
     <!--Cancel Activity Entry Button-->
     <Style x:Key="CancelActivityEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="3,0,0,3">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        
         <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="Bold"/>
@@ -156,7 +147,7 @@
             <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
             </Trigger>
         </Style.Triggers>
         
@@ -172,26 +163,24 @@
             <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
     
-    <!--Title Limit Counter-->
-    <Style x:Key="TitleLimitCounter" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+    <!--Title Limit Indicator-->
+    <Style x:Key="ActivityTitleLimitIndicator" TargetType="{x:Type Border}">
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Margin" Value="0,0,5,5"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="CornerRadius" Value="3"/>
         
     </Style>
     
-    <!--Content Limit Counter-->
-    <Style x:Key="ContentLimitCounter" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TitleLimitCounter}">
-        <Setter Property="FontWeight" Value="Regular"/>
+    <!--Content Limit Indicator-->
+    <Style x:Key="ActivityContentLimitIndicator" TargetType="{x:Type Border}" BasedOn="{StaticResource ActivityTitleLimitIndicator}">
     </Style>
     
     <!--Color Picker Border-->
@@ -208,7 +197,7 @@
     
     <!--Color Picker Hover Animation-->
     <Style x:Key="ColorPickerHoverAnimation" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource MediumTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ExtraLightBackgroundBrush}"/>
         <Setter Property="Height" Value="25"/>
         <Setter Property="Width" Value="25"/>
     </Style>
@@ -218,7 +207,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="2,2,0,0"/>
-        <Setter Property="Background" Value="{StaticResource MediumTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
                 <Setter Property="VerticalAlignment" Value="Top"/>
@@ -294,7 +283,7 @@
     <!--Duration / Color Header-->
     <Style x:Key="Header" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="Regular"/>
     </Style>
@@ -304,7 +293,7 @@
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         <Setter Property="FontSize" Value="10"/>
-        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Margin" Value="10"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="LineHeight" Value="20"/>

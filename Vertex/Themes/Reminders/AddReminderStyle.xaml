@@ -7,13 +7,16 @@
     Reminder Content Input Placeholder
     Reminder Content Input
     Time Picker Scroll Background
+    Cancel Reminder Entry Button
+    Save Reminder Entry Button
+    Content Limit Counter
     Time Picker
-    Tooltip Body
+    Tooltip Content
     Tooltip Header-->
     
     <!--Reminder Content Input Placeholder-->
     <Style x:Key="ReminderContentInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
@@ -32,7 +35,7 @@
     <!--Reminder Content Input-->
     <Style x:Key="ReminderContentInput" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
@@ -42,6 +45,7 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource LightTextBrush}"/>
     </Style>
     
     <!--Time Picker-->
@@ -57,17 +61,6 @@
     
     <!--Cancel Reminder Entry Button-->
     <Style x:Key="CancelReminderEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="3,0,0,3">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
         
         <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
         <Setter Property="FontSize" Value="12"/>
@@ -77,7 +70,7 @@
             <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -92,25 +85,24 @@
             <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource MediumTextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
     
     <!--Content Limit Counter-->
-    <Style x:Key="ReminderContentLimitCounter" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+    <Style x:Key="ReminderContentLimitIndicator" TargetType="{x:Type Border}">
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Margin" Value="0,0,5,5"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="CornerRadius" Value="3"/>
         
     </Style>
     
-    <!--Tooltip Body-->
-    <Style x:Key="ReminderTooltipBody" TargetType="{x:Type TextBlock}">
+    <!--Tooltip Content-->
+    <Style x:Key="ReminderTooltipContent" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         <Setter Property="FontSize" Value="10"/>

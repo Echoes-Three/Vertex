@@ -24,7 +24,7 @@
         
         <TextBlock 
             Grid.Column="0"
-            Text="Vertex"
+            Text="VERTEX"
             Style="{StaticResource ApplicationName}"></TextBlock>
         
 
@@ -37,21 +37,30 @@
                 <ColumnDefinition Width="10*"/> <!--Spacer-->
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25*"/> <!--Spacer-->
-                <RowDefinition Height="50*"/> <!--Buttons-->
-                <RowDefinition Height="25*"/> <!--Spacer-->
+                <RowDefinition Height="30*"/> <!--Spacer-->
+                <RowDefinition Height="40*"/> <!--Buttons-->
+                <RowDefinition Height="30*"/> <!--Spacer-->
             </Grid.RowDefinitions>
             
             <Button 
                 Grid.Column="1"
                 Grid.Row="1"
                 Click="MinimizeButton"
-                Style="{StaticResource MinimizeButton}"/><!-- Minimize Button-->
+                Style="{StaticResource MinimizeButton}">
+                <TextBlock 
+                    Style="{StaticResource MinimizeWindowIcon}"
+                    Text="–"/>
+            </Button> <!-- Minimize Button-->
+            
             <Button 
                 Grid.Column="3"
                 Grid.Row="1"
                 Click="CloseButton"
-                Style="{StaticResource CloseButton}"/><!--Close Button-->
+                Style="{StaticResource CloseButton}">
+                <TextBlock 
+                    Style="{StaticResource CloseWindowIcon}"
+                    Text="✗"/>
+            </Button><!--Close Button-->
         </Grid>
     </Grid>
 </UserControl>

@@ -1,23 +1,19 @@
 ﻿<Application x:Class="Vertex.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Vertex"
              StartupUri="/Views/MainWindow/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Vertex;component/Themes/MainTheme.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/Typeface.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/Icons.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ScrollBar.xaml"/>
-                <!--Main Window-->
+                <!--TitleBar-->
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/TitleBarStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/MainWindowStyle.xaml"/>
                 <!--Reminders-->
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersTabStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersItemStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/AddReminderWindowStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/AddReminderStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/Calendar.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/DatePicker.xaml"/>
                 <!--Activities-->

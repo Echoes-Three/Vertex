@@ -8,7 +8,6 @@
     Reminder Set For Label
     Delete Reminder Button
     Edit Reminder Button
-    Mark Reminder As Done Button
     Delete Reminder Icon
     Edit Reminder Icon-->
     
@@ -17,7 +16,7 @@
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MediumTextBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="0,15"/>
@@ -29,98 +28,53 @@
     <Style x:Key="ReminderSetForLabel" TargetType="{x:Type TextBlock}" >
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ExtraDarkTextBrush}"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"></Setter>
         
     </Style>
     
     <!--Delete Reminder Button-->
     <Style x:Key="DeleteReminderButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
         
+        <!--On Hover-->
         <Style.Triggers>
-            <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LipstickRedBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
     
     <!--Edit Reminder Button-->
     <Style x:Key="EditReminderButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
         
+        <!--On Hover-->
         <Style.Triggers>
-            <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Mark Reminder As Done Button-->
-    <Style x:Key="MarkReminderAsDoneButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
-        
-        <Style.Triggers>
-            <!--On Hover-->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
     
     <!--Delete Reminder Icon-->
-    <Style x:Key="DeleteReminderIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource Bin}"/>
-        <Setter Property="Height" Value="15"/>
-        <Setter Property="Width" Value="15"/>
-        
-        <!--On Hover-->
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
+    <Style x:Key="DeleteReminderIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
     </Style>
     
     <!--Edit Reminder Icon-->
-    <Style x:Key="EditReminderIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource Edit}"/>
-        <Setter Property="Height" Value="15"/>
-        <Setter Property="Width" Value="15"/>
-        
-        <!--On Hover-->
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource DarkBackgroundBrush}"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Reminder CheckBox Icon-->
-    <Style x:Key="ReminderCheckBoxIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource EmptyCheckBox}"/>
-        
-        <Style.Triggers>
-            
-            <!--Binding-->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource ExtraLightBackgroundBrush}"/>
-                <Setter Property="Data" Value="{StaticResource SelectedCheckBox}"/>
-            </DataTrigger>
-            <!--On Hover-->
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked}" Value="True"/>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsMouseOver}" Value="True"/>
-                </MultiDataTrigger.Conditions>
-                <MultiDataTrigger.Setters>
-                    <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
-                </MultiDataTrigger.Setters>
-            </MultiDataTrigger>
-        </Style.Triggers>
-        
+    <Style x:Key="EditReminderIcon" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DeleteReminderIcon}">
     </Style>
     
 </ResourceDictionary>

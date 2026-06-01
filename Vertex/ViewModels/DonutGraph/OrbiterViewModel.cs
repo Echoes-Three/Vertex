@@ -1,4 +1,4 @@
-using Vertex.Models.Entities.Entry;
+using Vertex.Models.Entities;
 using Vertex.MVVM;
 
 namespace Vertex.ViewModels.DonutGraph;
@@ -15,13 +15,11 @@ public class OrbiterViewModel : ViewModelBase
     private void InitializeOrbiters()
     {
         HourToAngle();
-        ReminderContent = EntryData.Content;
-        ReminderSetForHour = $"SET FOR TODAY AT: " +
+        var trimmed = EntryData.Content.Length > 50 ? EntryData.Content[..50] : EntryData.Content;
+        ReminderContent = $"{trimmed}...";
+        ReminderSetForHour = $"TODAY AT: " +
                              $"{EntryData.SetFor:hh}:{EntryData.SetFor:mm} {EntryData.SetFor:tt}";
-        var status = EntryData.Done ? "DONE" : "NOT DONE";
-        ReminderStatus = $"STATUS -> -> {status}";
     }
-
     private void HourToAngle()
     {
         var hour = EntryData.SetFor.Hour;
@@ -34,98 +32,48 @@ public class OrbiterViewModel : ViewModelBase
 
         var radian = angle * (Math.PI / 180);
 
-        var x1 = 360 * Math.Cos(radian);
-        var y1 = -360 * Math.Sin(radian);
-        var x2 = 360 * Math.Cos(radian);
-        var y2 = -360 * Math.Sin(radian);
+        var x1 = 377 * Math.Cos(radian);
+        var y1 = -377 * Math.Sin(radian);
 
-        InnerCanvasLeft = Math.Truncate(x1) - 10;
-        InnerCanvasTop = Math.Truncate(y1) - 10;
-        OuterCanvasLeft = Math.Truncate(x2) - 15;
-        OuterCanvasTop = Math.Truncate(y2) - 15;
+        CanvasLeft = Math.Truncate(x1) - 15;
+        CanvasTop = Math.Truncate(y1) - 15;
+
     }
-    private double _innerCanvasLeft;
 
-    public double InnerCanvasLeft
+    public double CanvasLeft
     {
-        get => _innerCanvasLeft;
+        get;
         set
         {
-            _innerCanvasLeft = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private double _innerCanvasTop;
-
-    public double InnerCanvasTop
+    public double CanvasTop
     {
-        get => _innerCanvasTop;
+        get;
         set
         {
-            _innerCanvasTop = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private double _outerCanvasLeft;
-
-    public double OuterCanvasLeft
-    {
-        get => _outerCanvasLeft;
-        set
-        {
-            _outerCanvasLeft = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private double _outerCanvasTop;
-
-    public double OuterCanvasTop
-    {
-        get => _outerCanvasTop;
-        set
-        {
-            _outerCanvasTop = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _reminderSetForHour;
-
     public string ReminderSetForHour
     {
-        get => _reminderSetForHour;
+        get;
         set
         {
-            _reminderSetForHour = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _reminderContent;
-
     public string ReminderContent
     {
-        get => _reminderContent;
+        get;
         set
         {
-            _reminderContent = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _reminderStatus;
-
-    public string ReminderStatus
-    {
-        get => _reminderStatus;
-        set
-        {
-            _reminderStatus = value;
-            OnPropertyChanged();
-        }
-    }
-
 }

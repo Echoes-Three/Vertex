@@ -8,44 +8,43 @@
     Activity Content
     Delete Activity Button
     Edit Activity Button
-    Mark Activity As Done Button
     Delete Activity Icon
     Edit Activity Icon
-    Activity CheckBox Icon-->
+/   Tooltip Activity Hover-->
     
     <!--Activity Title-->
     <Style x:Key="ActivityTitle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontWeight" Value="Light"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
-        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Margin" Value="10,5,5,5"/>
         
     </Style>
     
     <!--Activity Content-->
     <Style x:Key="ActivityContent" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Foreground" Value="{DynamicResource DarkTextBrush}"/>
+        <Setter Property="TextAlignment" Value="Left"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="Margin" Value="5,15,0,15"/>
-        
+        <Setter Property="Margin" Value="0,8,0,8"/>
     </Style>
     
     <!--Edit Activity Button-->
     <Style x:Key="EditActivityButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
         
+        <!--On Hover-->
         <Style.Triggers>
-            <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -53,55 +52,36 @@
     <!--Delete Activity Button-->
     <Style x:Key="DeleteActivityButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
         
+        <!--On Hover-->
         <Style.Triggers>
-            <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Mark Activity As Done Button-->
-    <Style x:Key="MarkActivityAsDoneButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
-        
-        <Style.Triggers>
-            <!--On Hover-->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource LipstickRedBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
     
     <!--Delete Activity Icon-->
-    <Style x:Key="DeleteActivityIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource Bin}"/>
-        <Setter Property="Height" Value="15"/>
-        <Setter Property="Width" Value="15"/>
-        <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
-        
+    <Style x:Key="DeleteActivityIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
     </Style>
     
     <!--Edit Activity Icon-->
-    <Style x:Key="EditActivityIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource Edit}"/>
-        <Setter Property="Height" Value="15"/>
-        <Setter Property="Width" Value="15"/>
-        <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
-        
+    <Style x:Key="EditActivityIcon" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DeleteActivityIcon}">
     </Style>
     
-    <!--Activity CheckBox Icon-->
-    <Style x:Key="ActivityCheckBoxIcon" TargetType="{x:Type Path}" BasedOn="{StaticResource Icons}">
-        <Setter Property="Data" Value="{StaticResource EmptyCheckBox}"/>
-        <Setter Property="Fill" Value="{StaticResource LightTextBrush}"/>
-        
-        <Style.Triggers>
-            <!--Binding-->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked}" Value="True">
-                <Setter Property="Fill" Value="{StaticResource UltraLightBackgroundBrush}"/>
-                <Setter Property="Data" Value="{StaticResource SelectedCheckBox}"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
+    <!--Tooltip Activity Hover-->
+    <Style x:Key="ActivityHoverToolTip" TargetType="{x:Type TextBlock}">
+        <Setter Property="Text" Value="+"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 </ResourceDictionary>

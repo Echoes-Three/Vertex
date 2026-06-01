@@ -1,10 +1,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
+    <FontFamily x:Key="JetBrainsMono">/Vertex;component/Assets/Typeface/JetBrainsMono-2.304/fonts/ttf/#JetBrains Mono</FontFamily>
+    
     <Color x:Key="Black" >#020204</Color>
     <Color x:Key="CarbonBlack" >#1B1D21</Color>
     <Color x:Key="CharcoalBlue" >#464954</Color>
     <Color x:Key="LavenderGray" >#aaabb8</Color>
+    <Color x:Key="ShadowyGray">#26282E</Color>
+    <Color x:Key="Graphite">#31333b</Color>
     <Color x:Key="PaleSlate" >#c1c2cb</Color>
     <Color x:Key="AlabasterGray" >#e6e6ea</Color>
     
@@ -14,16 +18,19 @@
     <Color x:Key="PersianBlue">#1138C8</Color>
     <Color x:Key="LipstickRed">#ea163b</Color>
     
-    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource Black}"/>
-    <SolidColorBrush x:Key="MediumBackgroundBrush" Color="{StaticResource CarbonBlack}"/>
+    <SolidColorBrush x:Key="UltraDarkBackgroundBrush" Color="{StaticResource Black}"/>
+    <SolidColorBrush x:Key="ExtraDarkBackgroundBrush" Color="{StaticResource CarbonBlack}"/>
+    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource ShadowyGray}"/>
+    <SolidColorBrush x:Key="MediumBackgroundBrush" Color="{StaticResource Graphite}"/>
     <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource CharcoalBlue}"/>
     <SolidColorBrush x:Key="ExtraLightBackgroundBrush" Color="{StaticResource LavenderGray}"/>
     <SolidColorBrush x:Key="UltraLightBackgroundBrush" Color="{StaticResource PaleSlate}"/>
     
     <SolidColorBrush x:Key="LightTextBrush" Color="{StaticResource AlabasterGray}"/>
-    <SolidColorBrush x:Key="MediumTextBrush" Color="{StaticResource CharcoalBlue}"/>
-    <SolidColorBrush x:Key="DarkTextBrush" Color="{StaticResource CarbonBlack}"/>
-    <SolidColorBrush x:Key="ExtraDarkTextBrush" Color="{StaticResource Black}"/>
+    <SolidColorBrush x:Key="MediumTextBrush" Color="{StaticResource LavenderGray}"/>
+    <SolidColorBrush x:Key="DarkTextBrush" Color="{StaticResource CharcoalBlue}"/>
+    <SolidColorBrush x:Key="ExtraDarkTextBrush" Color="{StaticResource CarbonBlack}"/>
+    <SolidColorBrush x:Key="UltraDarkTextBrush" Color="{StaticResource Black}"/>
     
     <SolidColorBrush x:Key="PersianBlueBrush" Color="{StaticResource PersianBlue}"/>
     <SolidColorBrush x:Key="ElectricAquaBrush" Color="{StaticResource ElectricAqua}"/>

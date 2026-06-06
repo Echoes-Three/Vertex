@@ -1,3 +1,4 @@
+using System.Windows.Documents;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
@@ -49,9 +50,8 @@ public class ReminderFormViewModel : ViewModelBase
             .Where(e => !string.IsNullOrWhiteSpace(e));
         
         WarningMessages = parts.Any() ? string.Join("\n", parts) : "No warning." ;
-        
         WarningColor = canAdd ? Colors.GetBrush("#C3FE0C") : Colors.GetBrush("#ea163b");
-        
+        ShowWarning = canAdd;
         return canAdd;
     }
     private void SaveAction()
@@ -131,6 +131,15 @@ public class ReminderFormViewModel : ViewModelBase
         }
     }
     public Brush? WarningColor
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool ShowWarning
     {
         get;
         set

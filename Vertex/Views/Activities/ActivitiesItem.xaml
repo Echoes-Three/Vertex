@@ -9,6 +9,7 @@
              d:DataContext="{d:DesignInstance Type=activities:ActivityItemViewModel}">
     
     <Border Margin="0,0,0,10">
+        
         <Grid x:Name="ButtonHover" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/> <!--Spacer-->
@@ -45,8 +46,7 @@
             
             <Border 
                 Grid.Column="0"
-                Background="{StaticResource ExtraDarkBackgroundBrush}"
-                ToolTipService.InitialShowDelay="0">
+                Background="{StaticResource ExtraDarkBackgroundBrush}">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="Grid.ColumnSpan" Value="7"/>
@@ -57,14 +57,28 @@
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-                <Border.ToolTip>
+            </Border> <!--Title Background-->
+            
+            <Border
+                Grid.Column="1"
+                Background="{Binding ActivityColor, FallbackValue=Chartreuse}"></Border> <!--Activity Color-->
+            
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="3"
+                Style="{StaticResource ActivityTitle}"
+                Text="{Binding EntryData.Title, FallbackValue=No Title}"
+                ToolTipService.InitialShowDelay="0"
+                MouseLeave="MouseLeave">
+                <TextBlock.ToolTip>
                     <ToolTip 
+                        x:Name="ActivityToolTip"
                         Background="Transparent" 
                         Placement="Bottom"
-                        HorizontalOffset="10"
                         BorderBrush="Transparent">
                             
-                        <Grid Width="200"> 
+                        <Grid 
+                            Width="200"> 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="10*"/>
                                 <RowDefinition Height="80*"/>
@@ -118,18 +132,8 @@
                         </Grid>
                             
                     </ToolTip>
-                </Border.ToolTip>
-            </Border> <!--Title Background-->
-            
-            <Border
-                Grid.Column="1"
-                Background="{Binding ActivityColor, FallbackValue=Chartreuse}"></Border>
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="3"
-                IsHitTestVisible="False"
-                Style="{StaticResource ActivityTitle}"
-                Text="{Binding EntryData.Title, FallbackValue=No Title}"/> <!--Title-->
+                </TextBlock.ToolTip>
+            </TextBlock> <!--Title-->
             
         </Grid>
     </Border>

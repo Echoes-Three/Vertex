@@ -26,7 +26,7 @@ public class ActivitiesViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
+    
     public ObservableCollection<ActivityItemViewModel> RemainingActivities
     {
         get;
@@ -37,6 +37,8 @@ public class ActivitiesViewModel : ViewModelBase
         }
     }
 
+    private readonly int _todayIndex = (int)DateTime.Today.DayOfWeek;
+    
     public RelayCommand OnAddActivityView { get; }
     
     public ActivitiesViewModel(ActivitiesHandler activitiesHandler)
@@ -45,13 +47,7 @@ public class ActivitiesViewModel : ViewModelBase
         
         _form = new ActivityFormViewModel(activitiesHandler);
 
-        TodayActivities = new ObservableCollection<ActivityItemViewModel>(
-            ActivitiesData.Activities!.Where(a => a!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
-                .Select(a => new ActivityItemViewModel(a)));
-
-        RemainingActivities = new ObservableCollection<ActivityItemViewModel>(
-            ActivitiesData.Activities!.Where(a => !a!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
-                .Select(a => new ActivityItemViewModel(a)));
+        LoadCollection();
 
         activitiesHandler.Activities!.CollectionChanged += (s, e) =>
         {
@@ -62,6 +58,8 @@ public class ActivitiesViewModel : ViewModelBase
                         TodayActivities.Add(new ActivityItemViewModel(entry));
                     else
                         RemainingActivities.Add(new ActivityItemViewModel(entry));
+                    
+                    LoadCollection();
                 }
             
             if (e.OldItems != null)
@@ -73,6 +71,8 @@ public class ActivitiesViewModel : ViewModelBase
                     var vmTwo = TodayActivities.FirstOrDefault(a => a.EntryData!.Id == entry.Id);
                     if (vmTwo != null)
                         TodayActivities.Remove(vmTwo);
+                    
+                    LoadCollection();
                 }
         };
         
@@ -80,7 +80,7 @@ public class ActivitiesViewModel : ViewModelBase
             DeleteActivity(msg.Value));
         
         WeakReferenceMessenger.Default.Register<ActivityEditedMessage>(this, (r, msg) =>
-            ReloadCollection());
+            LoadCollection());
         
         WeakReferenceMessenger.Default.Register<EditActivityMessage>(this, (r, msg) =>
         {
@@ -94,28 +94,35 @@ public class ActivitiesViewModel : ViewModelBase
             _form.CleanFields();
             OpenFormWindow();
         });
-        
+
+        TodayIsEmpty = !TodayActivities?.Any() ?? true;
+        RemainingIsEmpty = !RemainingActivities?.Any() ?? true;
     }
     
-    private void DeleteActivity(string activityId)
+    private void LoadCollection()
     {
-        var activityEntry = ActivitiesData.Activities!.FirstOrDefault(x => x.Id == activityId);
-        if (activityEntry == null) return;
-        ActivitiesData.Delete(activityEntry!);
-    }
-    private void ReloadCollection()
-    {
-        TodayActivities = null;
         TodayActivities = new ObservableCollection<ActivityItemViewModel>(
-            ActivitiesData.Activities!.Where(x => x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
-                .Select(x => new ActivityItemViewModel(x)));
-        
+            ActivitiesData.Activities!
+                .Where(a => a!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
+                .OrderBy(e => e.Title)
+                .Select(a => new ActivityItemViewModel(a)));
+
         RemainingActivities = new ObservableCollection<ActivityItemViewModel>(
-            ActivitiesData.Activities!.Where(x => !x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
-                .Select(x => new ActivityItemViewModel(x)));
+            ActivitiesData.Activities!
+                .Where(a => !a!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
+                .OrderBy(e => e.Title)
+                .Select(a => new ActivityItemViewModel(a)));
+        
+        TodayIsEmpty = !TodayActivities?.Any() ?? true;
+        RemainingIsEmpty = !RemainingActivities?.Any() ?? true;
     }
     private void OpenFormWindow()
     {
+        
+        var screenHeight = SystemParameters.WorkArea.Height;
+        var height = screenHeight * 0.6;
+        var width = height * 0.7272;
+        
         var window = new Window
         {
             Title = "ActivityWindowView",
@@ -126,17 +133,42 @@ public class ActivitiesViewModel : ViewModelBase
             AllowsTransparency = true,
             Background = Brushes.Transparent,
             WindowStartupLocation = WindowStartupLocation.CenterScreen,
-            Width = 400,
-            Height = 550,
+            Width = width,
+            Height = height,
             Content = new AddActivityWindow(),
             Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Assets/Icon/VertexIcon.ico"))
         };
-
+        
         _form.SetCloseAction(() => window.Close());
         window.ShowDialog();
     }
-
+    
+    private void DeleteActivity(string activityId)
+    {
+        var activityEntry = ActivitiesData.Activities!.FirstOrDefault(x => x.Id == activityId);
+        if (activityEntry == null) return;
+        ActivitiesData.Delete(activityEntry!);
+    }
+    
     public bool ShowRemainingActivities
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool TodayIsEmpty
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool RemainingIsEmpty
     {
         get;
         set

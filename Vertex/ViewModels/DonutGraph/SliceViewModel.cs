@@ -22,10 +22,10 @@ public class SliceViewModel : ViewModelBase
     private void InitializeSlice()
     {
         var today = (int)DateTime.Today.DayOfWeek;
-        var durationSpam = EntryData!.Duration.Hours + EntryData.Duration.Minutes / 60.0;
+        var durationSpan = EntryData!.Duration.Hours + EntryData.Duration.Minutes / 60.0;
         
         StartAngle = EntryData.StartAngle[today];
-        EndAngle = EntryData.EndAngle[today] = EntryData.StartAngle[today] - durationSpam * 15;
+        EndAngle = EntryData.EndAngle[today] = EntryData.StartAngle[today] - durationSpan * 15;
         
         SliceColor = Colors.Palette[EntryData.Color];
     }

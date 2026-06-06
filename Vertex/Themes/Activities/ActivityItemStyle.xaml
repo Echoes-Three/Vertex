@@ -10,7 +10,7 @@
     Edit Activity Button
     Delete Activity Icon
     Edit Activity Icon
-/   Tooltip Activity Hover-->
+    Tooltip Activity Hover-->
     
     <!--Activity Title-->
     <Style x:Key="ActivityTitle" TargetType="{x:Type TextBlock}">
@@ -18,7 +18,7 @@
         <Setter Property="FontWeight" Value="Light"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="Margin" Value="10,5,5,5"/>

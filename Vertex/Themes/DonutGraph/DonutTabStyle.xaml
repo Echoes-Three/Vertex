@@ -70,4 +70,5 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
     </Style>
+    
 </ResourceDictionary>

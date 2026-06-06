@@ -324,9 +324,47 @@
                                     
                                 </ToolTip>
                             </Border.ToolTip>
-                        </Border>
-                            
+                        </Border> <!--Warning Tooltip-->
                         
+                        <Border 
+                            Grid.Column="4"
+                            IsHitTestVisible="False"
+                            Tag="{Binding ShowWarning}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="Transparent" />
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard x:Name="BlinkingStoryboard">
+                                                    <Storyboard>
+                                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                RepeatBehavior="Forever">
+                                    
+                                                            <DiscreteColorKeyFrame KeyTime="0:0:0.0" Value="Transparent" />
+                                    
+                                                            <DiscreteColorKeyFrame KeyTime="0:0:0.7" Value="{StaticResource CarbonBlack}" />
+                                    
+                                                            <DiscreteColorKeyFrame KeyTime="0:0:1.4" Value="{StaticResource CarbonBlack}" />
+                                    
+                                                        </ColorAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                    
+                                            <DataTrigger.ExitActions>
+                                                <StopStoryboard BeginStoryboardName="BlinkingStoryboard" />
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border> <!--Warning Animation-->
                     </Grid> <!--Cancel/Save Button-->
 
                 </Grid>

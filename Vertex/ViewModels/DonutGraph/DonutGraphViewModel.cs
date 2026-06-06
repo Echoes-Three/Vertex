@@ -3,22 +3,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
-using Vertex.Data.Services;
 using Vertex.Models.Entities;
 using Vertex.MVVM;
-using Vertex.ViewModels.Activities;
 using Colors = Vertex.Data.Services.Colors;
 
 namespace Vertex.ViewModels.DonutGraph;
 
 public class DonutGraphViewModel : ViewModelBase
 {
-    private readonly ActivitiesHandler _activitiesData;
+    private ActivitiesHandler _activitiesData;
     private readonly RemindersHandler _remindersData;
 
     public ObservableCollection<SliceViewModel> Slices
@@ -41,6 +38,10 @@ public class DonutGraphViewModel : ViewModelBase
     }
 
     private int TodayIndex => (int)DateTime.Today.DayOfWeek;
+    private readonly List<string> _meridiem = ["AM", "PM"];
+    private int _currentMeridiemIndex;
+    private int _currentHourCount = 06;
+    private int _currentMinuteCount = 00;
 
     private DispatcherTimer _clock;
     
@@ -100,19 +101,21 @@ public class DonutGraphViewModel : ViewModelBase
             { BuildSlices();});
         WeakReferenceMessenger.Default.Register<RelaunchOrbitersMessage> (this, (r, m) => 
             { LaunchOrbiters();});
-        
+
+      
         StartClock();
         ActivityColor = Colors.GetBrush("#e6e6ea");
+        Snap = _activitiesData.Snap;
+        
     }
-    
     
     /*Objects Creation & Initialization*/
     private void AddSlice(ActivityEntry entry)
     {
-        var durationSpam = entry!.Duration.Hours + entry.Duration.Minutes / 60.0;
+        var durationSpan = entry!.Duration.Hours + entry.Duration.Minutes / 60.0;
         
         var startAngle = Slices.Count == 0 ? 180 : Slices[^1].EndAngle;
-        var endAngle = startAngle - durationSpam * 15;
+        var endAngle = startAngle - durationSpan * 15;
 
         for (var i = 0; i <= 6; i++)
         {
@@ -121,14 +124,13 @@ public class DonutGraphViewModel : ViewModelBase
         }
     }
     private void LaunchOrbiters() =>
-        Orbiters = new ObservableCollection<OrbiterViewModel>(
-            _remindersData.Reminders!
+        Orbiters = new ObservableCollection<OrbiterViewModel>(_remindersData.Reminders!
                 .Where(r => r.SetFor.Date == DateTime.Today)
                 .Select(r => new OrbiterViewModel(r)));
     private void BuildSlices() =>
-        Slices = new ObservableCollection<SliceViewModel>(
-            _activitiesData.Activities!.Where(x => x!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
-                .Select(x => new SliceViewModel(x)));
+        Slices = new ObservableCollection<SliceViewModel>(_activitiesData.Activities!
+            .Where(s => s!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
+            .Select(s => new SliceViewModel(s)));
     
     
     /*Clock;*/
@@ -280,6 +282,7 @@ public class DonutGraphViewModel : ViewModelBase
     }
     
     
+        
     /*Dragging Slice*/
     public void OnMouseDown(object sender, MouseButtonEventArgs e, Canvas donutCanvas)
     {
@@ -336,12 +339,16 @@ public class DonutGraphViewModel : ViewModelBase
         
         activity!.StartAngle[TodayIndex] = DragSlice.StartAngle;
 
+        if (Snap) 
+            activity = DoSnap(activity);
+        
         _activitiesData.Serialize();
-
+        
         CleanActivityInfo();
         
         IsDragging = false;
         DragSlice = null;
+        BuildSlices();
     }
     private static (string Hour, string Minute, string Meridiem) FromAngleToHour(double angle)
     {
@@ -382,7 +389,28 @@ public class DonutGraphViewModel : ViewModelBase
         UpdateClock();
         ActivityColor = Colors.GetBrush("#e6e6ea");
     }
-
+    private ActivityEntry DoSnap(ActivityEntry entry)
+    {
+        var activities = _activitiesData.Activities;
+        if (activities == null) return entry;
+        
+        var min = entry.StartAngle[TodayIndex] - 5;
+        var max = entry.StartAngle[TodayIndex] + 5;
+        
+        foreach (var activity in activities)
+        {
+            if (activity.Id == entry.Id) continue;
+            
+            if ((activity.EndAngle[TodayIndex] < 0))
+                activity.EndAngle[TodayIndex] += 360;
+                            
+            if (activity.EndAngle[TodayIndex] >= min && activity.EndAngle[TodayIndex] <= max )
+                entry.StartAngle[TodayIndex] = activity.EndAngle[TodayIndex];
+        }
+        
+        return entry;
+    }
+    
     private double LastClockDegree
     {
         get;
@@ -419,5 +447,15 @@ public class DonutGraphViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+    public bool Snap
+    {
+        get;
+        set
+        {
+            field = value;
+            _activitiesData.Snap = value;
+            _activitiesData.Serialize();
+            OnPropertyChanged();
+        }
+    }
 }

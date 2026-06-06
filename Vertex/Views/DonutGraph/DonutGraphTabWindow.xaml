@@ -42,14 +42,14 @@
             MouseMove="OnMouseMove"
             MouseLeftButtonUp="OnMouseUp">
             
-            <TextBlock
+            <!--<TextBlock
                 Text="+&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;+&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003; &#x0A;"
                 FontFamily="{StaticResource JetBrainsMono}"
                 FontSize="60"
                 FontWeight="Thin"
                 Foreground="{StaticResource LightTextBrush}"
                 LineHeight="680"
-                TextAlignment="Left"></TextBlock> <!--Visual Elements-->
+                TextAlignment="Left"></TextBlock> ~1~Visual Elements@1@-->
             <TextBlock
                 Canvas.Left="920"
                 Canvas.Top="680"
@@ -102,6 +102,21 @@
                 Foreground="{StaticResource LightTextBrush}"
                 LineHeight="15"
                 TextAlignment="Left"></TextBlock> <!--Visual Elements-->
+            <Border
+                Width="40"
+                Height="40"
+                Canvas.Top="15"
+                Canvas.Right="45">
+                <TextBlock
+                    FontFamily="{StaticResource JetBrainsMono}"
+                    FontSize="45"
+                    FontWeight="thin"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="+"
+                    Foreground="{StaticResource LightTextBrush}">
+                </TextBlock>
+            </Border> <!--Visual Element-->
             
             <Ellipse 
                 Height="700" Width="700"
@@ -246,7 +261,6 @@
                 Text="9"
                 Style="{StaticResource MainClockFace}"/> <!--9am-->
             
-            
             <ItemsControl 
                 ItemsSource="{Binding DonutGraphVM.Slices}"
                 Canvas.Left="510" Canvas.Top="377"
@@ -376,7 +390,47 @@
                               Y2="{Binding DonutGraphVM.Y2}"
                               StrokeThickness="6"
                               Stroke="{StaticResource LipstickRedBrush}"/> <!--Clock Hand-->
-        </Canvas><!--Tab Tittle-->
-        
+            
+            <ToggleButton
+                x:Name="Snap"
+                Width="40"
+                Height="40"
+                Canvas.Top="15"
+                Canvas.Left="0"
+                IsChecked="{Binding DonutGraphVM.Snap}">
+                <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+                <TextBlock
+                    FontFamily="{StaticResource JetBrainsMono}"
+                    FontSize="40"
+                    FontWeight="Regular"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Text" Value="↑"/>
+                                <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=Snap}" Value="True">
+                                        <Setter Property="Text" Value="↓"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=Snap}" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
+                                        <Setter Property="Foreground" Value="{StaticResource ElectricAquaBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+            </ToggleButton> <!--Snapping Toggle-->
+            
+            </Canvas>
     </Grid>
 </UserControl>

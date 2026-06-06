@@ -65,7 +65,8 @@
                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                         To="{StaticResource Chartreuse}"
                                         Duration="0:0:0.1"
-                                        AutoReverse="True"/>
+                                        AutoReverse="True"
+                                        FillBehavior="Stop"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -73,20 +74,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
-        <!--On Hover-->
-        <Style.Triggers>
-            
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
-            </Trigger>
-            
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource UltraDarkBackgroundBrush}"/>
-            </Trigger>
-            
-        </Style.Triggers>
-        
     </Style>
     
 </ResourceDictionary>

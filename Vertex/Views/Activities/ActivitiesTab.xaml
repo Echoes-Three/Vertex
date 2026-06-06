@@ -10,7 +10,7 @@
              d:DesignHeight="553" d:DesignWidth="504"
              d:DataContext="{d:DesignInstance Type=activities:ActivitiesViewModel}">
     
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/> <!--Spacer-->
             <RowDefinition Height="8*"/> <!--Tab-->
@@ -58,25 +58,96 @@
                     Text="+"/>
             </Button> <!--Add New Reminder Button-->
             
-            <!--<TextBlock 
-                Grid.Column="0" 
-                Text="❮❮❮❮"
-                FontFamily="{StaticResource JetBrainsMono}"
-                FontSize="100"
-                FontWeight="bold"
-                Margin="180,0,0,0"
-                VerticalAlignment="Center" HorizontalAlignment="Center"
-                IsHitTestVisible="False"
-                Foreground="{StaticResource LightTextBrush}"/> ~1~Visual Element@1@-->
+            
             
         </Grid> <!--Tab Buttons-->
         
+       <Grid
+            Grid.Column="1" Grid.Row="3"
+            Width="300" Height="150">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding TodayIsEmpty}" Value="False"/>
+                                <Condition Binding="{Binding ShowRemainingActivities}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RemainingIsEmpty}" Value="False"/>
+                                <Condition Binding="{Binding ShowRemainingActivities}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/> <!--Upper Text-->
+                <RowDefinition Height="5*"/> <!--Spacer-->
+                <RowDefinition Height="60*"/> <!--Visual Element-->
+                <RowDefinition Height="5*"/> <!--Spacer-->
+                <RowDefinition Height="15*"/> <!--Upper Text-->
+            </Grid.RowDefinitions>
+            <TextBlock 
+                Grid.Row="0"
+                Text="EMPTY EMPTY EMPTY"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="20"
+                FontWeight="ExtraBlack"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Foreground="{StaticResource DarkBackgroundBrush}"/> <!--Upper Text Element-->
+            
+            <Border 
+                Grid.Row="2" 
+                Margin="15,0"
+                Background="{StaticResource DarkBackgroundBrush}"></Border> <!--Visual Element Background-->
+            
+            <TextBlock 
+                Grid.Row="2"
+                Text="❮❮❮❮"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="150"
+                FontWeight="bold"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Foreground="{StaticResource ExtraDarkBackgroundBrush}"/> <!--Visual Element-->
+            
+            <TextBlock 
+                Grid.Row="2"
+                Text="❮❮❮❮❮"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="150"
+                FontWeight="bold"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Foreground="{StaticResource ExtraDarkBackgroundBrush}"/> <!--Visual Element-->
+            
+            <TextBlock 
+                Grid.Row="4"
+                Text="EMPTY EMPTY EMPTY"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="20"
+                FontWeight="ExtraBlack"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Foreground="{StaticResource DarkBackgroundBrush}"/> <!--lower Text Element-->
+        </Grid> <!--Empty Activity Placeholder-->
         
-        <ScrollViewer Grid.Row="3" Grid.Column="1" 
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled"
-                      Style="{StaticResource ShowAllActivitiesIsOff}"
-                      Tag="{Binding ShowRemainingActivities}">
+        
+        <ScrollViewer 
+            Grid.Row="3" 
+            Grid.Column="1" 
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            Style="{StaticResource ShowAllActivitiesIsOff}"
+            Tag="{Binding ShowRemainingActivities}">
             
             <ScrollViewer.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>
@@ -91,11 +162,13 @@
             </ItemsControl>
             
         </ScrollViewer> <!--Today's Activities-->
-        <ScrollViewer Grid.Row="3" Grid.Column="1" 
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled"
-                      Style="{StaticResource ShowRemainingActivitiesIsOn}"
-                      Tag="{Binding ShowRemainingActivities}">
+        <ScrollViewer 
+            Grid.Row="3" 
+            Grid.Column="1" 
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            Style="{StaticResource ShowRemainingActivitiesIsOn}"
+            Tag="{Binding ShowRemainingActivities}">
             
             <ScrollViewer.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBar}"/>

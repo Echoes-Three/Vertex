@@ -13,6 +13,8 @@ public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
     private readonly string _fullPath = Path.Combine(
     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
     "Vertex", "Data", "Activities.json");
+
+    public bool Snap { get; set; } = false;
     
     public ObservableCollection<ActivityEntry>? Activities { get; set; }
     
@@ -61,6 +63,9 @@ public class ActivitiesHandler : ViewModelBase, IFileHandler<ActivityEntry>
 
             var handler = JsonSerializer.Deserialize<ActivitiesHandler>(file, options);
             Activities = handler?.Activities ?? new ObservableCollection<ActivityEntry>();
+            
+            if (handler == null) return;
+            Snap = handler.Snap;
         }
         catch (JsonException)
         {

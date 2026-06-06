@@ -36,24 +36,28 @@ public class RemindersViewModel : ViewModelBase
             
             _form = new ReminderFormViewModel(remindersHandler);
             
-            Reminders = new ObservableCollection<ReminderItemViewModel>(
-                RemindersData.Reminders!
-                    .Select(r => new ReminderItemViewModel(r))
-                    .OrderBy(r => r.SetFor)
-                    .ToList());
+            LoadCollection();
             
             remindersHandler.Reminders!.CollectionChanged += (s, e) =>
             {
                 if (e.NewItems != null)
                     foreach (ReminderEntry entry in e.NewItems)
+                    {
                         Reminders.Add(new ReminderItemViewModel(entry));
+                        LoadCollection();
+                    }
+                        
 
                 if (e.OldItems != null)
                     foreach (ReminderEntry entry in e.OldItems)
                     {
                         var vm = Reminders.FirstOrDefault(x => x.EntryData!.Id == entry.Id);
                         if (vm != null)
+                        {
                             Reminders.Remove(vm);
+                            LoadCollection();
+                        }
+                            
                     }
             };
             
@@ -61,7 +65,7 @@ public class RemindersViewModel : ViewModelBase
                 DeleteReminder(msg.Value));
             
             WeakReferenceMessenger.Default.Register<ReminderEditedMessage>(this, (r, msg) =>
-                ReloadCollection());
+                LoadCollection());
             
             WeakReferenceMessenger.Default.Register<EditReminderMessage>(this, (r, msg) =>
             {
@@ -75,6 +79,8 @@ public class RemindersViewModel : ViewModelBase
                 _form.CleanFields();
                 OpenFormWindow();
             });
+            
+            IsEmpty = !Reminders?.Any() ?? true;
         }
 
     private void DeleteReminder(string reminderId)
@@ -83,15 +89,25 @@ public class RemindersViewModel : ViewModelBase
         if (reminderEntry == null) return;
         RemindersData.Delete(reminderEntry!);
     }
-     private void ReloadCollection() => 
-         Reminders = new ObservableCollection<ReminderItemViewModel>(
+
+    private void LoadCollection()
+    {
+        Reminders = new ObservableCollection<ReminderItemViewModel>(
             RemindersData.Reminders!
-                .Select(x => new ReminderItemViewModel(x))
-                .OrderBy(r => r.SetFor)
+                .Select(r => new ReminderItemViewModel(r))
+                .OrderBy(r => Math.Abs((r.EntryData!.SetFor - DateTime.Today).Ticks))
                 .ToList());
+        
+        IsEmpty = !Reminders?.Any() ?? true;
+    }
+         
 
      private void OpenFormWindow()
      {
+         var screenHeight = SystemParameters.WorkArea.Height;
+         var height = screenHeight * 0.6;
+         var width = height * 0.7272;
+         
          var window = new Window
          {
              Title = "AddReminderWindow",
@@ -102,13 +118,24 @@ public class RemindersViewModel : ViewModelBase
              AllowsTransparency = true,
              Background = Brushes.Transparent,
              WindowStartupLocation = WindowStartupLocation.CenterScreen,
-             Width = 400,
-             Height = 550,
+             Width = width,
+             Height = height,
              Content = new AddReminderWindow(),
              Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Assets/Icon/VertexIcon.ico"))
+             
          }; 
          
          _form.SetCloseAction(() => window.Close());
          window.ShowDialog();
+     }
+     
+     public bool IsEmpty
+     {
+         get;
+         set
+         {
+             field = value;
+             OnPropertyChanged();
+         }
      }
 }

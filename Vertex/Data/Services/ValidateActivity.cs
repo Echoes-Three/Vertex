@@ -47,14 +47,13 @@ public static class ValidateActivity
                     totalDuration -= exception;
                 }
                 
-
                 if (totalDuration + span <= TimeSpan.FromHours(24)) continue;
                 isValid = false;
-                warining += $"{ day},";
+                warining += $" {day.ToString()[..3]},";
 
             }
         
-            warining = isValid ? "" : $"- Activity duration is above 24h limit on: {warining[..^1]}.";
+            warining = isValid ? "" : $"- Activity duration is above 24h limit on:{warining[..^1]}.";
         
             return (isValid, warining);
         }

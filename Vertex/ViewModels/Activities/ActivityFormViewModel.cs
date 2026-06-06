@@ -37,7 +37,6 @@ public class ActivityFormViewModel : ViewModelBase
         TitleLimitIndicator = Colors.GetBrush("#ea163b");
     }
     
-    
     /*Saving Activity*/
     public void LoadForEdit(string activityId)
     {
@@ -75,9 +74,9 @@ public class ActivityFormViewModel : ViewModelBase
             Content = string.IsNullOrWhiteSpace(ActivityContent) ? "No Content" : ActivityContent,
             Id = Guid.NewGuid().ToString(),
             Duration = new TimeSpan(hours: _hourCount, minutes: _minuteCount, seconds: 0),
-            RepeatOn = DaysOfWeek.ToDayOfWeek()
+            RepeatOn = DaysOfWeek.ToDayOfWeek(),
         };
-
+        
         _activitiesData.Save(activity);
         _closeWindow?.Invoke();
         CleanFields();
@@ -117,9 +116,8 @@ public class ActivityFormViewModel : ViewModelBase
             .Where(e => !string.IsNullOrWhiteSpace(e));
         
         WarningMessages = parts.Any() ? string.Join("\n", parts) : "No warning." ;
-        
         WarningColor = canAdd ? Colors.GetBrush("#C3FE0C") : Colors.GetBrush("#ea163b");
-
+        ShowWarning = canAdd;
         return canAdd;
     }
     private void SaveAction()
@@ -148,6 +146,15 @@ public class ActivityFormViewModel : ViewModelBase
         }
     }
     public Brush? WarningColor
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool ShowWarning
     {
         get;
         set

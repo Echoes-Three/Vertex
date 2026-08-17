@@ -8,7 +8,7 @@
              d:DataContext="{d:DesignInstance Type=activitiesViewModel:ActivityFormViewModel}">
     <Viewbox Stretch="Uniform">
         <Border Width="400" Height="550"
-            Background="{StaticResource ExtraDarkBackgroundBrush}"
+            Background="{StaticResource Brush-Gray-800}"
             MouseLeftButtonDown="OnDrag">
             <Grid>
                 <Grid.RowDefinitions>
@@ -30,7 +30,7 @@
                     Grid.Column="0" Grid.ColumnSpan="3"
                     Grid.Row="2"
                     Height="2"
-                    Fill="{StaticResource DarkBackgroundBrush}" /> <!--Separator-->
+                    Fill="{StaticResource Brush-Gray-700}" /> <!--Separator-->
 
                 <Border 
                     Grid.Column="1"
@@ -70,7 +70,7 @@
                 <Border
                     Grid.Column="0" Grid.ColumnSpan="3"
                     Grid.Row="5" Grid.RowSpan="2"
-                    Background="{StaticResource DarkBackgroundBrush}" /> <!--Color Division-->
+                    Background="{StaticResource Brush-Gray-700}" /> <!--Color Division-->
                 
                 <Canvas Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Grid.ColumnSpan="3" >
                     <Grid
@@ -88,12 +88,12 @@
                             <ColumnDefinition Width="10*"/>
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
-                        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
-                        <Border Grid.Column="2" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
-                        <Border Grid.Column="3" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
-                        <Border Grid.Column="4" Grid.Row="0" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
-                        <Border Grid.Column="5" Grid.Row="1" Background="{StaticResource ExtraDarkBackgroundBrush}"/>
+                        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource Brush-Gray-800}"/>
+                        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource Brush-Gray-800}"/>
+                        <Border Grid.Column="2" Grid.Row="0" Background="{StaticResource Brush-Gray-800}"/>
+                        <Border Grid.Column="3" Grid.Row="1" Background="{StaticResource Brush-Gray-800}"/>
+                        <Border Grid.Column="4" Grid.Row="0" Background="{StaticResource Brush-Gray-800}"/>
+                        <Border Grid.Column="5" Grid.Row="1" Background="{StaticResource Brush-Gray-800}"/>
                     </Grid>
                 </Canvas> <!--Visual Element-->
 
@@ -143,7 +143,7 @@
                             Grid.Column="0"
                             Grid.ColumnSpan="3"
                             CornerRadius="3"
-                            Background="{StaticResource LightBackgroundBrush}" /> <!--Duration Picker Background-->
+                            Background="{StaticResource Brush-Gray-400}" /> <!--Duration Picker Background-->
                         
                         <Border
                             Grid.Row="2"
@@ -190,7 +190,7 @@
                         <Border
                             Grid.Row="2"
                             Grid.Column="4"
-                            BorderBrush="{StaticResource DarkTextBrush}"
+                            BorderBrush="{StaticResource Brush-Gray-500}"
                             BorderThickness="1"
                             Background="Transparent"
                             CornerRadius="3"
@@ -301,7 +301,7 @@
                                             Background="{StaticResource LipstickRedBrush}"/> <!--Body Background-->
                                         <Border 
                                             Grid.Row="0" 
-                                            Background="{StaticResource DarkTextBrush}"/> <!--Header Background-->
+                                            Background="{StaticResource Brush-Gray-500}"/> <!--Header Background-->
                                         
                                         <TextBlock 
                                             Grid.Row="0"
@@ -348,9 +348,9 @@
                                     
                                                             <DiscreteColorKeyFrame KeyTime="0:0:0.0" Value="Transparent" />
                                     
-                                                            <DiscreteColorKeyFrame KeyTime="0:0:0.7" Value="{StaticResource CarbonBlack}" />
+                                                            <DiscreteColorKeyFrame KeyTime="0:0:0.7" Value="{StaticResource Color-Gray-800}" />
                                     
-                                                            <DiscreteColorKeyFrame KeyTime="0:0:1.4" Value="{StaticResource CarbonBlack}" />
+                                                            <DiscreteColorKeyFrame KeyTime="0:0:1.4" Value="{StaticResource Color-Gray-800}" />
                                     
                                                         </ColorAnimationUsingKeyFrames>
                                                     </Storyboard>

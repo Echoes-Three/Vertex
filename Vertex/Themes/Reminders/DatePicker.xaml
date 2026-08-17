@@ -3,13 +3,13 @@
     
     <!-- DatePicker -->
     <Style TargetType="{x:Type DatePicker}">
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}" /> <!-- Select a Date Text EDITABLE-->
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}" /> <!-- Select a Date Text EDITABLE-->
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"></Setter> <!-- Font Family EDITABLE-->
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="10"></Setter>
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="SelectedDateFormat" Value="Short" />
-        <Setter Property="Background" Value="{StaticResource DarkTextBrush}" /> <!--Whole Element Background EDITABLE-->
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-500}" /> <!--Whole Element Background EDITABLE-->
         <Setter Property="Padding" Value="2,2,0,0"/>
         <Setter Property="BorderBrush" Value="Transparent" /> <!-- Select a Date Border EDITABLE-->
         <Setter Property="BorderThickness" Value="1" />
@@ -66,7 +66,7 @@
                                                     <VisualState Name="Normal" />
                                                     <VisualState Name="MouseOver">
                                                         <Storyboard>
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource PaleSlate}"/> <!-- Calendar Icon On Hover EDITABLE-->
+                                                            <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource Color-Gray-200}"/> <!-- Calendar Icon On Hover EDITABLE-->
                                                         </Storyboard>
                                                     </VisualState>
                                                     <VisualState Name="Pressed">
@@ -82,7 +82,7 @@
                                             </VisualStateManager.VisualStateGroups>
 
                                             <!--Start UI-->
-                                            <Grid Height="18" Width="19" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Background="{StaticResource ExtraDarkTextBrush}" FlowDirection="LeftToRight"> <!--Calendar Icon Whole Background EDITABLE-->
+                                            <Grid Height="18" Width="19" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Background="{StaticResource Brush-Gray-800}" FlowDirection="LeftToRight"> <!--Calendar Icon Whole Background EDITABLE-->
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="20*"/>
                                                     <ColumnDefinition Width="20*"/>
@@ -125,7 +125,7 @@
                                     VerticalContentAlignment="Center"
                                     Focusable="{TemplateBinding Focusable}"
                                     Background="Transparent"
-                                    CaretBrush="{StaticResource LightTextBrush}"
+                                    CaretBrush="{StaticResource Brush-Gray-100}"
                                     Padding="1,1,0,0"/> <!--Select a Date TextBox Background, Padding, Caret EDITABLE-->
                                 <Grid x:Name="PART_DisabledVisual" 
                                       Opacity="0" 

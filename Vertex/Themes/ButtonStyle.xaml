@@ -7,7 +7,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
         
         <!--Removes Default Style-->
         <Setter Property="Template">
@@ -44,7 +44,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
         
         <!--Removes Default Style-->
         <Setter Property="Template">

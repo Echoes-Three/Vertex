@@ -16,7 +16,7 @@
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Foreground" Value="{DynamicResource MediumTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-300}"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="0,15"/>
@@ -28,7 +28,7 @@
     <Style x:Key="ReminderSetForLabel" TargetType="{x:Type TextBlock}" >
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource ExtraDarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-800}"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -58,7 +58,7 @@
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -70,7 +70,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontWeight" Value="Thin"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
     </Style>
     
     <!--Edit Reminder Icon-->

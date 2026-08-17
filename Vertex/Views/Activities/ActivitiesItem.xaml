@@ -46,7 +46,7 @@
             
             <Border 
                 Grid.Column="0"
-                Background="{StaticResource ExtraDarkBackgroundBrush}">
+                Background="{StaticResource Brush-Gray-800}">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="Grid.ColumnSpan" Value="7"/>
@@ -93,7 +93,7 @@
                             <Border
                                 Grid.Column="0" Grid.ColumnSpan="3" 
                                 Grid.Row="0" Grid.RowSpan="3"
-                                Background="{StaticResource DarkBackgroundBrush}"/> <!--Body Background-->
+                                Background="{StaticResource Brush-Gray-700}"/> <!--Body Background-->
                             
                             <Border
                                 Height="20"

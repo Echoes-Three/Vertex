@@ -22,7 +22,7 @@
     <Viewbox Stretch="Uniform">
         
         <Grid Width="1600" Height="900"  
-              Background="{DynamicResource ExtraDarkBackgroundBrush}">
+              Background="{DynamicResource Brush-Gray-800}">
                <Grid.RowDefinitions>
                    <RowDefinition Height="5*"/> <!--TitleBar-->
                    <RowDefinition Height="95*"/> <!--Main Body-->

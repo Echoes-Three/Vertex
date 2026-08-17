@@ -15,7 +15,7 @@
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="25"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Margin" Value="20,0,0,0"></Setter>
@@ -23,7 +23,7 @@
     
     <!--Minimize Button-->
     <Style x:Key="MinimizeButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Background" Value="{StaticResource MediumBackgroundBrush}"></Setter>
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"></Setter>
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -35,7 +35,7 @@
     
     <!--Close Button-->
     <Style x:Key="CloseButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Background" Value="{StaticResource MediumBackgroundBrush}"></Setter>
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"></Setter>
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -52,7 +52,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource MediumBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-600}"/>
     </Style>
     
     <!--Minimize Window icon-->
@@ -62,6 +62,6 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource MediumBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-600}"/>
     </Style>
 </ResourceDictionary>

@@ -3,38 +3,36 @@
     
     <FontFamily x:Key="JetBrainsMono">/Vertex;component/Assets/Typeface/JetBrainsMono-2.304/fonts/ttf/#JetBrains Mono</FontFamily>
     
-    <Color x:Key="Black" >#020204</Color>
-    <Color x:Key="CarbonBlack" >#1B1D21</Color>
-    <Color x:Key="CharcoalBlue" >#464954</Color>
-    <Color x:Key="LavenderGray" >#aaabb8</Color>
-    <Color x:Key="ShadowyGray">#26282E</Color>
-    <Color x:Key="Graphite">#31333b</Color>
-    <Color x:Key="PaleSlate" >#c1c2cb</Color>
-    <Color x:Key="AlabasterGray" >#e6e6ea</Color>
-    
-    <Color x:Key="Chartreuse">#C3FE0C</Color>
+    <Color x:Key="Color-Gray-900" >#020204</Color>
+    <Color x:Key="Color-Gray-800" >#1B1D21</Color>
+    <Color x:Key="Color-Gray-700">#26282E</Color>
+    <Color x:Key="Color-Gray-600">#31333b</Color>
+    <Color x:Key="Color-Gray-500" >#464954</Color>
+    <Color x:Key="Color-Gray-400" >#787A86</Color>
+    <Color x:Key="Color-Gray-300" >#aaabb8</Color>
+    <Color x:Key="Color-Gray-200" >#c1c2cb</Color>
+    <Color x:Key="Color-Gray-100" >#e6e6ea</Color>
+
+    <Color x:Key="PersianBlue">#1138C8</Color>
     <Color x:Key="ElectricAqua">#0c4af7</Color>
     <Color x:Key="CrayolaBlue">#2777E6</Color>
-    <Color x:Key="PersianBlue">#1138C8</Color>
+    <Color x:Key="Chartreuse">#C3FE0C</Color>
     <Color x:Key="LipstickRed">#ea163b</Color>
     
-    <SolidColorBrush x:Key="UltraDarkBackgroundBrush" Color="{StaticResource Black}"/>
-    <SolidColorBrush x:Key="ExtraDarkBackgroundBrush" Color="{StaticResource CarbonBlack}"/>
-    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource ShadowyGray}"/>
-    <SolidColorBrush x:Key="MediumBackgroundBrush" Color="{StaticResource Graphite}"/>
-    <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource CharcoalBlue}"/>
-    <SolidColorBrush x:Key="ExtraLightBackgroundBrush" Color="{StaticResource LavenderGray}"/>
-    <SolidColorBrush x:Key="UltraLightBackgroundBrush" Color="{StaticResource PaleSlate}"/>
-    
-    <SolidColorBrush x:Key="LightTextBrush" Color="{StaticResource AlabasterGray}"/>
-    <SolidColorBrush x:Key="MediumTextBrush" Color="{StaticResource LavenderGray}"/>
-    <SolidColorBrush x:Key="DarkTextBrush" Color="{StaticResource CharcoalBlue}"/>
-    <SolidColorBrush x:Key="ExtraDarkTextBrush" Color="{StaticResource CarbonBlack}"/>
-    <SolidColorBrush x:Key="UltraDarkTextBrush" Color="{StaticResource Black}"/>
+    <SolidColorBrush x:Key="Brush-Gray-900" Color="{StaticResource Color-Gray-900}"/>
+    <SolidColorBrush x:Key="Brush-Gray-800" Color="{StaticResource Color-Gray-800}"/>
+    <SolidColorBrush x:Key="Brush-Gray-700" Color="{StaticResource Color-Gray-700}"/>
+    <SolidColorBrush x:Key="Brush-Gray-600" Color="{StaticResource Color-Gray-600}"/>
+    <SolidColorBrush x:Key="Brush-Gray-500" Color="{StaticResource Color-Gray-500}"/>
+    <SolidColorBrush x:Key="Brush-Gray-400" Color="{StaticResource Color-Gray-400}"/>
+    <SolidColorBrush x:Key="Brush-Gray-300" Color="{StaticResource Color-Gray-300}"/>
+    <SolidColorBrush x:Key="Brush-Gray-200" Color="{StaticResource Color-Gray-200}"/>
+    <SolidColorBrush x:Key="Brush-Gray-100" Color="{StaticResource Color-Gray-100}"/>
     
     <SolidColorBrush x:Key="PersianBlueBrush" Color="{StaticResource PersianBlue}"/>
     <SolidColorBrush x:Key="ElectricAquaBrush" Color="{StaticResource ElectricAqua}"/>
     <SolidColorBrush x:Key="CrayolaBlueBrush" Color="{StaticResource CrayolaBlue}"/>
     <SolidColorBrush x:Key="ChartreuseBrush" Color="{StaticResource Chartreuse}"/>
     <SolidColorBrush x:Key="LipstickRedBrush" Color="{StaticResource LipstickRed}"/>
+    
 </ResourceDictionary>

@@ -29,7 +29,7 @@
             Grid.Column="1"
             Grid.Row="0" 
             Text="DONUT GRAPH"
-            Foreground="{StaticResource LightTextBrush}"
+            Foreground="{StaticResource Brush-Gray-100}"
             Style="{StaticResource DonutGraphTabTitle}"/> <!--Title-->
         
         <Canvas
@@ -57,7 +57,7 @@
                 FontFamily="{StaticResource JetBrainsMono}"
                 FontSize="8"
                 FontWeight="Regular"
-                Foreground="{StaticResource LightTextBrush}"
+                Foreground="{StaticResource Brush-Gray-100}"
                 LineHeight="10"
                 TextAlignment="Left"></TextBlock> <!--Visual Elements-->
             <TextBlock
@@ -67,7 +67,7 @@
                 FontFamily="{StaticResource JetBrainsMono}"
                 FontSize="70"
                 FontWeight="Thin"
-                Foreground="{StaticResource LightTextBrush}"
+                Foreground="{StaticResource Brush-Gray-100}"
                 LineHeight="15"
                 TextAlignment="Left"></TextBlock> <!--Visual Elements-->
             <TextBlock
@@ -79,7 +79,7 @@
                 FontFamily="{StaticResource JetBrainsMono}"
                 FontSize="500"
                 FontWeight="ExtraBold"
-                Foreground="{StaticResource LightTextBrush}"
+                Foreground="{StaticResource Brush-Gray-100}"
                 LineHeight="15"
                 TextAlignment="Left"></TextBlock> <!--Visual Elements-->
             <TextBlock
@@ -89,7 +89,7 @@
                 FontFamily="{StaticResource JetBrainsMono}"
                 FontSize="15"
                 FontWeight="Regular"
-                Foreground="{StaticResource LightTextBrush}"
+                Foreground="{StaticResource Brush-Gray-100}"
                 LineHeight="15"
                 TextAlignment="Left"></TextBlock> <!--Visual Elements-->
             <TextBlock
@@ -99,7 +99,7 @@
                 FontFamily="{StaticResource JetBrainsMono}"
                 FontSize="15"
                 FontWeight="Regular"
-                Foreground="{StaticResource LightTextBrush}"
+                Foreground="{StaticResource Brush-Gray-100}"
                 LineHeight="15"
                 TextAlignment="Left"></TextBlock> <!--Visual Elements-->
             <Border
@@ -114,14 +114,14 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Text="+"
-                    Foreground="{StaticResource LightTextBrush}">
+                    Foreground="{StaticResource Brush-Gray-100}">
                 </TextBlock>
             </Border> <!--Visual Element-->
             
             <Ellipse 
                 Height="700" Width="700"
                 Canvas.Left="160" Canvas.Top="27"
-                Fill="{StaticResource ExtraDarkBackgroundBrush}"/> <!--Donut Background-->
+                Fill="{StaticResource Brush-Gray-800}"/> <!--Donut Background-->
             
             <Grid
                 Background="Transparent"
@@ -152,7 +152,7 @@
                     <TextBlock 
                         Text="✗"
                         FontFamily="{StaticResource JetBrainsMono}"
-                        Foreground="{StaticResource DarkBackgroundBrush}"
+                        Foreground="{StaticResource Brush-Gray-700}"
                         FontSize="40"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"></TextBlock>
@@ -163,7 +163,7 @@
                     <TextBlock 
                         Style="{StaticResource DeleteActivityIcon}"
                         Text="✗"
-                        Foreground="{StaticResource DarkBackgroundBrush}"
+                        Foreground="{StaticResource Brush-Gray-700}"
                         FontSize="40"
                     />
                 </Border> <!--VE / Activity Color Indicated-->
@@ -214,7 +214,7 @@
             </Grid> <!--Current Time-->
             
             <Border 
-                BorderBrush="{StaticResource DarkBackgroundBrush}" 
+                BorderBrush="{StaticResource Brush-Gray-700}" 
                 BorderThickness="60"
                 Canvas.Left="235" Canvas.Top="102"
                 Height="550" Width="550"
@@ -325,7 +325,7 @@
                                                 <Border 
                                                     Grid.Column="0" Grid.ColumnSpan="3"
                                                     Grid.Row="0" Grid.RowSpan="3"
-                                                    Background="{StaticResource DarkBackgroundBrush}"/> <!--Reminder Content Background-->
+                                                    Background="{StaticResource Brush-Gray-700}"/> <!--Reminder Content Background-->
                                                 
                                                 <Border
                                                     Height="20"
@@ -380,7 +380,7 @@
             
             <Path
                 Canvas.Left="510" Canvas.Top="377"
-                Stroke="{StaticResource DarkBackgroundBrush}" StrokeThickness="20"
+                Stroke="{StaticResource Brush-Gray-700}" StrokeThickness="20"
                 Data="{Binding DonutGraphVM.PathData}"
                 MouseLeftButtonDown="OnMouseLeftButtonDown"
                 FocusVisualStyle="{x:Null}"/> <!--Passed Time Slice-->
@@ -402,7 +402,7 @@
                     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-100}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -416,13 +416,13 @@
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Text" Value="↑"/>
-                                <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsChecked, ElementName=Snap}" Value="True">
                                         <Setter Property="Text" Value="↓"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsMouseOver, ElementName=Snap}" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource LightTextBrush}"/>
+                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-100}"/>
                                         <Setter Property="Foreground" Value="{StaticResource ElectricAquaBrush}"/>
                                     </DataTrigger>
                                 </Style.Triggers>

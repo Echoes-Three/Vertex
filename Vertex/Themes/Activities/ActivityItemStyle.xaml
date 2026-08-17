@@ -19,7 +19,7 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="Margin" Value="10,5,5,5"/>
         
@@ -33,7 +33,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="TextAlignment" Value="Left"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="Margin" Value="0,8,0,8"/>
     </Style>
@@ -44,7 +44,7 @@
         <!--On Hover-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -67,7 +67,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontWeight" Value="Thin"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
     </Style>
     
     <!--Edit Activity Icon-->
@@ -78,7 +78,7 @@
     <Style x:Key="ActivityHoverToolTip" TargetType="{x:Type TextBlock}">
         <Setter Property="Text" Value="+"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="FontWeight" Value="Thin"/>
         <Setter Property="VerticalAlignment" Value="Center"/>

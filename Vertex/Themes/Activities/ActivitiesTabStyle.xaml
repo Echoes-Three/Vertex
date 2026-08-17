@@ -18,7 +18,7 @@
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="28"/>
-        <Setter Property="Foreground" Value="{DynamicResource ExtraDarkTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-800}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
@@ -33,11 +33,11 @@
         <Style.Triggers>
             <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
             </Trigger>
             <!--Binding-->
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
             </DataTrigger>
         </Style.Triggers>
         
@@ -51,7 +51,7 @@
         <Style.Triggers>
             <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
             </Trigger>
         </Style.Triggers>
         
@@ -88,7 +88,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontWeight" Value="Thin"/>
-        <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
     </Style>
     
     <!--Show All Activities Icon-->

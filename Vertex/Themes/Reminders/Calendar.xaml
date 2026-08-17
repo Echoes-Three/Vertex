@@ -6,7 +6,7 @@
 
     <Style TargetType="Calendar">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />        
-        <Setter Property="Background" Value="{StaticResource ExtraLightBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-300}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
@@ -39,7 +39,7 @@
                                 FontWeight="Bold" 
                                 FontFamily="Verdana" 
                                 FontSize="9.5" 
-                                Foreground="{StaticResource ExtraDarkTextBrush}" 
+                                Foreground="{StaticResource Brush-Gray-800}" 
                                 HorizontalAlignment="Center"
                                 Text="{Binding}"
                                 Margin="0,6,0,6"
@@ -100,7 +100,7 @@
                                                 <Grid>
                                                     <Path x:Name="path" Margin="14,-6,0,0" Height="10" Width="6" VerticalAlignment="Center" HorizontalAlignment="Left" Stretch="Fill" Data="M288.75,232.25 L288.75,240.625 L283,236.625 z">
                                                         <Path.Fill>
-                                                            <SolidColorBrush Color="{StaticResource CarbonBlack}" />
+                                                            <SolidColorBrush Color="{StaticResource Color-Gray-800}" />
                                                         </Path.Fill>
                                                     </Path>
                                                 </Grid>
@@ -371,7 +371,7 @@
                                 <VisualState Name="Today">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="TodayBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
-                                        <ColorAnimation Duration="0" Storyboard.TargetName="NormalText" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="{StaticResource AlabasterGray}"></ColorAnimation>
+                                        <ColorAnimation Duration="0" Storyboard.TargetName="NormalText" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="{StaticResource Color-Gray-100}"></ColorAnimation>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -387,17 +387,17 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="TodayBackground" Opacity="0" Fill="{StaticResource DarkTextBrush}"/>
+                        <Rectangle x:Name="TodayBackground" Opacity="0" Fill="{StaticResource Brush-Gray-500}"/>
                         <Rectangle x:Name="SelectedBackground" Opacity="0" Fill="{StaticResource ChartreuseBrush}"/>
                         <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"/>
-                        <Rectangle x:Name="HighlightBackground" Opacity="0" Fill="{StaticResource UltraLightBackgroundBrush}"/>
+                        <Rectangle x:Name="HighlightBackground" Opacity="0" Fill="{StaticResource Brush-Gray-200}"/>
                         <ContentPresenter
                                 x:Name="NormalText"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Margin="5,1,5,1">
                             <TextElement.Foreground>
-                                <SolidColorBrush Color="{StaticResource CharcoalBlue}" />
+                                <SolidColorBrush Color="{StaticResource Color-Gray-500}" />
                             </TextElement.Foreground>
                         </ContentPresenter>
                         <Path x:Name="Blackout" Opacity="0" Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" Fill="#FF000000" Stretch="Fill" Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z"/>
@@ -410,7 +410,7 @@
     
      <!--Calendar Button-->
     <Style TargetType="CalendarButton">
-        <Setter Property="Background" Value="{StaticResource UltraLightBackgroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-200}"/>
         <Setter Property="MinWidth" Value="40"/>
         <Setter Property="MinHeight" Value="42"/>
         <Setter Property="FontSize" Value="10"/>
@@ -455,7 +455,7 @@
                                 <VisualState Name="Active" />
                                 <VisualState Name="Inactive">
                                     <Storyboard>
-                                        <ColorAnimation Duration="0" Storyboard.TargetName="NormalText" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="{StaticResource CharcoalBlue}"></ColorAnimation>
+                                        <ColorAnimation Duration="0" Storyboard.TargetName="NormalText" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="{StaticResource Color-Gray-500}"></ColorAnimation>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -488,14 +488,14 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle x:Name="SelectedBackground" Opacity="0" Fill="{StaticResource ChartreuseBrush}"/>
-                        <Rectangle x:Name="Background" Opacity="0" Fill="{StaticResource UltraLightBackgroundBrush}"/>
+                        <Rectangle x:Name="Background" Opacity="0" Fill="{StaticResource Brush-Gray-200}"/>
                         <ContentPresenter
                                 x:Name="NormalText"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Margin="1,0,1,1">
                             <TextElement.Foreground>
-                                <SolidColorBrush Color="{StaticResource CarbonBlack}"/>
+                                <SolidColorBrush Color="{StaticResource Color-Gray-800}"/>
                             </TextElement.Foreground>
                         </ContentPresenter>
                         <Rectangle x:Name="CalendarButtonFocusVisual" Visibility="Collapsed" IsHitTestVisible="false" Stroke="{StaticResource ChartreuseBrush}"/>

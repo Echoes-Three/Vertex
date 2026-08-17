@@ -36,7 +36,7 @@
             <TextBlock
                 Grid.Column="0"
                 Text="ACTIVITIES"
-                Foreground="{StaticResource LightTextBrush}"
+                Foreground="{StaticResource Brush-Gray-100}"
                 Style="{StaticResource ActivitiesTabTitle}"/> <!--Tab Tittle-->
             
             <ToggleButton 
@@ -105,12 +105,12 @@
                 FontSize="20"
                 FontWeight="ExtraBlack"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
-                Foreground="{StaticResource DarkBackgroundBrush}"/> <!--Upper Text Element-->
+                Foreground="{StaticResource Brush-Gray-700}"/> <!--Upper Text Element-->
             
             <Border 
                 Grid.Row="2" 
                 Margin="15,0"
-                Background="{StaticResource DarkBackgroundBrush}"></Border> <!--Visual Element Background-->
+                Background="{StaticResource Brush-Gray-700}"></Border> <!--Visual Element Background-->
             
             <TextBlock 
                 Grid.Row="2"
@@ -119,7 +119,7 @@
                 FontSize="150"
                 FontWeight="bold"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
-                Foreground="{StaticResource ExtraDarkBackgroundBrush}"/> <!--Visual Element-->
+                Foreground="{StaticResource Brush-Gray-800}"/> <!--Visual Element-->
             
             <TextBlock 
                 Grid.Row="2"
@@ -128,7 +128,7 @@
                 FontSize="150"
                 FontWeight="bold"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
-                Foreground="{StaticResource ExtraDarkBackgroundBrush}"/> <!--Visual Element-->
+                Foreground="{StaticResource Brush-Gray-800}"/> <!--Visual Element-->
             
             <TextBlock 
                 Grid.Row="4"
@@ -137,7 +137,7 @@
                 FontSize="20"
                 FontWeight="ExtraBlack"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
-                Foreground="{StaticResource DarkBackgroundBrush}"/> <!--lower Text Element-->
+                Foreground="{StaticResource Brush-Gray-700}"/> <!--lower Text Element-->
         </Grid> <!--Empty Activity Placeholder-->
         
         

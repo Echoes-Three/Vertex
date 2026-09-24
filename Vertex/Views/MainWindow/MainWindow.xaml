@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Vertex.ViewModels"
-        xmlns:consistency="clr-namespace:Vertex.Views"
         xmlns:reminders="clr-namespace:Vertex.Views.Reminders"
         xmlns:activities="clr-namespace:Vertex.Views.Activities"
         xmlns:donutGraph="clr-namespace:Vertex.Views.DonutGraph"
@@ -23,49 +22,95 @@
         
         <Grid Width="1600" Height="900"  
               Background="{DynamicResource Brush-Gray-800}">
-               <Grid.RowDefinitions>
-                   <RowDefinition Height="5*"/> <!--TitleBar-->
-                   <RowDefinition Height="95*"/> <!--Main Body-->
-               </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/> <!--TitleBar-->
+                <RowDefinition Height="840"/> <!--Main Body-->
+                <RowDefinition Height="20"/> <!--Spacer-->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/> <!--Spacer-->
+                <ColumnDefinition Width="1560"/> <!--Main Body-->
+                <ColumnDefinition Width="20"/> <!--Spacer-->
+            </Grid.ColumnDefinitions>
             
-            <mainWindow:TitleBarView Grid.Row="0"/><!--TitleBar-->
+            <mainWindow:TitleBarView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" /><!--TitleBar-->
             
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/> <!--Spacer-->
-                    <ColumnDefinition Width="65*"/> <!--Donut Graph-->
-                    <ColumnDefinition Width="0.5*"/> <!--Spacer-->
-                    <ColumnDefinition Width="31.5*"/> <!--Side Panel-->
-                    <ColumnDefinition Width="0.5*"/> <!--Spacer-->
+                    <ColumnDefinition Width="*"/> <!--Donut Graph-->
+                    <ColumnDefinition Style="{StaticResource SideTab}"/> <!--Side Tab-->
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/> <!--Spacer-->
-                    <RowDefinition Height="98*"/> <!--Donut Graph & Side Panel-->
-                    <RowDefinition Height="1*"/> <!--Spacer-->
-                </Grid.RowDefinitions>
                 
-                <donutGraph:DonutGraphTabWindow Grid.Row="1" Grid.Column="1" /><!--Donut Graph-->
+                <Border Grid.Column="0" Background="{StaticResource VividRoyalBrush}"/> <!--Donut Background-->
                 
-                <Grid  Grid.Row="1" Grid.Column ="3">
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/> <!--Spacer-->
+                        <RowDefinition Height="155"/> <!--Toggles-->
+                        <RowDefinition Height="585"/> <!--Spacer-->
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/> <!--Spacer-->
+                        <ColumnDefinition Width="45"/> <!--Toggles-->
+                        <ColumnDefinition Width="10"/> <!--Spacer-->
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"/> <!--Activity Tab Toggle-->
+                            <RowDefinition Height="10"/> <!--Spacer-->
+                            <RowDefinition Height="45"/> <!--Reminder Tab Toggle-->
+                            <RowDefinition Height="10"/> <!--Spacer-->
+                            <RowDefinition Height="45"/> <!--Add Tab Toggle-->
+                        </Grid.RowDefinitions>
+                        
+                        
+                        <Border  Grid.Row="0" Style="{StaticResource ActivityToggleBackground}"/> <!--Activity Toggle Background-->
+
+                        <ToggleButton 
+                            x:Name="ActivityToggle"
+                            Grid.Row="0"
+                            Content="⍹"
+                            Style="{StaticResource RightSideToggleButton}"/> <!--Activity Tab Toggle-->
+                        
+                        
+                        <Border Grid.Row="2" Style="{StaticResource ReminderToggleBackground}"/> <!--Reminder Toggle Background-->
+
+                        <ToggleButton 
+                            x:Name="ReminderToggle"
+                            Grid.Row="2"
+                            Content="⍶"
+                            Style="{StaticResource RightSideToggleButton}"/> <!--Reminder Tab Toggle-->
+                            
+                        
+                        <Border Grid.Row="4" Style="{StaticResource AddToggleBackground}"/>  <!--Add Toggle Background-->
+
+                        <ToggleButton 
+                            x:Name="AddToggle"
+                            Grid.Row="4"
+                            Content="+"
+                            Style="{StaticResource RightSideToggleButton}"/> <!--Add Tab Toggle-->
+                        
+                    </Grid> <!--Toggles-->
+                    
+                </Grid> <!--Right Side Toggles-->
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="66*"/> <!--Activities-->
                         <RowDefinition Height="1*"/> <!--Spacer-->
                         <RowDefinition Height="33*"/> <!--Reminders-->
                     </Grid.RowDefinitions>
                     
-                    <activities:ActivitiesTab Grid.Row="0"/><!--Activities-->
-                    <reminders:RemindersTab Grid.Row="2"/><!--Reminders-->
+                    <!--<activities:ActivitiesTab Grid.Row="0"/>~1~Activities@1@
+                    <reminders:RemindersTab Grid.Row="2"/>~1~Reminders@1@-->
+                    <!--<donutGraph:DonutGraphTabWindow Grid.Row="1" Grid.Column="1" />~1~Donut Graph@1@-->
                     
                 </Grid> <!--Side Panel Activities/Reminders/Consistency-->
+                
             </Grid>
             
-            <!--<Border 
-                Grid.Row="0" 
-                Grid.RowSpan="2" 
-                Background="{StaticResource MediumTextBrush}" 
-                Opacity="0.5"
-                IsHitTestVisible="False"></Border>-->
-            
-        </Grid><!--Main Body-->
+        </Grid> <!--Main Body-->
+        
     </Viewbox>       
 </Window>

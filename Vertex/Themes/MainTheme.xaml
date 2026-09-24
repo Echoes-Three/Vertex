@@ -3,7 +3,6 @@
     
     <FontFamily x:Key="JetBrainsMono">/Vertex;component/Assets/Typeface/JetBrainsMono-2.304/fonts/ttf/#JetBrains Mono</FontFamily>
     
-    <Color x:Key="Color-Gray-900" >#020204</Color>
     <Color x:Key="Color-Gray-800" >#1B1D21</Color>
     <Color x:Key="Color-Gray-700">#26282E</Color>
     <Color x:Key="Color-Gray-600">#31333b</Color>
@@ -13,13 +12,14 @@
     <Color x:Key="Color-Gray-200" >#c1c2cb</Color>
     <Color x:Key="Color-Gray-100" >#e6e6ea</Color>
 
+    <Color x:Key="VividRoyal">#1D1CA5</Color>
     <Color x:Key="PersianBlue">#1138C8</Color>
     <Color x:Key="ElectricAqua">#0c4af7</Color>
     <Color x:Key="CrayolaBlue">#2777E6</Color>
     <Color x:Key="Chartreuse">#C3FE0C</Color>
     <Color x:Key="LipstickRed">#ea163b</Color>
+    <Color x:Key="ElectricRose">#F610A2</Color>
     
-    <SolidColorBrush x:Key="Brush-Gray-900" Color="{StaticResource Color-Gray-900}"/>
     <SolidColorBrush x:Key="Brush-Gray-800" Color="{StaticResource Color-Gray-800}"/>
     <SolidColorBrush x:Key="Brush-Gray-700" Color="{StaticResource Color-Gray-700}"/>
     <SolidColorBrush x:Key="Brush-Gray-600" Color="{StaticResource Color-Gray-600}"/>
@@ -29,10 +29,12 @@
     <SolidColorBrush x:Key="Brush-Gray-200" Color="{StaticResource Color-Gray-200}"/>
     <SolidColorBrush x:Key="Brush-Gray-100" Color="{StaticResource Color-Gray-100}"/>
     
+    <SolidColorBrush x:Key="VividRoyalBrush" Color="{StaticResource VividRoyal}"/>
     <SolidColorBrush x:Key="PersianBlueBrush" Color="{StaticResource PersianBlue}"/>
     <SolidColorBrush x:Key="ElectricAquaBrush" Color="{StaticResource ElectricAqua}"/>
     <SolidColorBrush x:Key="CrayolaBlueBrush" Color="{StaticResource CrayolaBlue}"/>
     <SolidColorBrush x:Key="ChartreuseBrush" Color="{StaticResource Chartreuse}"/>
     <SolidColorBrush x:Key="LipstickRedBrush" Color="{StaticResource LipstickRed}"/>
+    <SolidColorBrush x:Key="ElectricRoseBrush" Color="{StaticResource ElectricRose}"/>
     
 </ResourceDictionary>

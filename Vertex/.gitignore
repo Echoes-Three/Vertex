@@ -8,9 +8,11 @@ obj/
 ## JetBrains Rider
 .idea/
 *.sln.iml
+*.sln.docstates
 
 ## Publish output
 publish/
 
 ## User-specific
 .vs/
+*.sln.DotSettings.user

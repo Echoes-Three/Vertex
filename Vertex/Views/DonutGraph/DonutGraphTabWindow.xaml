@@ -382,14 +382,15 @@
                 Canvas.Left="510" Canvas.Top="377"
                 Stroke="{StaticResource Brush-Gray-700}" StrokeThickness="20"
                 Data="{Binding DonutGraphVM.PathData}"
-                MouseLeftButtonDown="OnMouseLeftButtonDown"
                 FocusVisualStyle="{x:Null}"/> <!--Passed Time Slice-->
-            <Line X1="{Binding DonutGraphVM.X1}" 
-                              Y1="{Binding DonutGraphVM.Y1}" 
-                              X2="{Binding DonutGraphVM.X2}" 
-                              Y2="{Binding DonutGraphVM.Y2}"
-                              StrokeThickness="6"
-                              Stroke="{StaticResource LipstickRedBrush}"/> <!--Clock Hand-->
+            
+            <Line 
+                X1="{Binding DonutGraphVM.X1}" 
+                Y1="{Binding DonutGraphVM.Y1}" 
+                X2="{Binding DonutGraphVM.X2}" 
+                Y2="{Binding DonutGraphVM.Y2}"
+                StrokeThickness="6"
+                Stroke="{StaticResource LipstickRedBrush}"/> <!--Clock Hand-->
             
             <ToggleButton
                 x:Name="Snap"

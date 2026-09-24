@@ -5,62 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Vertex.ViewModels"
         mc:Ignorable="d"
-        d:DesignHeight="20"
-        d:DesignWidth="700"
+        d:DesignHeight="40"
+        d:DesignWidth="1600"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     
     <Grid>
         <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="10*"/> <!--Logo/App Name-->
-        <ColumnDefinition Width="80*"/> <!--Draggable Area-->
-        <ColumnDefinition Width="10*"/> <!--Tittle Bar Buttons-->
-    </Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1440"/> <!--Draggable Area-->
+            <ColumnDefinition Width="60"/> <!--Minimize Button-->
+            <ColumnDefinition Width="20"/> <!--Spacer-->
+            <ColumnDefinition Width="60"/> <!--Close Button-->
+            <ColumnDefinition Width="20"/> <!--Spacer-->
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/> <!--Spacer-->
+            <RowDefinition Height="20"/> <!--Buttons-->
+            <RowDefinition Height="10"/> <!--Spacer-->
+        </Grid.RowDefinitions>
         
         <Border
-            Grid.Column="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Grid.Row="0"
+            Grid.RowSpan="3"
             Background="Transparent"
             MouseLeftButtonDown="TitleBarDrag"/> <!--Draggable Area-->
-        
-        <TextBlock 
-            Grid.Column="0"
-            Text="VERTEX"
-            Style="{StaticResource ApplicationName}"></TextBlock>
-        
-
-        <Grid Grid.Column="2" Grid.Row="0"> <!--Tittle Bar Buttons-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*"/> <!--Spacer-->
-                <ColumnDefinition Width="35*"/> <!-- Minimize Button-->
-                <ColumnDefinition Width="10*"/> <!--Spacer-->
-                <ColumnDefinition Width="35*"/> <!--Close Button-->
-                <ColumnDefinition Width="10*"/> <!--Spacer-->
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30*"/> <!--Spacer-->
-                <RowDefinition Height="40*"/> <!--Buttons-->
-                <RowDefinition Height="30*"/> <!--Spacer-->
-            </Grid.RowDefinitions>
             
-            <Button 
-                Grid.Column="1"
-                Grid.Row="1"
-                Click="MinimizeButton"
-                Style="{StaticResource MinimizeButton}">
-                <TextBlock 
-                    Style="{StaticResource MinimizeWindowIcon}"
-                    Text="–"/>
-            </Button> <!-- Minimize Button-->
-            
-            <Button 
-                Grid.Column="3"
-                Grid.Row="1"
-                Click="CloseButton"
-                Style="{StaticResource CloseButton}">
-                <TextBlock 
-                    Style="{StaticResource CloseWindowIcon}"
-                    Text="✗"/>
-            </Button><!--Close Button-->
-        </Grid>
+        <Button 
+            Grid.Column="1"
+            Grid.Row="1"
+            Click="MinimizeButton"
+            Style="{StaticResource MinimizeButton}">
+            <TextBlock 
+                Style="{StaticResource MinimizeWindowIcon}"
+                Text="–"/>
+        </Button> <!-- Minimize Button-->
+        
+        <Button 
+            Grid.Column="3"
+            Grid.Row="1"
+            Click="CloseButton"
+            Style="{StaticResource CloseButton}">
+            <TextBlock 
+                Style="{StaticResource CloseWindowIcon}"
+                Text="✗"/>
+        </Button><!--Close Button-->
+        
     </Grid>
 </UserControl>

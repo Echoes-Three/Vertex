@@ -8,8 +8,9 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/MainTheme.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ScrollBar.xaml"/>
-                <!--TitleBar-->
+                <!--MainWindow-->
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/TitleBarStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/MainwindowStyle.xaml"/>
                 <!--Reminders-->
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersTabStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersItemStyle.xaml"/>

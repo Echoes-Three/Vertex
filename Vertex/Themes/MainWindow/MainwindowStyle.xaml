@@ -1,0 +1,106 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!--Styles Present Here-->
+    
+    <!--
+    Left Side Toggle Buttons
+    Right Side toggle Buttons
+    Activity Toggle Background
+    -->
+
+    <!--Right Side toggle Buttons-->
+    <Style x:Key="RightSideToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="ExtraLight"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        
+        <Style.Triggers>
+            
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"/>
+            </Trigger>
+            
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--Activity Toggle Background-->
+    <Style x:Key="ActivityToggleBackground" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        
+        <Style.Triggers>
+            
+            <DataTrigger Binding="{Binding ElementName=ActivityToggle, Path=IsMouseOVer}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=ActivityToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-200}"/>
+            </DataTrigger>
+            
+         </Style.Triggers>   
+        
+    </Style>
+    
+    <!--Reminder Toggle Background-->
+    <Style x:Key="ReminderToggleBackground" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        
+        <Style.Triggers>
+            
+            <DataTrigger Binding="{Binding ElementName=ReminderToggle, Path=IsMouseOVer}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=ReminderToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-200}"/>
+            </DataTrigger>
+            
+        </Style.Triggers>   
+        
+    </Style>
+    
+    <!--Add Toggle Background-->
+    <Style x:Key="AddToggleBackground" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        
+        <Style.Triggers>
+            
+            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsMouseOVer}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-200}"/>
+            </DataTrigger>
+            
+        </Style.Triggers>   
+        
+    </Style>
+    
+    <Style x:Key="SideTab" TargetType="{x:Type ColumnDefinition}">
+        <Setter Property="Width" Value="0"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ActivityToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="440"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=ReminderToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="440"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="440"/>
+            </DataTrigger>
+            
+        </Style.Triggers>
+    </Style>
+    
+</ResourceDictionary>

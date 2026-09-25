@@ -4,12 +4,31 @@
     <!--Styles Present Here-->
     
     <!--
-    Left Side Toggle Buttons
-    Right Side toggle Buttons
+    ////// RIGHT SIDE TAB //////
+    Right Side Toggle Buttons
+    Expandable Column
     Activity Toggle Background
+    Reminder Toggle Background
+    Add Toggle Background
+
+    ////// LEFT SIDE TAB //////
+    Left Side Toggle Buttons
+    Expandable Toggle Title
+    Snap Toggle Background
+    MiniView Toggle Background
+    Snap Title Background
+    MiniView Title Background
+    Snap Title
+    MiniView Title
+    Expandable Snap Card Row
+    Expandable Snap Card Element Grid
+    Expandable MiniView Card Row
+    Expandable MiniView Card Element Grid
     -->
 
-    <!--Right Side toggle Buttons-->
+    <!--////// RIGHT SIDE TAB //////-->
+    
+    <!--Right Side Toggle Buttons-->
     <Style x:Key="RightSideToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="ExtraLight"/>
@@ -27,6 +46,27 @@
         
     </Style>
     
+    <!--Expandable Column-->
+    <Style x:Key="SideTabExpandable" TargetType="{x:Type ColumnDefinition}">
+        <Setter Property="Width" Value="0"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ActivityToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="440"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=ReminderToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="440"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="440"/>
+            </DataTrigger>
+            
+        </Style.Triggers>
+    </Style>
+    
+    
     <!--Activity Toggle Background-->
     <Style x:Key="ActivityToggleBackground" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
@@ -34,7 +74,7 @@
         
         <Style.Triggers>
             
-            <DataTrigger Binding="{Binding ElementName=ActivityToggle, Path=IsMouseOVer}" Value="True">
+            <DataTrigger Binding="{Binding ElementName=ActivityToggle, Path=IsMouseOver}" Value="True">
                 <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
             </DataTrigger>
             
@@ -53,7 +93,7 @@
         
         <Style.Triggers>
             
-            <DataTrigger Binding="{Binding ElementName=ReminderToggle, Path=IsMouseOVer}" Value="True">
+            <DataTrigger Binding="{Binding ElementName=ReminderToggle, Path=IsMouseOver}" Value="True">
                 <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
             </DataTrigger>
             
@@ -72,7 +112,7 @@
         
         <Style.Triggers>
             
-            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsMouseOVer}" Value="True">
+            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsMouseOver}" Value="True">
                 <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
             </DataTrigger>
             
@@ -84,23 +124,174 @@
         
     </Style>
     
-    <Style x:Key="SideTab" TargetType="{x:Type ColumnDefinition}">
-        <Setter Property="Width" Value="0"/>
+    
+    <!--////// LEFT SIDE TAB //////-->
+    
+    <!--Left Side Toggle Buttons-->
+    <Style x:Key="LeftSideToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource RightSideToggleButton}">
+    </Style>
+    
+    <!--Expandable Toggle Title-->
+    <Style x:Key="ToggleTitleExpandable" TargetType="{x:Type ColumnDefinition}">
+        <Setter Property="Width" Value="45"/>
         
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=ActivityToggle, Path=IsChecked}" Value="True">
-                <Setter Property="Width" Value="440"/>
+            
+            <DataTrigger Binding="{Binding ElementName=SnapToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="290"/>
             </DataTrigger>
             
-            <DataTrigger Binding="{Binding ElementName=ReminderToggle, Path=IsChecked}" Value="True">
-                <Setter Property="Width" Value="440"/>
+            <DataTrigger Binding="{Binding ElementName=MiniViewToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Width" Value="290"/>
             </DataTrigger>
             
-            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsChecked}" Value="True">
-                <Setter Property="Width" Value="440"/>
-            </DataTrigger>
             
         </Style.Triggers>
     </Style>
+    
+    
+    <!--Snap Toggle Background-->
+    <Style x:Key="SnapToggleBackground" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+        <Setter Property="CornerRadius" Value="5,0,0,5"/>
+        
+        <Style.Triggers>
+            
+            <DataTrigger Binding="{Binding ElementName=SnapToggle, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=SnapToggleTitle, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=SnapToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="{StaticResource ChartreuseBrush}"/>
+                <Setter Property="CornerRadius" Value="5,0,0,0"/>
+            </DataTrigger>
+            
+        </Style.Triggers>   
+        
+    </Style>
+    
+    <!--MiniView Toggle Background-->
+    <Style x:Key="MiniViewToggleBackground" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+        <Setter Property="CornerRadius" Value="5,0,0,5"/>
+        
+        <Style.Triggers>
+            
+            <DataTrigger Binding="{Binding ElementName=MiniViewToggle, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=MiniViewToggleTitle, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=MiniViewToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="{StaticResource ChartreuseBrush}"/>
+                <Setter Property="CornerRadius" Value="5,0,0,0"/>
+            </DataTrigger>
+            
+        </Style.Triggers>
+        
+    </Style>
+    
+    
+    <!--Snap Title Background-->
+    <Style x:Key="SnapTitleBackground" TargetType="{x:Type Border}" BasedOn="{StaticResource SnapToggleBackground}">
+        <Setter Property="CornerRadius" Value="0,5,5,0"/>
+    </Style>
+    
+    <!--MiniView Title Background-->
+    <Style x:Key="MiniViewTitleBackground" TargetType="{x:Type Border}" BasedOn="{StaticResource MiniViewToggleBackground}">
+        <Setter Property="CornerRadius" Value="0,5,5,0"/>
+
+    </Style>
+    
+    
+    <!--Snap Title-->
+    <Style x:Key="SnapTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>    
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SnapToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--MiniView Title-->
+    <Style x:Key="MinViewTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>    
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=MiniViewToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    
+    <!--Expandable Snap Card Row-->
+    <Style x:Key="SnapCardRowDropDown" TargetType="{x:Type RowDefinition}">
+        <Setter Property="Height" Value="45"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SnapToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Height" Value="240"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Expandable Snap Card Element Grid-->
+    <Style x:Key="SnapCardDropDown" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Collapsed"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SnapToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    
+    <!--Expandable MiniView Card Row-->
+    <Style x:Key="MiniViewCardRowDropDown" TargetType="{x:Type RowDefinition}">
+        <Setter Property="Height" Value="45"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=MiniViewToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Height" Value="295"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Expandable MiniView Card Element Grid-->
+    <Style x:Key="MiniViewCardDropDown" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Collapsed"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=MiniViewToggle, Path=IsChecked}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
     
 </ResourceDictionary>

@@ -20,13 +20,17 @@
     
     <Viewbox Stretch="Uniform">
         
-        <Grid Width="1600" Height="900"  
-              Background="{DynamicResource Brush-Gray-800}">
+        <Grid 
+            Width="1600"
+            Height="900"  
+            Background="{DynamicResource Brush-Gray-800}">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/> <!--TitleBar-->
                 <RowDefinition Height="840"/> <!--Main Body-->
                 <RowDefinition Height="20"/> <!--Spacer-->
             </Grid.RowDefinitions>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/> <!--Spacer-->
                 <ColumnDefinition Width="1560"/> <!--Main Body-->
@@ -35,13 +39,144 @@
             
             <mainWindow:TitleBarView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" /><!--TitleBar-->
             
-            <Grid Grid.Row="1" Grid.Column="1">
+            <Grid 
+                Grid.Row="1"
+                Grid.Column="1">
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/> <!--Donut Graph-->
-                    <ColumnDefinition Style="{StaticResource SideTab}"/> <!--Side Tab-->
+                    <ColumnDefinition Style="{StaticResource SideTabExpandable}"/> <!--Side Tab-->
                 </Grid.ColumnDefinitions>
                 
                 <Border Grid.Column="0" Background="{StaticResource VividRoyalBrush}"/> <!--Donut Background-->
+                
+                <Grid 
+                    Grid.Column="0">
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/> <!--Spacer-->
+                        <RowDefinition Style="{StaticResource SnapCardRowDropDown}"/> <!--Toggle + Card-->
+                        <RowDefinition Height="10"/> <!--Spacer-->
+                        <RowDefinition Style="{StaticResource MiniViewCardRowDropDown}"/> <!--Toggles + Card-->
+                        <RowDefinition Height="*"/> <!--Spacer-->
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/> <!--Spacer-->
+                        <ColumnDefinition Style="{StaticResource ToggleTitleExpandable}"/> <!--Toggles + Card-->
+                        <ColumnDefinition Width="*"/> <!--Spacer-->
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid 
+                        Grid.Column="1" 
+                        Grid.Row="1">
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"/> <!--Toggle-->
+                            <RowDefinition Height="2"/> <!--Spacer-->
+                            <RowDefinition Height="193"/> <!--Card-->
+                        </Grid.RowDefinitions>
+                    
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/> <!--Toggles-->
+                            <ColumnDefinition Width="2"/> <!--Spacer-->
+                            <ColumnDefinition Width="240"/> <!--Card-->
+                        </Grid.ColumnDefinitions>
+                        
+                        <Border Grid.Column="0"  Grid.Row="0" Style="{StaticResource SnapToggleBackground}"/> <!--Snap Toggle Background-->
+
+                        <ToggleButton 
+                            x:Name="SnapToggle"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Content="≍"
+                            Style="{StaticResource LeftSideToggleButton}"/> <!--Snap Toggle-->
+                        
+                        
+                        <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource SnapTitleBackground}"/> <!--Snap Title Background-->
+                    
+                        <TextBlock 
+                            Grid.Column="2"
+                            Grid.Row="0" 
+                            Text="SNAP TO END"
+                            Style="{StaticResource SnapTitle}"/>  <!--Snap Title-->
+                    
+                        <ToggleButton 
+                            x:Name="SnapToggleTitle"
+                            Grid.Column="2"
+                            Grid.Row="0" 
+                            Style="{StaticResource LeftSideToggleButton}"/> <!--Snap Toggle Title-->
+                        
+                        <Grid 
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="3" 
+                            Grid.Row="2"
+                            Style="{StaticResource SnapCardDropDown}">
+                            
+                            <Border 
+                                CornerRadius="0,0,5,5"
+                                Background="{StaticResource Brush-Gray-700}"/> <!--Snap Card Background-->
+                            
+                        </Grid> <!--Card Content-->
+                        
+                    </Grid> <!--Snap-->
+                    
+                    <Grid 
+                        Grid.Column="1" 
+                        Grid.Row="3">
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"/> <!--Toggle-->
+                            <RowDefinition Height="2"/> <!--Spacer-->
+                            <RowDefinition Height="240"/> <!--Card-->
+                        </Grid.RowDefinitions>
+                    
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/> <!--Toggles-->
+                            <ColumnDefinition Width="2"/> <!--Spacer-->
+                            <ColumnDefinition Width="240"/> <!--Card-->
+                        </Grid.ColumnDefinitions>
+                        
+                        <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource MiniViewToggleBackground}"/> <!--MiniView Toggle Background-->
+
+                        <ToggleButton 
+                            x:Name="MiniViewToggle"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Content="◎"
+                            Tag="MiniViewToggle"
+                            Style="{StaticResource LeftSideToggleButton}"/> <!--MiniView Toggle-->
+                    
+                    
+                        <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource MiniViewTitleBackground}"/> <!--MiniView Title Background-->
+                    
+                        <TextBlock 
+                            Grid.Column="2"
+                            Grid.Row="0"
+                            Text="MINI VIEW"
+                            Style="{StaticResource MinViewTitle}"/> <!--MiniView Title-->
+                    
+                        <ToggleButton 
+                            x:Name="MiniViewToggleTitle"
+                            Grid.Column="2"
+                            Grid.Row="0"
+                            Style="{StaticResource LeftSideToggleButton}"/> <!--MiniView Toggle Title-->
+                        
+                        <Grid
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="3" 
+                            Grid.Row="2"
+                            Style="{StaticResource MiniViewCardDropDown}">
+                            
+                            <Border 
+                                CornerRadius="0,0,5,5"
+                                Background="{StaticResource Brush-Gray-700}"/> <!--MiniView Card Background-->
+                            
+                        </Grid> <!--Card Content-->
+                        
+                    </Grid> <!--MiniView-->
+                    
+                </Grid> <!--Left Side Toggles-->
                 
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
@@ -95,18 +230,19 @@
                     </Grid> <!--Toggles-->
                     
                 </Grid> <!--Right Side Toggles-->
-                <Grid Grid.Column="0">
+                
+                <!--<Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="66*"/> <!--Activities-->
-                        <RowDefinition Height="1*"/> <!--Spacer-->
-                        <RowDefinition Height="33*"/> <!--Reminders-->
+                        <RowDefinition Height="66*"/> ~1~Activities@1@
+                        <RowDefinition Height="1*"/> ~1~Spacer@1@
+                        <RowDefinition Height="33*"/> ~1~Reminders@1@
                     </Grid.RowDefinitions>
                     
-                    <!--<activities:ActivitiesTab Grid.Row="0"/>~1~Activities@1@
-                    <reminders:RemindersTab Grid.Row="2"/>~1~Reminders@1@-->
-                    <!--<donutGraph:DonutGraphTabWindow Grid.Row="1" Grid.Column="1" />~1~Donut Graph@1@-->
+                    ~1~<activities:ActivitiesTab Grid.Row="0"/>~2~Activities@2@
+                    <reminders:RemindersTab Grid.Row="2"/>~2~Reminders@2@@1@
+                    ~1~<donutGraph:DonutGraphTabWindow Grid.Row="1" Grid.Column="1" />~2~Donut Graph@2@@1@
                     
-                </Grid> <!--Side Panel Activities/Reminders/Consistency-->
+                </Grid> ~1~Side Panel Activities/Reminders/Consistency@1@-->
                 
             </Grid>
             

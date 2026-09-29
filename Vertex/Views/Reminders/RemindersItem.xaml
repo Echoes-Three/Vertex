@@ -5,74 +5,108 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:remindersViewModel="clr-namespace:Vertex.ViewModels.Reminders"
              mc:Ignorable="d"
-             d:DesignHeight="100" d:DesignWidth="476"
+             d:DesignHeight="200" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:ReminderItemViewModel}">
     <Border
-        Margin="0,0,0,20">
-        <Grid>
+        Margin="0,0,0,10">
+        
+        <Grid x:Name="MainGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="80*"/> <!--Content-->
-                <RowDefinition Height="10*"/> <!--Set For / Buttons-->
+                <RowDefinition Height="40"/> <!--Top Bar-->
+                <RowDefinition Height="5*"/> <!--Spacer-->
+                <RowDefinition Height="155"/> <!--Content-->
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="96*"/> <!--Content-->
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-            </Grid.ColumnDefinitions>
             
-            <!--<Border 
-                Grid.Column="0" 
-                Grid.Row="0"
-                Grid.ColumnSpan="3"
-                Grid.RowSpan="3"
-                CornerRadius="0,5,5,0"
-                Background="{StaticResource DarkBackgroundBrush}"/> ~1~Reminder Background@1@-->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/> <!--Spacer-->
+                    <ColumnDefinition Width="180"/> <!--Reminder Date Info-->
+                    <ColumnDefinition Width="145"/> <!--Spacer-->
+                    <ColumnDefinition Width="65"/> <!--Action Buttons-->
+                    <ColumnDefinition Width="5"/> <!--Spacer-->
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/> <!--Spacer-->
+                    <RowDefinition Height="30"/> <!--Elements-->
+                    <RowDefinition Height="5"/> <!--Spacer-->
+                </Grid.RowDefinitions>
+                
+                <Border 
+                    Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="3"
+                    BorderBrush="{StaticResource Brush-Gray-600}"
+                    BorderThickness="2"
+                    Background="Transparent"
+                    CornerRadius="5"/> <!--VE Border-->
+                
+                <Border 
+                    Grid.Column="1" 
+                    Grid.Row="1">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5"/>
+                            <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
+                            
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=MainGrid, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource ElectricRoseBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border> <!--Reminder Date Background-->
+                
+                <TextBlock
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Text="{Binding SetFor, FallbackValue=In 5 Day(s)}"
+                    Style="{StaticResource ReminderDateInfo}"/> <!--Reminder Date-->
+                
+                <Grid 
+                    Grid.Row="1" Grid.Column="3"
+                    Style="{StaticResource ShowReminderActionButtons}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/> <!--Delete Button-->
+                        <ColumnDefinition Width="5"/> <!--Spacer-->
+                        <ColumnDefinition Width="30"/> <!--Edit Button-->
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Grid.Column="0" 
+                            CornerRadius="3"
+                            Style="{StaticResource DeleteReminderButtonHover}"/> <!--Delete Activity Button Hover-->
+                    
+                    <Border Grid.Column="2" 
+                            CornerRadius="3"
+                            Style="{StaticResource EditReminderButtonHover}"/> <!--Edit Activity Button Hover-->
+                
+                    <Button 
+                        x:Name="DeleteReminderButton"
+                        Grid.Column="0"
+                        Content="✗"
+                        Style="{StaticResource DeleteReminderButton}"
+                        Command="{Binding OnDeleteReminder}"/><!--Delete Button-->
+                
+                    <Button 
+                        x:Name="EditReminderButton"
+                        Grid.Column="2"
+                        Style="{StaticResource EditReminderButton}"
+                        Content="→"
+                        Command="{Binding OnEditReminder}"/><!--Edit Button-->
+                </Grid> <!--Action Buttons-->
+                
+            </Grid> <!--Top Bar-->
             
-            <TextBlock 
-                Grid.Row="0"
-                Grid.Column="1" 
+            <Border 
+                Grid.Row="2"
+                BorderBrush="{StaticResource Brush-Gray-600}"
+                BorderThickness="2"
+                Background="Transparent"
+                CornerRadius="5"/> <!--VE Border-->
+            
+            <TextBox 
+                Grid.Row="2"
                 Style="{StaticResource ReminderContent}"
                 Text="{Binding EntryData.Content, FallbackValue=No Content}"/> <!--Reminder Content-->
             
-            <Grid Grid.Row="1" Grid.Column="1" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="44*"/> <!--Reminder Date Info-->
-                    <ColumnDefinition Width="34*"/> <!--Spacer-->
-                    <ColumnDefinition Width="6*"/> <!--Delete Button-->
-                    <ColumnDefinition Width="2*"/> <!--Spacer-->
-                    <ColumnDefinition Width="6*"/> <!--Edit Button-->
-                </Grid.ColumnDefinitions>
-                
-                
-                <Border 
-                    Grid.Column="0" 
-                    Grid.Row="0"  
-                    Background="{StaticResource ChartreuseBrush}"/> <!--Set For Date Background Highlight-->
-                
-                <TextBlock
-                    Grid.Column="0"
-                    Text="{Binding SetFor, FallbackValue=In 5 Day(s)}"
-                    Style="{StaticResource ReminderSetForLabel}"/> <!--Set For Date-->
-                
-                <Button 
-                    Grid.Column="2"
-                    Style="{StaticResource DeleteReminderButton}"
-                    Command="{Binding OnDeleteReminder}">
-                    <TextBlock 
-                        Style="{StaticResource DeleteReminderIcon}"
-                        Text="✗"/>
-                </Button> <!--Delete Button-->
-                
-                <Button 
-                    Grid.Column="4"
-                    Style="{StaticResource EditReminderButton}"
-                    Command="{Binding OnEditReminder}">
-                    <TextBlock 
-                        Style="{StaticResource EditReminderIcon}"
-                        Text="⎋"/>
-                </Button> <!--Edit Button-->
-                
-            </Grid>
         </Grid>
     </Border>
 </UserControl>

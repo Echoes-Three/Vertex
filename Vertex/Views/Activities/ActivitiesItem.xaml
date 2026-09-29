@@ -5,135 +5,427 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:activities="clr-namespace:Vertex.ViewModels.Activities"
              mc:Ignorable="d"
-             d:DesignHeight="90" d:DesignWidth="476"
+             d:DesignHeight="152" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance Type=activities:ActivityItemViewModel}">
     
     <Border Margin="0,0,0,10">
         
-        <Grid x:Name="ButtonHover" Background="Transparent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="1*"/> <!--Activity Color-->
-                <ColumnDefinition Width="1*"/> <!--Spacer-->
-                <ColumnDefinition Width="68*"/> <!--Title-->
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-                <ColumnDefinition Width="8*"/> <!--Delete Button-->
-                <ColumnDefinition Width="8*"/> <!--Edit Button-->
-                <ColumnDefinition Width="2*"/> <!--Spacer-->
-            </Grid.ColumnDefinitions>
+        <Grid x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/> <!--Title Bar-->
+                <RowDefinition Height="2"/> <!--Spacer-->
+                <RowDefinition Style="{StaticResource ContentExpand}"/> <!--Contents-->
+            </Grid.RowDefinitions>
             
-            <Button 
-                Grid.Column="5"
-                Width="30"
-                Height="30"
-                Style="{StaticResource DeleteActivityButton}"
-                Command="{Binding OnDeleteActivity}">
-                <TextBlock 
-                    Style="{StaticResource DeleteActivityIcon}"
-                    Text="✗"/>
-            </Button> <!--Delete Button-->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/> <!--Activity Color-->
+                    <ColumnDefinition Width="2"/> <!--Spacer-->
+                    <ColumnDefinition Width="288"/> <!--Title-->
+                    <ColumnDefinition Width="70"/> <!--Buttons-->
+                </Grid.ColumnDefinitions>
+                
+                <Border 
+                    Grid.Column="0"
+                    CornerRadius="3,0,0,3"
+                    Background="{StaticResource Brush-Gray-700}"/> <!--Color Background-->  
+                
+                <Border 
+                    Grid.Column="2" Grid.ColumnSpan="2"
+                    CornerRadius="0,3,3,0"
+                    Background="{StaticResource Brush-Gray-700}"/> <!--Title Background-->
+                
+                <TextBlock
+                    Grid.Column="0"
+                    Text="⌦"
+                    FontFamily="{StaticResource JetBrainsMono}"
+                    FontSize="30"
+                    FontWeight="Bold"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Foreground="{Binding ActivityColor, FallbackValue=Chartreuse}"></TextBlock> <!--Activity Color-->
+                
+                <TextBlock
+                    Grid.Column="2"
+                    Style="{StaticResource ActivityTitle}"
+                    Text="{Binding EntryData.Title, FallbackValue=Title}"/> <!--Title-->
+                
+                <ToggleButton 
+                    x:Name="ShowContent"
+                    Grid.Column="2"
+                    Style="{StaticResource ShowContentToggle}"/> <!--Show Content Toggle-->
+                
+                <Grid Grid.Column="3" Style="{StaticResource ShowActivityActionButtons}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/> <!--Delete Button-->
+                        <ColumnDefinition Width="5"/> <!--Spacer-->
+                        <ColumnDefinition Width="30"/> <!--Edit Button-->
+                        <ColumnDefinition Width="5"/> <!--Spacer-->
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/> <!--Spacer-->
+                        <RowDefinition Height="30"/> <!--Buttons-->
+                        <RowDefinition Height="5"/> <!--Spacer-->
+                    </Grid.RowDefinitions>
+                    
+                    <Border Grid.Column="0" Grid.Row="1" 
+                            CornerRadius="3"
+                            Style="{StaticResource DeleteActivityButtonHover}"/> <!--Delete Activity Button Hover-->
+                    
+                    <Border Grid.Column="2" Grid.Row="1" 
+                            CornerRadius="3"
+                            Style="{StaticResource EditActivityButtonHover}"/> <!--Edit Activity Button Hover-->
+                    
+                    
+                    <Button 
+                        x:Name="DeleteActivityButton"
+                        Grid.Column="0" Grid.Row="1"
+                        Style="{StaticResource DeleteActivityButton}"
+                        Content="✗"
+                        Command="{Binding OnDeleteActivity}"/> <!--Delete Button-->
         
-            <Button 
-                Grid.Column="6"
-                Width="30"
-                Height="30"
-                Style="{StaticResource EditActivityButton}"
-                Command="{Binding OnEditActivity}">
-                <TextBlock 
-                    Style="{StaticResource EditActivityIcon}"
-                    Text="⎋"/>
-            </Button> <!--Edit Button-->
-            
-            <Border 
-                Grid.Column="0"
-                Background="{StaticResource Brush-Gray-800}">
-                <Border.Style>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="Grid.ColumnSpan" Value="7"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ButtonHover}" Value="True">
-                                <Setter Property="Grid.ColumnSpan" Value="5"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-            </Border> <!--Title Background-->
+                    <Button 
+                        x:Name="EditActivityButton"
+                        Grid.Column="2" Grid.Row="1"
+                        Style="{StaticResource EditActivityButton}"
+                        Content="→"
+                        Command="{Binding OnEditActivity}"/> <!--Edit Button-->
+                    
+                </Grid> <!--Buttons-->
+                
+            </Grid> <!--Title Bar-->
             
             <Border
-                Grid.Column="1"
-                Background="{Binding ActivityColor, FallbackValue=Chartreuse}"></Border> <!--Activity Color-->
+                Grid.Row="2"
+                CornerRadius="0,0,3,3"
+                Background="{StaticResource Brush-Gray-700}"/> <!--Content Dropdown Background-->
             
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="3"
-                Style="{StaticResource ActivityTitle}"
-                Text="{Binding EntryData.Title, FallbackValue=No Title}"
-                ToolTipService.InitialShowDelay="0"
-                MouseLeave="MouseLeave">
-                <TextBlock.ToolTip>
-                    <ToolTip 
-                        x:Name="ActivityToolTip"
-                        Background="Transparent" 
-                        Placement="Bottom"
-                        BorderBrush="Transparent">
-                            
-                        <Grid 
-                            Width="200"> 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="10*"/>
-                                <RowDefinition Height="80*"/>
-                                <RowDefinition Height="10*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*"/>
-                                <ColumnDefinition Width="80*"/>
-                                <ColumnDefinition Width="10*"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <Border
-                                Grid.Column="0" Grid.ColumnSpan="3" 
-                                Grid.Row="0" Grid.RowSpan="3"
-                                Background="{StaticResource Brush-Gray-700}"/> <!--Body Background-->
-                            
-                            <Border
-                                Height="20"
-                                Width="20"
-                                Grid.Column="0"
-                                Grid.Row="0">
-                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
-                            </Border><!--Visual Element-->
-                            <Border
-                                Height="20"
-                                Width="20"
-                                Grid.Column="2"
-                                Grid.Row="0" >
-                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
-                            </Border><!--Visual Element-->
-                            <Border
-                                Height="20"
-                                Width="20"
-                                Grid.Column="0"
-                                Grid.Row="2">
-                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
-                            </Border><!--Visual Element-->
-                            <Border
-                                Height="20"
-                                Width="20"
-                                Grid.Column="2"
-                                Grid.Row="2">
-                                <TextBlock Style="{StaticResource ActivityHoverToolTip}"/>
-                            </Border><!--Visual Element-->
-                            
-                            <TextBlock 
-                                Grid.Column="1"
-                                Grid.Row="1"
-                                Style="{StaticResource ActivityContent}"
-                                Text="{Binding EntryData.Content, FallbackValue=No Content}"/> <!--Content-->
-                        </Grid>
-                            
-                    </ToolTip>
-                </TextBlock.ToolTip>
-            </TextBlock> <!--Title-->
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/> <!--Days of Week-->
+                    <RowDefinition Height="85"/> <!--Content-->
+                    <RowDefinition Height="5"/> <!--Spacer-->
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/> <!--Spacer-->
+                    <ColumnDefinition Width="390"/> <!--Content-->
+                    <ColumnDefinition Width="5"/> <!--Spacer-->
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/> <!--Spacer-->
+                        <ColumnDefinition Width="54"/> <!--Sun-->
+                        <ColumnDefinition Width="2"/> <!--Spacer-->
+                        <ColumnDefinition Width="54"/> <!--Mon-->
+                        <ColumnDefinition Width="2"/> <!--Spacer-->
+                        <ColumnDefinition Width="54"/> <!--Tue-->
+                        <ColumnDefinition Width="2"/> <!--Spacer-->
+                        <ColumnDefinition Width="54"/> <!--Wed-->
+                        <ColumnDefinition Width="2"/> <!--Spacer-->
+                        <ColumnDefinition Width="54"/> <!--Thu-->
+                        <ColumnDefinition Width="2"/> <!--Spacer-->
+                        <ColumnDefinition Width="54"/> <!--Fri-->
+                        <ColumnDefinition Width="2"/> <!--Spacer-->
+                        <ColumnDefinition Width="54"/> <!--Sat-->
+                        <ColumnDefinition Width="5"/> <!--Spacer-->
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border 
+                        Grid.Column="1"
+                        Tag="{Binding Sun}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        
+                    </Border> <!--Sun Background-->
+                    
+                    <Border 
+                        Grid.Column="3"
+                        Tag="{Binding Mon}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Mon Background-->
+                    
+                    <Border 
+                        Grid.Column="5"
+                        Tag="{Binding Tue}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Tue Background-->
+                    
+                    <Border 
+                        Grid.Column="7"
+                        Tag="{Binding Wed}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Wed Background-->
+                    
+                    <Border 
+                        Grid.Column="9"
+                        Tag="{Binding Thu}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Thu Background-->
+                    
+                    <Border 
+                        Grid.Column="11"
+                        Tag="{Binding Fri}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Fri Background-->
+                    
+                    <Border 
+                        Grid.Column="13"
+                        Tag="{Binding Sat}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Sat Background-->
+                    
+                    
+                    <TextBlock
+                        Grid.Column="1"
+                        Text="SUN"
+                        Tag="{Binding Sun}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock> <!--SUN-->
+                    
+                    <TextBlock
+                        Text="MON"
+                        Grid.Column="3"
+                        Tag="{Binding Mon}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock> <!--MON-->
+                    
+                    <TextBlock
+                        Text="TUE"
+                        Grid.Column="5"
+                        Tag="{Binding Tue}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock> <!--TUE-->
+                    
+                    <TextBlock
+                        Text="WED"
+                        Grid.Column="7"
+                        Tag="{Binding Wed}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock> <!--WED-->
+                    
+                    <TextBlock
+                        Text="THU"
+                        Grid.Column="9"
+                        Tag="{Binding Thu}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock> <!--THU-->
+                    
+                    <TextBlock
+                        Text="FRI"
+                        Grid.Column="11"
+                        Tag="{Binding Fri}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock> <!--FRI-->
+                    
+                    <TextBlock
+                        Text="SAT"
+                        Grid.Column="13"
+                        Tag="{Binding Sat}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock> <!--SAT-->
+                    
+                </Grid> <!--Weekdays / fix binding to data-->
+                
+                <Border
+                    Grid.Column="1" Grid.Row="1"
+                    Background="{StaticResource Brush-Gray-800}"/> <!--Content Background-->
+                
+                <TextBox
+                    Grid.Column="1" Grid.Row="1"
+                    Style="{StaticResource ActivityContent}"
+                    Text="{Binding EntryData.Content, FallbackValue=No Content}"/> <!--Content-->
+                
+            </Grid> <!--Content / Weekdays-->
             
         </Grid>
     </Border>

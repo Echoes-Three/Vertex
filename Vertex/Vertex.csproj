@@ -161,6 +161,10 @@
       <Resource Include="Assets\Typeface\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-Thin.ttf" />
       <None Remove="Assets\Typeface\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-ThinItalic.ttf" />
       <Resource Include="Assets\Typeface\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-ThinItalic.ttf" />
+      <None Remove="Assets\Typeface\DM_Serif_Display\DMSerifDisplay-Regular.ttf" />
+      <Resource Include="Assets\Typeface\DM_Serif_Display\DMSerifDisplay-Regular.ttf" />
+      <None Remove="Assets\Typeface\DM_Serif_Display\DMSerifDisplay-Italic.ttf" />
+      <Resource Include="Assets\Typeface\DM_Serif_Display\DMSerifDisplay-Italic.ttf" />
       <None Remove="Assets\Icons\ClosestToCurrentDate.svg" />
       <None Remove="Assets\Icons\CreatedFirst.svg" />
       <None Remove="Assets\Icons\Add.svg" />

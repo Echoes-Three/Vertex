@@ -7,7 +7,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Vertex;component/Themes/MainTheme.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/ScrollBar.xaml"/>
                 <!--MainWindow-->
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/TitleBarStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/MainwindowStyle.xaml"/>

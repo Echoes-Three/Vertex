@@ -9,9 +9,5 @@ public partial class ActivitiesItem : UserControl
     {
         InitializeComponent();
     }
-
-    private new void MouseLeave(object sender, MouseEventArgs e)
-    {
-        ActivityToolTip.IsOpen = false;
-    }
+    
 }

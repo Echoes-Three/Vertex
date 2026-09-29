@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <FontFamily x:Key="JetBrainsMono">/Vertex;component/Assets/Typeface/JetBrainsMono-2.304/fonts/ttf/#JetBrains Mono</FontFamily>
+    <FontFamily x:Key="DmSerif">/Vertex;component/Assets/Typeface/DM_Serif_Display/#DM Serif Display</FontFamily>
     
     <Color x:Key="Color-Gray-800" >#1B1D21</Color>
     <Color x:Key="Color-Gray-700">#26282E</Color>

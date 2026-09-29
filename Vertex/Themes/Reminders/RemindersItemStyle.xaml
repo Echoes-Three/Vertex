@@ -4,77 +4,137 @@
     <!--Styles Present Here-->
     
     <!--
+    Removes TextBox Style
     Reminder Content
-    Reminder Set For Label
-    Delete Reminder Button
+    Reminder Date Info
+    Edit Reminder Button Hover
     Edit Reminder Button
-    Delete Reminder Icon
-    Edit Reminder Icon-->
+    Delete Reminder Button Hover
+    Delete Reminder Button
+    Show Reminder Action Buttons-->
+    
+    
+    <!--Removes TextBox Style-->
+    <Style x:Key="NoStyleTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border 
+                        Name="Border"
+                        CornerRadius="0" 
+                        Padding="0"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0" >
+                        <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="Transparent"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="Transparent"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <!--Reminder Content-->
-    <Style x:Key="ReminderContent" TargetType="{x:Type TextBlock}">
+    <Style x:Key="ReminderContent" TargetType="{x:Type TextBox}" BasedOn="{StaticResource NoStyleTextBox}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-300}"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,15"/>
-        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-200}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="Margin" Value="5"/>
     </Style>
     
-    <!--Reminder Set For Label-->
-    <Style x:Key="ReminderSetForLabel" TargetType="{x:Type TextBlock}" >
+    <!--Reminder Date Info-->
+    <Style x:Key="ReminderDateInfo" TargetType="{x:Type TextBlock}" >
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-800}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
         <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="TextAlignment" Value="Center"></Setter>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
         
+    </Style>
+    
+    <!--Edit Reminder Button Hover-->
+    <Style x:Key="EditReminderButtonHover" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=EditReminderButton, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-500}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Edit Reminder Button-->
+    <Style x:Key="EditReminderButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-400}"/>
+        <Setter Property="Width" Value="30"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=EditReminderButton, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Delete Reminder Button Hover-->
+    <Style x:Key="DeleteReminderButtonHover" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=DeleteReminderButton, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{StaticResource LipstickRedBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
     <!--Delete Reminder Button-->
     <Style x:Key="DeleteReminderButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="Width" Value="30"/>
-        
-        <!--On Hover-->
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LipstickRedBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Edit Reminder Button-->
-    <Style x:Key="EditReminderButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="Width" Value="30"/>
-        
-        <!--On Hover-->
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Delete Reminder Icon-->
-    <Style x:Key="DeleteReminderIcon" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="FontWeight" Value="Thin"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-400}"/>
+        <Setter Property="Width" Value="30"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=DeleteReminderButton, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
-    <!--Edit Reminder Icon-->
-    <Style x:Key="EditReminderIcon" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DeleteReminderIcon}">
+    <!--Show Reminder Action Buttons-->
+    <Style x:Key="ShowReminderActionButtons" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Hidden"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=MainGrid, Path=IsMouseOver}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>

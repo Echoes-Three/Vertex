@@ -43,7 +43,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-600}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"/>
     </Style>
     
     <!--Minimize Window icon-->
@@ -53,6 +53,6 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-600}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"/>
     </Style>
 </ResourceDictionary>

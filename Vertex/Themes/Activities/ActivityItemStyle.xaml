@@ -14,18 +14,18 @@
     Delete Activity Button
     RowDefinition Expand
     Show Activity Action Buttons
+    Activity Background Hover
     -->
     
     <!--Activity Title-->
     <Style x:Key="ActivityTitle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
-        <Setter Property="Margin" Value="10,5,0,0"/>
         
     </Style>
     
@@ -182,6 +182,24 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=MainGrid, Path=IsMouseOver}" Value="True">
                 <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Activity Background Hover-->
+    <Style x:Key="ActivityBackgroundHover" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=MainGrid, Path=IsMouseOver}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding ElementName=ShowContent, Path=IsChecked}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+                <Setter Property="CornerRadius" Value="5,5,0,0"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

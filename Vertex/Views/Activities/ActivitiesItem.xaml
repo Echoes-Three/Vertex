@@ -20,42 +20,39 @@
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/> <!--Activity Color-->
-                    <ColumnDefinition Width="2"/> <!--Spacer-->
-                    <ColumnDefinition Width="288"/> <!--Title-->
+                    <ColumnDefinition Width="290"/> <!--Title-->
                     <ColumnDefinition Width="70"/> <!--Buttons-->
                 </Grid.ColumnDefinitions>
                 
                 <Border 
-                    Grid.Column="0"
-                    CornerRadius="3,0,0,3"
-                    Background="{StaticResource Brush-Gray-700}"/> <!--Color Background-->  
+                    Grid.Column="0" Grid.ColumnSpan="3"
+                    CornerRadius="5"
+                    Style="{StaticResource ActivityBackgroundHover}"/> <!--Tob Bar Background-->
                 
-                <Border 
-                    Grid.Column="2" Grid.ColumnSpan="2"
-                    CornerRadius="0,3,3,0"
-                    Background="{StaticResource Brush-Gray-700}"/> <!--Title Background-->
-                
-                <TextBlock
+                <Border
                     Grid.Column="0"
-                    Text="⌦"
-                    FontFamily="{StaticResource JetBrainsMono}"
-                    FontSize="30"
-                    FontWeight="Bold"
+                    Width="22"
+                    Height="22"
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Foreground="{Binding ActivityColor, FallbackValue=Chartreuse}"></TextBlock> <!--Activity Color-->
+                    CornerRadius="4"
+                    Background="{Binding ActivityColor, FallbackValue=Chartreuse}"
+                    RenderTransformOrigin="0.5,0.5">
+                    <Border.RenderTransform>
+                        <RotateTransform Angle="45"></RotateTransform>
+                    </Border.RenderTransform>
+                </Border> <!--Activity Color-->
                 
                 <TextBlock
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Style="{StaticResource ActivityTitle}"
                     Text="{Binding EntryData.Title, FallbackValue=Title}"/> <!--Title-->
                 
                 <ToggleButton 
                     x:Name="ShowContent"
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Style="{StaticResource ShowContentToggle}"/> <!--Show Content Toggle-->
                 
-                <Grid Grid.Column="3" Style="{StaticResource ShowActivityActionButtons}">
+                <Grid Grid.Column="2" Style="{StaticResource ShowActivityActionButtons}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30"/> <!--Delete Button-->
                         <ColumnDefinition Width="5"/> <!--Spacer-->
@@ -97,7 +94,7 @@
             
             <Border
                 Grid.Row="2"
-                CornerRadius="0,0,3,3"
+                CornerRadius="0,0,5,5"
                 Background="{StaticResource Brush-Gray-700}"/> <!--Content Dropdown Background-->
             
             <Grid Grid.Row="2">

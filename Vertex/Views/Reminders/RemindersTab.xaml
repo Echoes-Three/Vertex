@@ -10,7 +10,7 @@
              d:DesignHeight="840" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:RemindersViewModel}">
     
-    <Grid Background="{StaticResource Brush-Gray-800}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/> <!--Spacer-->
             <RowDefinition Height="25"/> <!--Title-->
@@ -21,13 +21,17 @@
         <TextBlock
             Grid.Row="1"
             Text="REMINDERS"
-            Style="{StaticResource ReminderTabTitle}"/> <!--Tab Tittle-->
+            FontFamily="{StaticResource DmSerif}"
+            FontSize="35"
+            FontWeight="Regular"
+            Foreground="{StaticResource Brush-Gray-200}"
+            VerticalAlignment="Center" HorizontalAlignment="Left"/> <!--Tab Tittle-->
         
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
-                <RowDefinition Height="360"/> <!--VE-->
-                <RowDefinition Height="84"/> <!--VE-->
-                <RowDefinition Height="316"/> <!--VE-->
+                <RowDefinition Height="360"/>
+                <RowDefinition Height="84"/>
+                <RowDefinition Height="316"/>
             </Grid.RowDefinitions>
            
             <TextBlock 
@@ -41,7 +45,31 @@
                 Margin="0,0,20,30"
                 HorizontalAlignment="Center"
                 Opacity="0.01"
-                Foreground="{StaticResource Brush-Gray-100}"/> <!--Upper Text Element-->
+                Foreground="{StaticResource Brush-Gray-100}"/>
+            
+            <TextBlock 
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Text="‾&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;‾"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="40"
+                FontWeight="Bold"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Opacity="0.04"
+                Foreground="{StaticResource Brush-Gray-100}"/> 
+            
+            <TextBlock 
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Text="‾&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;‾"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="40"
+                FontWeight="Bold"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Opacity="0.04"
+                Foreground="{StaticResource Brush-Gray-100}"/> 
             
             <TextBlock 
                 Grid.Row="1"
@@ -51,7 +79,7 @@
                 FontWeight="Bold"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
                 Opacity="0.01"
-                Foreground="{StaticResource Brush-Gray-100}"/> <!--Middle Text Element-->
+                Foreground="{StaticResource Brush-Gray-100}"/>
             
             
             <TextBlock 
@@ -61,8 +89,20 @@
                 FontSize="10"
                 FontWeight="bold"
                 VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                Margin="50,0,0,0"
                 Opacity="0.05"
-                Foreground="{StaticResource Brush-Gray-100}"/> <!--Bottom Left Visual Element-->
+                Foreground="{StaticResource Brush-Gray-100}"/>
+            
+            <TextBlock 
+                Grid.Row="2"
+                Text="+"
+                FontFamily="{StaticResource JetBrainsMono}"
+                FontSize="80"
+                FontWeight="Thin"
+                VerticalAlignment="Top" HorizontalAlignment="Left"
+                Margin="0,240,0,0"
+                Opacity="0.05"
+                Foreground="{StaticResource Brush-Gray-100}"/>
             
             <TextBlock 
                Grid.Row="2"
@@ -72,7 +112,7 @@
                FontWeight="bold"
                VerticalAlignment="Bottom" HorizontalAlignment="Right"
                Opacity="0.05"
-               Foreground="{StaticResource Brush-Gray-100}"/> <!--Bottom Right Visual Element-->
+               Foreground="{StaticResource Brush-Gray-100}"/>
            
         </Grid> <!--VE-->
         

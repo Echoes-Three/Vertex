@@ -12,20 +12,16 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/> <!--Spacer-->
-            <RowDefinition Height="25"/> <!--Title-->
+            <RowDefinition Height="10"/> <!--Spacer-->
+            <RowDefinition Height="40"/> <!--Title-->
             <RowDefinition Height="40"/> <!--Spacer-->
-            <RowDefinition Height="760"/> <!--Reminders-->
+            <RowDefinition Height="750"/> <!--Reminders-->
         </Grid.RowDefinitions>
     
         <TextBlock
             Grid.Row="1"
             Text="REMINDERS"
-            FontFamily="{StaticResource DmSerif}"
-            FontSize="35"
-            FontWeight="Regular"
-            Foreground="{StaticResource Brush-Gray-200}"
-            VerticalAlignment="Center" HorizontalAlignment="Left"/> <!--Tab Tittle-->
+            Style="{StaticResource RemindersTabTitle}"/> <!--Tab Tittle-->
         
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>

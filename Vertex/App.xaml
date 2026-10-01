@@ -11,13 +11,17 @@
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/TitleBarStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/MainWindow/MainwindowStyle.xaml"/>
                 <!--Reminders-->
-                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersItemStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/RemindersTabStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Reminders/ReminderItemStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/AddReminderStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/Calendar.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Reminders/DatePicker.xaml"/>
                 <!--Activities-->
+                <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivitiesTabStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivityItemStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Activities/AddActivityStyle.xaml"/>
+                <!--Form-->
+                <ResourceDictionary Source="/Vertex;component/Themes/Form/FormsTabStyle.xaml"/>
                 <!--Donut Graph-->
                 <ResourceDictionary Source="/Vertex;component/Themes/DonutGraph/DonutTabStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>

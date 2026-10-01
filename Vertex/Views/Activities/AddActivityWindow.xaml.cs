@@ -26,9 +26,7 @@ public partial class AddActivityWindow : UserControl
         Window.GetWindow(this)?.Close();
         Vm?.CleanFields();
     }
-
-    private void OnDrag(object sender, MouseButtonEventArgs e) => Window.GetWindow(this)?.DragMove();
-
+    
     private void OnHourScroll(object sender, MouseWheelEventArgs e)
     {
         if (e.Delta > 0) Vm?.DurationHourUp();

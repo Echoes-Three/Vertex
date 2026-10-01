@@ -1,0 +1,98 @@
+<UserControl x:Class="Vertex.Views.Form.FormsTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mainWindow="clr-namespace:Vertex.ViewModels"
+             xmlns:reminders="clr-namespace:Vertex.Views.Reminders"
+             xmlns:activities="clr-namespace:Vertex.Views.Activities"
+             mc:Ignorable="d"
+             d:DesignHeight="840" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance Type=mainWindow:MainWindowViewModel}">
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/> <!--Spacer-->
+            <RowDefinition Height="40"/> <!--Title-->
+            <RowDefinition Height="40"/> <!--Spacer-->
+            <RowDefinition Height="750"/> <!--Reminders-->
+        </Grid.RowDefinitions>
+    
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/> <!--VE-->
+                <ColumnDefinition Style="{StaticResource GrowingColumn}"/> 
+                <ColumnDefinition Width="250"/> <!--Title-->
+                <ColumnDefinition Style="{StaticResource GrowingColumn}"/>
+                <ColumnDefinition Width="20"/> <!--VE-->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Border 
+                Grid.Column="1" Grid.ColumnSpan="5">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=SwapForm, Path=IsMouseOver}" Value="True">
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border> <!--Toggle Background-->
+            
+            <TextBlock
+                Grid.Column="3"
+                Style="{StaticResource FormsTabTitle}"/> <!--Tab Tittle-->
+            
+            <TextBlock
+                Grid.Column="1"
+                Text="❰"
+                Style="{StaticResource FormsTabVEs}"/> <!--VE Left-->
+            
+            <TextBlock
+                Grid.Column="5"
+                Text="❱"
+                Style="{StaticResource FormsTabVEs}"/><!--VE Right-->
+            
+            <ToggleButton
+                x:Name="SwapForm"
+                Grid.Column="1" Grid.ColumnSpan="5"
+                IsChecked="{Binding SwapForm}"
+                Style="{StaticResource SwapFormToggle}"/> <!--Swap Form Toggle-->
+        </Grid>
+        
+        <activities:AddActivityWindow Grid.Row="3">
+            <activities:AddActivityWindow.Style>
+                <Style TargetType="activities:AddActivityWindow">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=SwapForm}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </activities:AddActivityWindow.Style>
+        </activities:AddActivityWindow><!--Activities-->
+                    
+        <reminders:AddReminderWindow Grid.Row="3">
+            <reminders:AddReminderWindow.Style>
+                <Style TargetType="reminders:AddReminderWindow">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=SwapForm}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </reminders:AddReminderWindow.Style>
+        </reminders:AddReminderWindow><!--Reminders-->
+
+        
+    </Grid>
+</UserControl>

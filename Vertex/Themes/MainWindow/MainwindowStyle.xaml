@@ -8,7 +8,7 @@
     Right Side Toggle Buttons
     Activity Toggle Background
     Reminder Toggle Background
-    Add Toggle Background
+    Form Toggle Background
     
     -->
 
@@ -70,18 +70,18 @@
         
     </Style>
     
-    <!--Add Toggle Background-->
-    <Style x:Key="AddToggleBackground" TargetType="{x:Type Border}">
+    <!--Form Toggle Background-->
+    <Style x:Key="FormToggleBackground" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
         <Setter Property="CornerRadius" Value="5"/>
         
         <Style.Triggers>
             
-            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsMouseOver}" Value="True">
+            <DataTrigger Binding="{Binding ElementName=FormToggle, Path=IsMouseOver}" Value="True">
                 <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
             </DataTrigger>
             
-            <DataTrigger Binding="{Binding ElementName=AddToggle, Path=IsChecked}" Value="True">
+            <DataTrigger Binding="{Binding ElementName=FormToggle, Path=IsChecked}" Value="True">
                 <Setter Property="Background" Value="{StaticResource Brush-Gray-200}"/>
             </DataTrigger>
             

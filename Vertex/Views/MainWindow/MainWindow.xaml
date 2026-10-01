@@ -8,6 +8,7 @@
         xmlns:activities="clr-namespace:Vertex.Views.Activities"
         xmlns:donutGraph="clr-namespace:Vertex.Views.DonutGraph"
         xmlns:mainWindow="clr-namespace:Vertex.Views.MainWindow"
+        xmlns:form="clr-namespace:Vertex.Views.Form"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -114,7 +115,7 @@
                             <RowDefinition Height="10"/> <!--Spacer-->
                             <RowDefinition Height="45"/> <!--Reminder Tab Toggle-->
                             <RowDefinition Height="10"/> <!--Spacer-->
-                            <RowDefinition Height="45"/> <!--Add Tab Toggle-->
+                            <RowDefinition Height="45"/> <!--Form Tab Toggle-->
                         </Grid.RowDefinitions>
                         
                         
@@ -138,14 +139,14 @@
                             Style="{StaticResource RightSideToggleButton}"/> <!--Reminder Tab Toggle-->
                             
                         
-                        <Border Grid.Row="4" Style="{StaticResource AddToggleBackground}"/>  <!--Add Toggle Background-->
+                        <Border Grid.Row="4" Style="{StaticResource FormToggleBackground}"/>  <!--Form Toggle Background-->
 
                         <ToggleButton 
-                            x:Name="AddToggle"
+                            x:Name="FormToggle"
                             Grid.Row="4"
                             Content="+"
-                            IsChecked="{Binding AddIsVisible}"
-                            Style="{StaticResource RightSideToggleButton}"/> <!--Add Tab Toggle-->
+                            IsChecked="{Binding FormIsVisible}"
+                            Style="{StaticResource RightSideToggleButton}"/> <!--Form Tab Toggle-->
                         
                     </Grid> <!--Toggles-->
                     
@@ -165,7 +166,11 @@
                     
                     <reminders:RemindersTab
                         Grid.Column="1"
-                        Visibility="{Binding IsChecked, ElementName=ReminderToggle, Converter={StaticResource BoolToVis}}"/><!--Activities-->
+                        Visibility="{Binding IsChecked, ElementName=ReminderToggle, Converter={StaticResource BoolToVis}}"/><!--Reminders-->
+                        
+                    <form:FormsTab
+                        Grid.Column="1"
+                        Visibility="{Binding IsChecked, ElementName=FormToggle, Converter={StaticResource BoolToVis}}"/><!--Form-->
                     
                 </Grid>
                 

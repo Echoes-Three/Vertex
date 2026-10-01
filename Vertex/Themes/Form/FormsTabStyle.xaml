@@ -1,0 +1,87 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!--Styles Present Here-->
+    
+    <!--
+    Forms Tab Title
+    Forms VEs
+    Growing ColumnDefinition
+    Swap Form Toggle
+    -->
+    
+     <!--Forms Tab Title-->
+    <Style x:Key="FormsTabTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource DmSerif}"/>
+        <Setter Property="FontSize" Value="35"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Text" Value="ADD ACTIVITY"/>
+                        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SwapForm, Path=IsChecked}" Value="True">
+                <Setter Property="Text" Value="ADD REMINDER"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+     <!--Forms VEs-->
+    <Style x:Key="FormsTabVEs" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FormsTabTitle}">
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"/>
+                        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SwapForm, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-400}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+     
+    <!--Growing ColumnDefinition-->
+    <Style x:Key="GrowingColumn" TargetType="{x:Type ColumnDefinition}">
+        <Setter Property="Width" Value="0"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SwapForm, Path=IsMouseOver}" Value="True">
+                <Setter Property="Width" Value="25"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Swap Form Toggle-->
+    <Style x:Key="SwapFormToggle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+        
+        <!--Removes Default Style-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="Background" Background="{TemplateBinding Background}">
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            TextElement.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="Background"
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                        To="{StaticResource Color-Gray-500}"
+                                        Duration="0:0:0.1"
+                                        AutoReverse="True"
+                                        FillBehavior="Stop"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+    
+</ResourceDictionary>

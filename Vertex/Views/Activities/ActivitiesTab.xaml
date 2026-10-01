@@ -13,20 +13,16 @@
     <Grid>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/> <!--Spacer-->
-            <RowDefinition Height="25"/> <!--Title-->
+            <RowDefinition Height="10"/> <!--Spacer-->
+            <RowDefinition Height="40"/> <!--Title-->
             <RowDefinition Height="40"/> <!--Spacer-->
-            <RowDefinition Height="760"/> <!--Activities-->
+            <RowDefinition Height="750"/> <!--Activities-->
         </Grid.RowDefinitions>
         
         <TextBlock
             Grid.Row="1"
             Text="ACTIVITIES"
-            FontFamily="{StaticResource DmSerif}"
-            FontSize="35"
-            FontWeight="Regular"
-            Foreground="{StaticResource Brush-Gray-200}"
-            VerticalAlignment="Center" HorizontalAlignment="Left"/> <!--Tab Tittle-->
+            Style="{StaticResource ActivitiesTabTitle}"/> <!--Tab Tittle-->
         
        <Grid Grid.Row="3">
             <Grid.RowDefinitions>

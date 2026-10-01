@@ -23,16 +23,51 @@
     Tooltip Body
     Tooltip Header-->
     
+    <!--Activity Title Input-->
+    <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-200}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="AcceptsReturn" Value="False"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource Brush-Gray-200}"/>
+    </Style>
+    
+    <!--Activity Title Input Placeholder-->
+    <Style x:Key="ActivityTitleInputPlaceholder" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-300}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Text, ElementName=TitleInput}" Value="">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    
     <!--Activity Content Input-->
     <Style x:Key="ActivityContentInput" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-200}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="AcceptsReturn" Value="True"/>
@@ -41,13 +76,13 @@
     
     <!--Activity Content Input Placeholder-->
     <Style x:Key="ActivityContentInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-300}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Margin" Value="5"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="Visibility" Value="Hidden"/>
         
         <Style.Triggers>
@@ -58,40 +93,7 @@
         
     </Style>
     
-    <!--Activity Title Input-->
-    <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Margin" Value="5,0,0,0"/>
-        <Setter Property="AcceptsReturn" Value="False"/>
-        <Setter Property="CaretBrush" Value="{DynamicResource Brush-Gray-100}"/>
-    </Style>
     
-    <!--Activity Title Input Placeholder-->
-    <Style x:Key="ActivityTitleInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="18"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="5,0,0,0"/>
-        <Setter Property="Visibility" Value="Hidden"/>
-      
-        <Setter Property="MinHeight" Value="0"></Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Text, ElementName=TitleInput}" Value="">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-        </Style.Triggers>
-        
-    </Style>
     
     <!--Duration Picker-->
     <Style x:Key="DurationPicker" TargetType="{x:Type TextBlock}">

@@ -35,18 +35,14 @@ public class MainWindowViewModel : ViewModelBase
         switch (tab)
         {
             case "Activity":
-                ReminderIsVisible = false;
-                AddIsVisible = false;
+                (ReminderIsVisible, FormIsVisible) = (false, false);
                 break;
             case "Reminder":
-                ActivityIsVisible = false;
-                AddIsVisible = false;
+                (ActivityIsVisible, FormIsVisible) = (false, false);
                 break;
             case "Add":
-                ActivityIsVisible = false;
-                ReminderIsVisible = false;
+                (ActivityIsVisible, ReminderIsVisible) = (false, false);
                 break;
-            
         }
     }
     
@@ -61,7 +57,7 @@ public class MainWindowViewModel : ViewModelBase
                     field = value;
                     SwapToggle("Activity");
                     break;
-                case true when !value && ReminderIsVisible || AddIsVisible:
+                case true when !value && ReminderIsVisible || FormIsVisible:
                     field = value;
                     break;
             }
@@ -80,7 +76,7 @@ public class MainWindowViewModel : ViewModelBase
                     field = value;
                     SwapToggle("Reminder");
                     break;
-                case true when !value && ActivityIsVisible || AddIsVisible:
+                case true when !value && ActivityIsVisible || FormIsVisible:
                     field = value;
                     break;
             }
@@ -89,7 +85,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
     
-    public bool AddIsVisible
+    public bool FormIsVisible
     {
         get;
         set
@@ -106,6 +102,16 @@ public class MainWindowViewModel : ViewModelBase
             }
             OnPropertyChanged();
             
+        }
+    }
+
+    public bool SwapForm
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
         }
     }
 }

@@ -3,18 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:activitiesViewModel="clr-namespace:Vertex.ViewModels.Activities"
+             xmlns:activities="clr-namespace:Vertex.ViewModels.Activities"
              mc:Ignorable="d"
              d:DesignHeight="750" d:DesignWidth="400"
-             d:DataContext="{d:DesignInstance Type=activitiesViewModel:ActivityFormViewModel}">
+             d:DataContext="{d:DesignInstance Type=activities:ActivityFormViewModel}">
     
-
     <Border Background="{StaticResource Brush-Gray-800}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="260" /> <!--Input Fields-->
-                <RowDefinition Height="258" /> <!--Spacer-->
-                <RowDefinition Height="100" /> <!--Duration Picker + Color Picker-->
+                <RowDefinition Height="228" /> <!--Spacer-->
+                <RowDefinition Height="130" /> <!--Duration Picker + Color Picker-->
                 <RowDefinition Height="20" /> <!--Spacer-->
                 <RowDefinition Height="52" /> <!--Days of Week-->
                 <RowDefinition Height="20" /> <!--Spacer-->
@@ -37,12 +36,20 @@
                     Style="{StaticResource ActivityContentInputPlaceholder}"
                     Text="Content..." /> <!--Content Placeholder-->
                 
+                <Border 
+                    Grid.Row="0"
+                    Background="{Binding ContentLimitIndicator, FallbackValue=chartreuse}"
+                    Style="{StaticResource ActivityContentLimitIndicator}"/> <!--Content Character Limit Indicator-->
+                <Border 
+                    Grid.Row="2"
+                    Background="{Binding TitleLimitIndicator, FallbackValue=chartreuse}"
+                    Style="{StaticResource ActivityTitleLimitIndicator}"/> <!--Title Character Limit Indicator-->
+                
                 <TextBox
                     Grid.Row="0"
                     x:Name="TitleInput"
                     Style="{StaticResource ActivityTitleInput}"
                     Text="{Binding ActivityTitle, UpdateSourceTrigger=PropertyChanged}" /> <!--Title Input-->
-                
                 <TextBox
                     Grid.Row="2"
                     x:Name="ContentInput"
@@ -53,212 +60,416 @@
                     Grid.Row="0"
                     Width="5"
                     HorizontalAlignment="Left"
-                    Background="{StaticResource Brush-Gray-700}"/>
-                
+                    Background="{StaticResource Brush-Gray-700}"/> <!--Title Guide Bar-->
                 <Border
                     Grid.Row="2"
                     Width="5"
                     HorizontalAlignment="Left"
-                    Background="{StaticResource Brush-Gray-700}"/>
-            </Grid>
-            
-            <Border 
-                Grid.Column="1"
-                Grid.Row="3"
-                Background="{Binding ContentLimitIndicator, FallbackValue=chartreuse}"
-                Style="{StaticResource ActivityContentLimitIndicator}"/> <!--Content Character Limit Indicator-->
-            <Border 
-                Grid.Column="1"
-                Grid.Row="1"
-                Background="{Binding TitleLimitIndicator, FallbackValue=chartreuse}"
-                Style="{StaticResource ActivityTitleLimitIndicator}"/> <!--Title Character Limit Indicator-->
-            
-            
-            <Grid Grid.Row="5" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="45*" /> <!---->
-                    <RowDefinition Height="5*" /> <!--Spacer-->
-                    <RowDefinition Height="25*" /> <!--Duration / Color-->
-                    <RowDefinition Height="5*" /> <!--Spacer-->
-                    <RowDefinition Height="5*" /> <!--Weekdays-->
-                    <RowDefinition Height="5*" /> <!--Spacer-->
-                    <RowDefinition Height="10*" /> <!--Buttons-->
-                </Grid.RowDefinitions>
+                    Background="{StaticResource Brush-Gray-700}"/> <!--Content Guide Bar-->
                 
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="28*" /> <!--HH-->
-                        <ColumnDefinition Width="5*" /><!--:-->
-                        <ColumnDefinition Width="28*" /><!--MM-->
-                        <ColumnDefinition Width="21*" /><!--Spacer-->
-                        <ColumnDefinition Width="18*" /><!--Color Picker-->
-                    </Grid.ColumnDefinitions>
+            </Grid> <!--Input Fields-->
+            
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260"/> <!--Duration Picker-->
+                    <ColumnDefinition Width="10"/> <!--Spacer-->
+                    <ColumnDefinition Width="130"/> <!--Color Picker-->
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="2">
+                    
+                    <Border
+                        Width="130"
+                        Height="130"
+                        Background="{StaticResource Brush-Gray-700}"/> <!--Color PIcker Background-->
+                    
+                    <Border
+                        Width="15"
+                        Height="8"
+                        Background="{StaticResource Brush-Gray-500}"
+                        IsHitTestVisible="False"
+                        VerticalAlignment="Top" HorizontalAlignment="Left"/> <!--VE TL-->
+                    <Border
+                        Width="15"
+                        Height="8"
+                        Background="{StaticResource Brush-Gray-500}"
+                        IsHitTestVisible="False"
+                        VerticalAlignment="Top" HorizontalAlignment="Right"/> <!--VE TR-->
+                    <Border
+                        Width="15"
+                        Height="8"
+                        Background="{StaticResource Brush-Gray-500}"
+                        IsHitTestVisible="False"
+                        VerticalAlignment="Bottom" HorizontalAlignment="Left"/> <!--VE BL-->
+                    <Border
+                        Width="15"
+                        Height="8"
+                        Background="{StaticResource Brush-Gray-500}"
+                        IsHitTestVisible="False"
+                        VerticalAlignment="Bottom" HorizontalAlignment="Right"/> <!--VE BR-->
+                    
+                    <Border
+                        Background="{Binding SelectedColor, FallbackValue=Red}"
+                        Style="{StaticResource Color}"/> <!--Color-->
+                    
+                    <Border
+                        Style="{StaticResource ColorCover}"/> <!--Color Cover-->
+                    
+                    <Button
+                        x:Name="ColorPicker"
+                        Command="{Binding OnChangeColor}"
+                        Style="{StaticResource BasicButton}"/> <!--Color Picker Interactable-->
+                    
+                    <Border 
+                        Style="{StaticResource ReticleTL}"/> <!--Reticle TL-->
+                    <Border 
+                        Style="{StaticResource ReticleTR}"/> <!--Reticle TR-->
+                    <Border 
+                        Style="{StaticResource ReticleBL}"/> <!--Reticle BL-->
+                    <Border 
+                        Style="{StaticResource ReticleBR}"/> <!--Reticle Br-->
+                    
+                    <Border
+                        Width="10"
+                        Height="10"
+                        IsHitTestVisible="False"
+                        Background="{StaticResource Brush-Gray-600}"/> <!--VE-->
+                    
+                </Grid> <!--Color Picker-->
+                
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="19" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="80*" />
+                        <RowDefinition Height="20" /> <!--Up Button-->
+                        <RowDefinition Height="90" /> <!--Digits-->
+                        <RowDefinition Height="20" /> <!--Down Buttons-->
                     </Grid.RowDefinitions>
-
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Text="Duration Picker"
-                        Style="{StaticResource Header}">
-                    </TextBlock> <!--Duration Picker Header-->
-
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="4"
-                        Text="Color"
-                        Style="{StaticResource Header}">
-                    </TextBlock> <!--Color Picker Header-->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" /><!--Spacer-->
+                        <ColumnDefinition Width="100" /> <!--HH-->
+                        <ColumnDefinition Width="20" /><!--:-->
+                        <ColumnDefinition Width="100" /><!--MM-->
+                        <ColumnDefinition Width="20" /><!--Spacer-->
+                    </Grid.ColumnDefinitions>
 
                     <Border
-                        Grid.Row="2"
-                        x:Name="DurationPickerBackground"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        CornerRadius="3"
-                        Background="{StaticResource Brush-Gray-400}" /> <!--Duration Picker Background-->
-                    
-                    <Border
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        x:Name="HourScroll"
-                        Background="Transparent"
-                        Cursor="ScrollNS"
-                        PreviewMouseWheel="OnHourScroll" /><!--HH Scroll-->
-                    <Border
-                        Grid.Row="2"
-                        Grid.Column="2"
-                        x:Name="MinuteScroll"
-                        Background="Transparent"
-                        Cursor="ScrollNS"
-                        PreviewMouseWheel="OnMinuteScroll" /><!--MM Scroll-->
+                        Grid.Row="1"
+                        Grid.Column="0" Grid.ColumnSpan="5"
+                        Background="{StaticResource Brush-Gray-700}"/><!--Background-->
 
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Style="{StaticResource DurationPicker}"
-                        IsHitTestVisible="False"
-                        Text="{Binding DurationHour, FallbackValue=00}" /> <!--HH-->
-                    <TextBlock
-                        Grid.Row="2"
+                    <Border
+                        Grid.Row="0" Grid.RowSpan="3"
                         Grid.Column="1"
-                        Style="{StaticResource DurationPicker}"
-                        IsHitTestVisible="False"
-                        Text=":" /> <!--:-->
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="2"
-                        Style="{StaticResource DurationPicker}"
-                        IsHitTestVisible="False"
-                        Text="{Binding DurationMinute, FallbackValue=00}" /> <!--MM-->
-
+                        Background="{StaticResource Brush-Gray-700}"/><!--HH Background-->
                     <Border
-                        Grid.Row="2"
-                        x:Name="ColorPickerSquare"
-                        Grid.Column="4"
-                        PreviewMouseWheel="OnColorsScroll"
-                        Background="{Binding SelectedColor, FallbackValue=Transparent}"
-                        Style="{StaticResource ColorPickerBorder}" /> <!--Color Picker Visual Interactable-->
+                        Grid.Row="0" Grid.RowSpan="3"
+                        Grid.Column="3"
+                        Background="{StaticResource Brush-Gray-700}"/><!--MM Background-->
                     
-                    <Border
-                        Grid.Row="2"
-                        Grid.Column="4"
-                        BorderBrush="{StaticResource Brush-Gray-500}"
-                        BorderThickness="1"
-                        Background="Transparent"
-                        CornerRadius="3"
-                        IsHitTestVisible="False">
-                        <Grid>
-                            <Border Style="{StaticResource TopLeft}" />
-                            <Border Style="{StaticResource TopRight}" />
-                            <Border Style="{StaticResource BottomLeft}" />
-                            <Border Style="{StaticResource BottomRight}" />
-                            <Border Style="{StaticResource ColorNumberBackground}">
-                                <TextBlock
-                                    Text="{Binding ColorNumber}"
-                                    Style="{StaticResource ColorNumber}"></TextBlock>
-                            </Border>
-                        </Grid>
-                    </Border> <!--Color Picker Container-->
-
+                    <Path
+                        Grid.Row="1" Grid.Column="2" 
+                        Height="24"
+                        Data="M 0,0 L 92,0 L 46,85 L 92,170 L 0,170 L 46,85 Z"
+                        Fill="{StaticResource Brush-Gray-500}"
+                        Stretch="Uniform"/> <!--VE-->
+                    
+                    <Button
+                        Grid.Row="0" Grid.Column="1" 
+                        Command="{Binding OnPickDuration}"
+                        CommandParameter="HU">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button> <!--HH Up Button-->
+                    <Button
+                        Grid.Row="2" Grid.Column="1" 
+                        Command="{Binding OnPickDuration}"
+                        CommandParameter="HD">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button> <!--HH Down Button-->
+                    
+                    <Button
+                        Grid.Row="0" Grid.Column="3" 
+                        Command="{Binding OnPickDuration}"
+                        CommandParameter="MU">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button> <!--MM Up Button-->
+                    <Button
+                        Grid.Row="2" Grid.Column="3" 
+                        Command="{Binding OnPickDuration}"
+                        CommandParameter="MD">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button> <!--MM Down Button-->
+                    
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="1" 
+                        Text="+"
+                        Style="{StaticResource DurationPickerButtonIcon}"/> <!--Button Icon-->
+                    <TextBlock
+                        Grid.Row="2" Grid.Column="1" 
+                        Text="+"
+                        Style="{StaticResource DurationPickerButtonIcon}"/> <!--Button Icon-->
+                    
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="3" 
+                        Text="+"
+                        Style="{StaticResource DurationPickerButtonIcon}"/> <!--Button Icon-->
+                    <TextBlock
+                        Grid.Row="2" Grid.Column="3" 
+                        Text="+"
+                        Style="{StaticResource DurationPickerButtonIcon}"/> <!--Button Icon-->
+                    
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsHitTestVisible="False"
+                        Style="{StaticResource DurationPickerDigits}"
+                        Text="{Binding DurationHour, FallbackValue=00}"/> <!--HH-->
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        IsHitTestVisible="False"
+                        Style="{StaticResource DurationPickerDigits}"
+                        Text="{Binding DurationMinute, FallbackValue=00}"/> <!--MM-->
+                        
                 </Grid> <!--Duration Scroll-->
 
-                <Grid Grid.Row="4">
+                
+
+            </Grid> <!--Duration Picker + Color Picker-->
+            
+            <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" /> <!--Sun-->
-                        <ColumnDefinition Width="*" /> <!--Mon-->
-                        <ColumnDefinition Width="*" /> <!--Tue-->
-                        <ColumnDefinition Width="*" /> <!--Wed-->
-                        <ColumnDefinition Width="*" /> <!--Thu-->
-                        <ColumnDefinition Width="*" /> <!--Fri-->
-                        <ColumnDefinition Width="*" /> <!--Sat-->
+                        <ColumnDefinition Width="52" /> <!--Sun-->
+                        <ColumnDefinition Width="6" /> <!--Midsection-->
+                        <ColumnDefinition Width="52" /> <!--Mon-->
+                        <ColumnDefinition Width="6" /> <!--Midsection-->
+                        <ColumnDefinition Width="52" /> <!--Tue-->
+                        <ColumnDefinition Width="6" /> <!--Midsection-->
+                        <ColumnDefinition Width="52" /> <!--Wed-->
+                        <ColumnDefinition Width="6" /> <!--Midsection-->
+                        <ColumnDefinition Width="52" /> <!--Thu-->
+                        <ColumnDefinition Width="6" /> <!--Midsection-->
+                        <ColumnDefinition Width="52" /> <!--Fri-->
+                        <ColumnDefinition Width="6" /> <!--Midsection-->
+                        <ColumnDefinition Width="52" /> <!--Sat-->
                     </Grid.ColumnDefinitions>
 
                     <ToggleButton
+                        x:Name="Sun"
                         Grid.Column="0"
-                        Content="Sun"
+                        Content="S"
                         IsChecked="{Binding Sunday}"
                         Style="{StaticResource WeekDayToggleButton}" /> <!--Sun-->
                     <ToggleButton
-                        Grid.Column="1"
-                        Content="Mon"
+                        x:Name="Mon"
+                        Grid.Column="2"
+                        Content="M"
                         IsChecked="{Binding Monday}"
                         Style="{StaticResource WeekDayToggleButton}" /> <!--Mon-->
                     <ToggleButton
-                        Grid.Column="2"
-                        Content="Tue"
+                        x:Name="Tue"
+                        Grid.Column="4"
+                        Content="T"
                         IsChecked="{Binding Tuesday}"
                         Style="{StaticResource WeekDayToggleButton}" /> <!--Tue-->
                     <ToggleButton
-                        Grid.Column="3"
-                        Content="Wed"
+                        x:Name="Wed"
+                        Grid.Column="6"
+                        Content="W"
                         IsChecked="{Binding Wednesday}"
                         Style="{StaticResource WeekDayToggleButton}" /> <!--Wed-->
                     <ToggleButton
-                        Grid.Column="4"
-                        Content="Thu"
+                        x:Name="Thu"
+                        Grid.Column="8"
+                        Content="T"
                         IsChecked="{Binding Thursday}"
                         Style="{StaticResource WeekDayToggleButton}" /> <!--Thu-->
                     <ToggleButton
-                        Grid.Column="5"
-                        Content="Fri"
+                        x:Name="Fri"
+                        Grid.Column="10"
+                        Content="F"
                         IsChecked="{Binding Friday}"
                         Style="{StaticResource WeekDayToggleButton}" /> <!--Fri-->
                     <ToggleButton
-                        Grid.Column="6"
-                        Content="Sat"
+                        x:Name="Sat"
+                        Grid.Column="12"
+                        Content="S"
                         IsChecked="{Binding Saturday}"
                         Style="{StaticResource WeekDayToggleButton}" /> <!--Sat-->
+                    
+                    <Border 
+                        Grid.Column="1">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+                                
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=Sun, Path=IsChecked}" Value="True"/>
+                                            <Condition Binding="{Binding ElementName=Mon, Path=IsChecked}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Background" Value="{StaticResource VividRoyalBrush}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Midsection-->
+                    <Border 
+                        Grid.Column="3">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+                                
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=Mon, Path=IsChecked}" Value="True"/>
+                                            <Condition Binding="{Binding ElementName=Tue, Path=IsChecked}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Background" Value="{StaticResource VividRoyalBrush}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Midsection-->
+                    <Border 
+                        Grid.Column="5">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+                                
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=Tue, Path=IsChecked}" Value="True"/>
+                                            <Condition Binding="{Binding ElementName=Wed, Path=IsChecked}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Background" Value="{StaticResource VividRoyalBrush}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Midsection-->
+                    <Border 
+                        Grid.Column="7">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+                                
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=Wed, Path=IsChecked}" Value="True"/>
+                                            <Condition Binding="{Binding ElementName=Thu, Path=IsChecked}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Background" Value="{StaticResource VividRoyalBrush}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Midsection-->
+                    <Border 
+                        Grid.Column="9">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+                                
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=Thu, Path=IsChecked}" Value="True"/>
+                                            <Condition Binding="{Binding ElementName=Fri, Path=IsChecked}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Background" Value="{StaticResource VividRoyalBrush}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Midsection-->
+                    <Border 
+                        Grid.Column="11">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+                                
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=Fri, Path=IsChecked}" Value="True"/>
+                                            <Condition Binding="{Binding ElementName=Sat, Path=IsChecked}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Background" Value="{StaticResource VividRoyalBrush}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border> <!--Midsection-->
 
                 </Grid> <!--Weekdays-->
-
-                <Grid Grid.Row="6">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="49*" /> <!--Cancel Button-->
-                        <ColumnDefinition Width="0.5*" /> <!--Spacer-->
-                        <ColumnDefinition Width="47*" /> <!--Save Button-->
-                        <ColumnDefinition Width="0.5*" /> <!--Spacer-->
-                        <ColumnDefinition Width="2*" /> <!--Can Save Indicator-->
-                    </Grid.ColumnDefinitions>
-
-                    <Button
-                        Grid.Column="0"
-                        Content="CANCEL"
-                        Style="{StaticResource CancelActivityEntry}"
-                        Click="OnCancel" /> <!--Cancel Button-->
-
-                    <Button
-                        Grid.Column="2"
-                        Content="SAVE"
-                        Style="{StaticResource SaveActivityEntry}"
-                        Command="{Binding OnSaveAction}" /> <!--Save Button-->
-                    
-                    <Border
-                        Grid.Column="4"
+            
+            <Grid Grid.Row="6">
+                
+                <Button
+                    Content="SAVE"
+                    Style="{StaticResource SaveActivityEntry}"
+                    Command="{Binding OnSaveAction}" /> <!--Save Button-->
+                
+                <!--<Border
                         Background="{Binding WarningColor, FallbackValue={StaticResource LipstickRedBrush}}"
                         ToolTipService.InitialShowDelay="0">
                         <Border.ToolTip>
@@ -269,42 +480,40 @@
                                 
                                 <Grid Height="120" Width="270">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="25*"/> <!--Header-->
-                                        <RowDefinition Height="75*"/> <!--Body-->
+                                        <RowDefinition Height="25*"/> ~1~Header@1@
+                                        <RowDefinition Height="75*"/> ~1~Body@1@
                                     </Grid.RowDefinitions>
                                     
                                     <Border 
                                         Grid.Row="1" 
-                                        Background="{StaticResource LipstickRedBrush}"/> <!--Body Background-->
+                                        Background="{StaticResource LipstickRedBrush}"/> ~1~Body Background@1@
                                     <Border 
                                         Grid.Row="0" 
-                                        Background="{StaticResource Brush-Gray-500}"/> <!--Header Background-->
+                                        Background="{StaticResource Brush-Gray-500}"/> ~1~Header Background@1@
                                     
                                     <TextBlock 
                                         Grid.Row="0"
                                         Text="WARNING"
-                                        Style="{StaticResource ActivityTooltipHeader}"/> <!--Header-->
+                                        Style="{StaticResource ActivityTooltipHeader}"/> ~1~Header@1@
                                     
                                     <TextBlock 
                                         Grid.Row="0"
                                         Text="❮❮❮❮❮"
                                         Margin="120,0,0,0"
                                         FontSize="60"
-                                        Style="{StaticResource ReminderTooltipHeader}"/> <!--Visual Element-->
+                                        Style="{StaticResource ReminderTooltipHeader}"/> ~1~Visual Element@1@
                                     
                                     <TextBlock 
                                         Grid.Row="1"
                                         Text="{Binding WarningMessages}"
-                                        Style="{StaticResource ActivityTooltipBody}"/> <!--Warning Body-->
+                                        Style="{StaticResource ActivityTooltipBody}"/> ~1~Warning Body@1@
                                     
                                 </Grid>
                                 
                             </ToolTip>
                         </Border.ToolTip>
-                    </Border> <!--Warning Tooltip-->
-                    
+                    </Border> ~1~Warning Tooltip@1@
                     <Border 
-                        Grid.Column="4"
                         IsHitTestVisible="False"
                         Tag="{Binding ShowWarning}">
                         <Border.Style>
@@ -341,11 +550,12 @@
                                 </Style.Triggers>
                             </Style>
                         </Border.Style>
-                    </Border> <!--Warning Animation-->
-                </Grid> <!--Cancel/Save Button-->
-
-            </Grid>
-
+                    </Border> ~1~Warning Animation@1@-->
+                
+            </Grid> <!--Save Button-->
+            
         </Grid>
+        
     </Border>
+    
 </UserControl>

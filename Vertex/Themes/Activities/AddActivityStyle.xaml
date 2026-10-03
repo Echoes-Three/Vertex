@@ -94,15 +94,116 @@
     </Style>
     
     
+    <!--Reticle TL-->
+    <Style x:Key="ReticleTL" TargetType="{x:Type Border}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Brush-Gray-600}"/>
+        <Setter Property="BorderThickness" Value="0,0,10,10"/>
+        <Setter Property="Margin" Value="25,25,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ColorPicker, Path=IsMouseOver}" Value="True">
+                <Setter Property="Margin" Value="5,5,0,0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Reticle TL-->
+    <Style x:Key="ReticleTR" TargetType="{x:Type Border}" BasedOn="{StaticResource ReticleTL}">
+        <Setter Property="BorderThickness" Value="10,0,0,10"/>
+        <Setter Property="Margin" Value="0,25,25,0"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ColorPicker, Path=IsMouseOver}" Value="True">
+                <Setter Property="Margin" Value="0,5,5,0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Reticle TL-->
+    <Style x:Key="ReticleBL" TargetType="{x:Type Border}" BasedOn="{StaticResource ReticleTL}">
+        <Setter Property="BorderThickness" Value="00,10,10,0"/>
+        <Setter Property="Margin" Value="25,0,0,25"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ColorPicker, Path=IsMouseOver}" Value="True">
+                <Setter Property="Margin" Value="5,0,0,5"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Reticle TL-->
+    <Style x:Key="ReticleBR" TargetType="{x:Type Border}" BasedOn="{StaticResource ReticleTL}">
+        <Setter Property="BorderThickness" Value="10,10,0,0"/>
+        <Setter Property="Margin" Value="0,0,25,25"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ColorPicker, Path=IsMouseOver}" Value="True">
+                <Setter Property="Margin" Value="0,0,5,5"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+     <!--Color Cover-->
+    <Style x:Key="ColorCover" TargetType="{x:Type Border}">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Visibility" Value="Visible"/>
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-500}"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ColorPicker, Path=IsMouseOver}" Value="True">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+     <!--Color-->
+    <Style x:Key="Color" TargetType="{x:Type Border}">
+        <Setter Property="Width" Value="80"/>
+        <Setter Property="Height" Value="80"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ColorPicker, Path=IsMouseOver}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
     
     <!--Duration Picker-->
-    <Style x:Key="DurationPicker" TargetType="{x:Type TextBlock}">
+    <Style x:Key="DurationPickerDigits" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
+        <Setter Property="FontSize" Value="50"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-400}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="65"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
+        
+    </Style>
+    
+    <!--Duration Picker-->
+    <Style x:Key="DurationPickerButtonIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-500}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
         
     </Style>
     
@@ -110,50 +211,71 @@
     <Style x:Key="WeekDayToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-400}"/>
+        <Setter Property="Background" Value="{StaticResource Brush-Gray-700}"/>
+        
+        <!--Removes Default Style-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="Background" Background="{TemplateBinding Background}">
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            TextElement.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="Background"
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                        To="{StaticResource GoldenGlow}"
+                                        Duration="0:0:0.1"
+                                        AutoReverse="True"
+                                        FillBehavior="Stop"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         
         <Style.Triggers>
+            
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource Brush-Gray-300}"/>
-                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
+                <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-300}"/>
             </Trigger>
+            
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsChecked" Value="True"/>
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
-                    <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
+                    <Setter Property="Background" Value="{StaticResource VividRoyalBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
                 </MultiTrigger.Setters>
             </MultiTrigger>
+            
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsChecked" Value="True"/>
                     <Condition Property="IsMouseOver" Value="True"/>
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="Background" Value="{StaticResource Brush-Gray-300}"/>
-                    <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+                    <Setter Property="Background" Value="{StaticResource PersianBlueBrush}"/>
                 </MultiTrigger.Setters>
             </MultiTrigger>
+            
         </Style.Triggers>
+        
     </Style>
     
-    <!--Cancel Activity Entry Button-->
-    <Style x:Key="CancelActivityEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        
-        <Style.Triggers>
-            <!--On Hover-->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource Brush-Gray-300}"/>
-                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
-            </Trigger>
-        </Style.Triggers>
-        
-    </Style>
+  
     
     <!--Save Activity Entry Button-->
     <Style x:Key="SaveActivityEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
@@ -164,11 +286,11 @@
         <Style.Triggers>
             <!--On Hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource Brush-Gray-300}"/>
                 <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     
     <!--Title Limit Indicator-->
     <Style x:Key="ActivityTitleLimitIndicator" TargetType="{x:Type Border}">
@@ -177,7 +299,7 @@
         <Setter Property="Margin" Value="0,0,5,5"/>
         <Setter Property="Height" Value="15"/>
         <Setter Property="Width" Value="15"/>
-        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="CornerRadius" Value="2"/>
         
     </Style>
     
@@ -185,110 +307,6 @@
     <Style x:Key="ActivityContentLimitIndicator" TargetType="{x:Type Border}" BasedOn="{StaticResource ActivityTitleLimitIndicator}">
     </Style>
     
-    <!--Color Picker Border-->
-    <Style x:Key="ColorPickerBorder" TargetType="{x:Type Border}">
-        <Setter Property="Cursor" Value="ScrollNS"/>
-        <Setter Property="Margin" Value="24,22"/>
-        
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Margin" Value="0,0,0,0"/> 
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    
-    <!--Color Picker Hover Animation-->
-    <Style x:Key="ColorPickerHoverAnimation" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource Brush-Gray-300}"/>
-        <Setter Property="Height" Value="25"/>
-        <Setter Property="Width" Value="25"/>
-    </Style>
-    
-    <!--Hover Animation Corners-->
-    <Style x:Key="TopLeft" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="2,2,0,0"/>
-        <Setter Property="Background" Value="{StaticResource Brush-Gray-300}"/>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
-                <Setter Property="VerticalAlignment" Value="Top"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="Background" Value="Transparent"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="TopRight" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="0,2,2,0"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
-                <Setter Property="VerticalAlignment" Value="Top"/>
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="BottomLeft" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="2,0,0,2"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
-                <Setter Property="VerticalAlignment" Value="Bottom"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="BottomRight" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="0,0,2,2"/>
-        
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
-                <Setter Property="VerticalAlignment" Value="Bottom"/>
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="ColorNumberBackground" TargetType="{x:Type Border}" BasedOn="{StaticResource ColorPickerHoverAnimation}">
-        <Setter Property="VerticalAlignment" Value="Bottom"/>
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
-        <Setter Property="CornerRadius" Value="3,0,0,0"></Setter>
-        <Setter Property="Visibility" Value="Hidden"/>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ColorPickerSquare}" Value="True">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    
-    <Style x:Key="ColorNumber" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-    </Style>
-    
-    <!--Duration / Color Header-->
-    <Style x:Key="Header" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-    </Style>
     
     <!--Tooltip Body-->
     <Style x:Key="ActivityTooltipBody" TargetType="{x:Type TextBlock}">

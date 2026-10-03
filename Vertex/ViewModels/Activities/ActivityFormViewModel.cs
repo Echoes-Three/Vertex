@@ -25,12 +25,16 @@ public class ActivityFormViewModel : ViewModelBase
     public void SetCloseAction(Action close) => _closeWindow = close;
     
     public RelayCommand OnSaveAction { get; }
-    
+    public RelayCommand OnPickDuration { get; }
+    public RelayCommand OnChangeColor { get; }
+
     public ActivityFormViewModel(ActivitiesHandler activitiesHandler)
     {
         _activitiesData = activitiesHandler;
         
         OnSaveAction = new RelayCommand(_ => SaveAction(), _ => CanSaveAction());
+        OnPickDuration = new RelayCommand(param => PickDurationAction(param));
+        OnChangeColor = new RelayCommand(_ => ChangeColor());
         
         SetColor();
         ContentLimitIndicator = Colors.GetBrush("#ea163b");
@@ -46,7 +50,6 @@ public class ActivityFormViewModel : ViewModelBase
         if (activityEntry == null) return;
     
         _colorIndex = activityEntry.Color;
-        ColorNumber = $"{activityEntry.Color + 1}";
         SetColor();
     
         ActivityId = activityEntry.Id;
@@ -205,7 +208,6 @@ public class ActivityFormViewModel : ViewModelBase
         ActivityContent = "";
         
         _colorIndex = 0;
-        ColorNumber = "1";
         
         (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) =
             (true, true, true, true, true, true, true);
@@ -216,30 +218,15 @@ public class ActivityFormViewModel : ViewModelBase
     }
     
     /*Color Picking on AddActivityWindow*/
-    public void ColorIndexUp()
+    public void ChangeColor()
     {
         _colorIndex = _colorIndex == _palletLastIndex ? 0 : _colorIndex + 1;
-        ColorNumber = $"{_colorIndex + 1}";
         SetColor();
     }
-    public void ColorIndexDown()
-    { 
-        _colorIndex = _colorIndex == 0 ? _palletLastIndex : _colorIndex - 1;
-        ColorNumber = $"{_colorIndex + 1}";
-        SetColor();
-    }
+   
     private void SetColor() =>
         SelectedColor = Colors.Palette[_colorIndex];
     
-    public string ColorNumber
-    {
-        get;
-        set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = "0";
     public Brush SelectedColor
     {
         get;
@@ -268,25 +255,27 @@ public class ActivityFormViewModel : ViewModelBase
         }
     }
     
-    /*Duration scroll behavior on AddActivityWindow*/
-    public void DurationHourUp()
+    /*Duration behavior on AddActivityWindow*/
+    private void PickDurationAction(object identifier)
     {
-        _hourCount = _hourCount == 12 ? 0 : _hourCount + 1;
+        var id = identifier.ToString();
+        
+        if (id!.StartsWith('H'))
+        {
+            if (id.EndsWith('U'))
+                _hourCount = _hourCount == 12 ? 0 : _hourCount + 1;
+            else
+                _hourCount = _hourCount == 0 ? 12 : _hourCount - 1;
+        }
+        else if (id.StartsWith('M'))
+        {
+            if (id.EndsWith('U'))
+                _minuteCount = _minuteCount == 59 ? 0 : _minuteCount + 1;
+            else
+                _minuteCount = _minuteCount == 0 ? 59 : _minuteCount - 1; 
+        }
+        
         DurationHour = $"{_hourCount:D2}";
-    }
-    public void DurationHourDown()
-    {
-        _hourCount = _hourCount == 0 ? 12 : _hourCount - 1;
-        DurationHour = $"{_hourCount:D2}";
-    }
-    public void DurationMinuteUp()
-    {
-        _minuteCount = _minuteCount == 59 ? 0 : _minuteCount + 1;
-        DurationMinute = $"{_minuteCount:D2}";
-    }
-    public void DurationMinuteDown()
-    { 
-        _minuteCount = _minuteCount == 0 ? 59 : _minuteCount - 1; 
         DurationMinute = $"{_minuteCount:D2}";
     }
     

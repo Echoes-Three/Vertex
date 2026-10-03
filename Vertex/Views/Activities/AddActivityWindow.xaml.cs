@@ -20,29 +20,4 @@ public partial class AddActivityWindow : UserControl
         InitializeComponent();
         
     }
-
-    private void OnCancel(object sender, RoutedEventArgs e)
-    {
-        Window.GetWindow(this)?.Close();
-        Vm?.CleanFields();
-    }
-    
-    private void OnHourScroll(object sender, MouseWheelEventArgs e)
-    {
-        if (e.Delta > 0) Vm?.DurationHourUp();
-        else Vm?.DurationHourDown();
-    }
-
-    private void OnMinuteScroll(object sender, MouseWheelEventArgs e)
-    {
-        if (e.Delta > 0) Vm?.DurationMinuteUp();
-        else Vm?.DurationMinuteDown();
-    }
-
-    private void OnColorsScroll(object sender, MouseWheelEventArgs e)
-    {
-        if (e.Delta > 0) Vm?.ColorIndexUp();
-        else Vm?.ColorIndexDown();
-    }
-    
 }

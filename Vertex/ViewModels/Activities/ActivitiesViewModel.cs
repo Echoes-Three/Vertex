@@ -15,7 +15,7 @@ public class ActivitiesViewModel : ViewModelBase
 {
     private ActivitiesHandler ActivitiesData { get; set; }
     
-    private readonly ActivityFormViewModel _form;
+    public ActivityFormViewModel Form;
 
     public ObservableCollection<ActivityItemViewModel> TodayActivities
     {
@@ -45,7 +45,7 @@ public class ActivitiesViewModel : ViewModelBase
     {
         ActivitiesData = activitiesHandler;
         
-        _form = new ActivityFormViewModel(activitiesHandler);
+        Form = new ActivityFormViewModel(activitiesHandler);
 
         LoadCollection();
 
@@ -84,16 +84,11 @@ public class ActivitiesViewModel : ViewModelBase
         
         WeakReferenceMessenger.Default.Register<EditActivityMessage>(this, (r, msg) =>
         {
-            _form.CleanFields();
-            _form.LoadForEdit(msg.Value);
-            OpenFormWindow();
+            Form.CleanFields();
+            Form.LoadForEdit(msg.Value);
         });
         
-        OnAddActivityView = new RelayCommand(_ =>
-        {
-            _form.CleanFields();
-            OpenFormWindow();
-        });
+        OnAddActivityView = new RelayCommand(_ => { Form.CleanFields(); });
 
         TodayIsEmpty = !TodayActivities?.Any() ?? true;
         RemainingIsEmpty = !RemainingActivities?.Any() ?? true;
@@ -115,32 +110,6 @@ public class ActivitiesViewModel : ViewModelBase
         
         TodayIsEmpty = !TodayActivities?.Any() ?? true;
         RemainingIsEmpty = !RemainingActivities?.Any() ?? true;
-    }
-    private void OpenFormWindow()
-    {
-        
-        var screenHeight = SystemParameters.WorkArea.Height;
-        var height = screenHeight * 0.6;
-        var width = height * 0.7272;
-        
-        var window = new Window
-        {
-            Title = "ActivityWindowView",
-            DataContext = _form,
-            Owner = Application.Current.MainWindow,
-            WindowStyle = WindowStyle.None,
-            ResizeMode = ResizeMode.NoResize,
-            AllowsTransparency = true,
-            Background = Brushes.Transparent,
-            WindowStartupLocation = WindowStartupLocation.CenterScreen,
-            Width = width,
-            Height = height,
-            Content = new AddActivityWindow(),
-            Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Assets/Icon/VertexIcon.ico"))
-        };
-        
-        _form.SetCloseAction(() => window.Close());
-        window.ShowDialog();
     }
     
     private void DeleteActivity(string activityId)

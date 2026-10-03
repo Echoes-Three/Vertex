@@ -153,11 +153,11 @@
                             IsHitTestVisible="False"
                             Text="{Binding CurrentMeridiem, FallbackValue=AM}"/>
                         
-                        <TextBlock 
+                        <!--<TextBlock 
                             Grid.Row="0" 
                             Grid.Column="0"
                             Text="Hour Picker"
-                            Style="{StaticResource Header}"></TextBlock> <!--Hour Picker Header-->
+                            Style="{StaticResource Header}"></TextBlock> ~1~Hour Picker Header@1@-->
                         
                         
                     </Grid> <!--Hour Picker-->

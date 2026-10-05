@@ -30,6 +30,7 @@ public partial class App : Application
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<ActivitiesViewModel>();
+        services.AddSingleton<ActivityFormViewModel>();
         services.AddSingleton<RemindersViewModel>();
         services.AddSingleton<DonutGraphViewModel>();
 

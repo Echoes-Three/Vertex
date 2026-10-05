@@ -236,7 +236,7 @@
                                         <TextBlock 
                                             Grid.Row="1"
                                             Text="{Binding WarningMessages}"
-                                            Style="{StaticResource ActivityTooltipBody}"/> <!--Warning Body-->
+                                            Style="{StaticResource WarningBody}"/> <!--Warning Body-->
                                         
                                     </Grid>
                                     

@@ -4,24 +4,26 @@
     <!--Styles Present Here-->
     
     <!--
-    Title Limit Counter
-    Content Limit Counter
     Activity Title Input
     Activity Title Input Placeholder
     Activity Content Input
     Activity Content Input Placeholder
+    Reticle TL
+    Reticle TR
+    Reticle BL
+    Reticle BR
+    Color Cover
+    Color
+    Duration Picker
+    Duration Picker Icons
     Weekday Toggle Button
     Duration Picker
-    Cancel Activity Entry Button
-    Save Activity Entry Button
-    Color Picker Border
-    Color Picker Hover Animation
-    Title Limit Indicator
-    Content Limit Indicator
-    Hover Animation Corners
-    Duration / Color Header
-    Tooltip Body
-    Tooltip Header-->
+    Title / Content Limit Indicator
+    Save Button Hover Animation Color
+    Save Button Text Element On Hover
+    Warning Hover Area
+    Warning Body
+    -->
     
     <!--Activity Title Input-->
     <Style x:Key="ActivityTitleInput" TargetType="{x:Type TextBox}">
@@ -113,7 +115,7 @@
         </Style.Triggers>
     </Style>
     
-    <!--Reticle TL-->
+    <!--Reticle TR-->
     <Style x:Key="ReticleTR" TargetType="{x:Type Border}" BasedOn="{StaticResource ReticleTL}">
         <Setter Property="BorderThickness" Value="10,0,0,10"/>
         <Setter Property="Margin" Value="0,25,25,0"/>
@@ -126,7 +128,7 @@
         </Style.Triggers>
     </Style>
     
-    <!--Reticle TL-->
+    <!--Reticle BL-->
     <Style x:Key="ReticleBL" TargetType="{x:Type Border}" BasedOn="{StaticResource ReticleTL}">
         <Setter Property="BorderThickness" Value="00,10,10,0"/>
         <Setter Property="Margin" Value="25,0,0,25"/>
@@ -139,7 +141,7 @@
         </Style.Triggers>
     </Style>
     
-    <!--Reticle TL-->
+    <!--Reticle BR-->
     <Style x:Key="ReticleBR" TargetType="{x:Type Border}" BasedOn="{StaticResource ReticleTL}">
         <Setter Property="BorderThickness" Value="10,10,0,0"/>
         <Setter Property="Margin" Value="0,0,25,25"/>
@@ -194,7 +196,7 @@
         
     </Style>
     
-    <!--Duration Picker-->
+    <!--Duration Picker Icons-->
     <Style x:Key="DurationPickerButtonIcon" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Thin"/>
@@ -219,7 +221,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border x:Name="Background" Background="{TemplateBinding Background}">
+                    <Border x:Name="Background" Background="{TemplateBinding Background}" CornerRadius="5">
                         <ContentPresenter
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -232,7 +234,7 @@
                                     <ColorAnimation
                                         Storyboard.TargetName="Background"
                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                        To="{StaticResource GoldenGlow}"
+                                        To="{StaticResource PersianBlue}"
                                         Duration="0:0:0.1"
                                         AutoReverse="True"
                                         FillBehavior="Stop"/>
@@ -274,59 +276,97 @@
         </Style.Triggers>
         
     </Style>
-    
-  
-    
-    <!--Save Activity Entry Button-->
-    <Style x:Key="SaveActivityEntry" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-        <Setter Property="Background" Value="{StaticResource Brush-Gray-400}"/>
+    <!--Title / Content Limit Indicator-->
+    <Style x:Key="ActivityLimitIndicator" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
         
         <Style.Triggers>
-            <!--On Hover-->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+            <Trigger Property="Tag" Value="Content">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
             </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <!--Save Button Hover Animation Color-->
+    <Style x:Key="SaveButtonHoverAnimationColor" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource LipstickRedBrush}"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=HoverAnimationHolder, Path=Tag}" Value="True">
+                <Setter Property="Background" Value="{StaticResource ChartreuseBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Save Button Text Element On Hover-->
+    <Style x:Key="SaveButtonTextOnHover" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ActivityTitle}">
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
+        
+        <Style.Triggers>
+            
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=HoverAnimationHolder, Path=Tag}" Value="True"/>
+                    <Condition Binding="{Binding ElementName=HoverAnimationHolder, Path=IsMouseOver}" Value="True"></Condition>
+                </MultiDataTrigger.Conditions>
+                
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Foreground" Value="{StaticResource Brush-Gray-700}"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=HoverAnimationHolder, Path=Tag}" Value="False"/>
+                    <Condition Binding="{Binding ElementName=HoverAnimationHolder, Path=IsMouseOver}" Value="True"></Condition>
+                </MultiDataTrigger.Conditions>
+                
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            
         </Style.Triggers>
     </Style>
     
     
-    <!--Title Limit Indicator-->
-    <Style x:Key="ActivityTitleLimitIndicator" TargetType="{x:Type Border}">
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="VerticalAlignment" Value="Bottom"/>
-        <Setter Property="Margin" Value="0,0,5,5"/>
-        <Setter Property="Height" Value="15"/>
-        <Setter Property="Width" Value="15"/>
-        <Setter Property="CornerRadius" Value="2"/>
+    <!--Warning Hover Area-->
+    <Style x:Key="WarningHover" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Hidden"/>
         
+        <Style.Triggers>
+            
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=HoverAnimationHolder, Path=Tag}" Value="False"/>
+                    <Condition Binding="{Binding ElementName=HoverAnimationHolder, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Visibility" Value="Visible"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            
+        </Style.Triggers>
     </Style>
     
-    <!--Content Limit Indicator-->
-    <Style x:Key="ActivityContentLimitIndicator" TargetType="{x:Type Border}" BasedOn="{StaticResource ActivityTitleLimitIndicator}">
-    </Style>
-    
-    
-    <!--Tooltip Body-->
-    <Style x:Key="ActivityTooltipBody" TargetType="{x:Type TextBlock}">
+    <!--Warning Body-->
+    <Style x:Key="WarningBody" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Margin" Value="5"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="LineHeight" Value="20"/>
-    </Style>
-    
-    <!--Tooltip Header-->
-    <Style x:Key="ActivityTooltipHeader" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
-        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-100}"/>
-        <Setter Property="FontSize" Value="25"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Margin" Value="10,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="left"/>
     </Style>
 </ResourceDictionary>

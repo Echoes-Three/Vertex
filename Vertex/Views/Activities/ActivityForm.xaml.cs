@@ -11,13 +11,26 @@ using Vertex.ViewModels.Activities;
 
 namespace Vertex.Views.Activities;
 
-public partial class AddActivityWindow : UserControl
+public partial class ActivityForm : UserControl
 {
     private ActivityFormViewModel? Vm => DataContext as ActivityFormViewModel;
     
-    public AddActivityWindow()
+    public ActivityForm()
     {
         InitializeComponent();
         
     }
+
+    private void MouseEnterSaveButton(object sender, MouseEventArgs e)
+    {
+        Vm.SetHover(true);
+        Vm.StartAnimation();
+    }
+
+    private void MouseLeaveSaveButton(object sender, MouseEventArgs e)
+    {
+        Vm.SetHover(false);
+        Vm.ResetAnimation();
+    }
+    
 }

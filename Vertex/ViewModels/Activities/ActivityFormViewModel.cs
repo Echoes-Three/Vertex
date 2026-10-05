@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using System.Windows.Media;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
 using Vertex.Data.Services;
@@ -12,35 +14,40 @@ public class ActivityFormViewModel : ViewModelBase
 {
     private readonly ActivitiesHandler _activitiesData;
     
-    private List<bool> DaysOfWeek => [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday];
+    private List<bool> DaysOfWeek => [Sun, Mon, Tue, Wed, Thu, Fri, Sat];
+    
+    private readonly DispatcherTimer timer = new DispatcherTimer();
     
     private WindowMode _windowMode = WindowMode.Add;
-    private int _hourCount;
-    private int _minuteCount;
     
+    private int _hour;
+    private int _minute;
     private int _colorIndex;
-    private readonly int _palletLastIndex = Colors.Palette.Count - 1;
     
-    private Action? _closeWindow;
-    public void SetCloseAction(Action close) => _closeWindow = close;
+    private readonly Random _random = new();
+    private CancellationTokenSource _cts = new();
+    public ObservableCollection<Square> Squares { get; } = new();
     
-    public RelayCommand OnSaveAction { get; }
+    public RelayCommand OnSaveActivity { get; }
     public RelayCommand OnPickDuration { get; }
     public RelayCommand OnChangeColor { get; }
-
+    
     public ActivityFormViewModel(ActivitiesHandler activitiesHandler)
     {
         _activitiesData = activitiesHandler;
         
-        OnSaveAction = new RelayCommand(_ => SaveAction(), _ => CanSaveAction());
+        for (var i = 0; i != 40; i++)
+        {
+            Squares.Add(new Square());
+        }
+        
+        OnSaveActivity = new RelayCommand(_ => SaveActivity(), _ => CanSaveActivity());
         OnPickDuration = new RelayCommand(param => PickDurationAction(param));
         OnChangeColor = new RelayCommand(_ => ChangeColor());
         
         SetColor();
-        ContentLimitIndicator = Colors.GetBrush("#ea163b");
-        TitleLimitIndicator = Colors.GetBrush("#ea163b");
     }
-    
+
     /*Saving Activity*/
     public void LoadForEdit(string activityId)
     {
@@ -57,15 +64,15 @@ public class ActivityFormViewModel : ViewModelBase
         ActivityContent = activityEntry.Content == "No Content" ? "" : activityEntry.Content ;
     
         var day = activityEntry.RepeatOn.ToBoolList();
-        (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) = 
+        (Sun, Mon, Tue, Wed, Thu, Fri, Sat) = 
             (day.Sun, day.Mon, day.Tue, day.Wed, day.Thu, day.Fri, day.Sat);
     
-        (_hourCount, DurationHour) = 
+        (_hour, DurationHour) = 
             (activityEntry.Duration.Hours, activityEntry.Duration.Hours.ToString("D2"));
-        (_minuteCount, DurationMinute) = 
+        (_minute, DurationMinute) = 
             (activityEntry.Duration.Minutes, activityEntry.Duration.Minutes.ToString("D2"));
 
-        OnSaveAction.RaiseCanExecuteChanged();
+        OnSaveActivity.RaiseCanExecuteChanged();
     }
     
     private void SaveNewActivity()
@@ -76,12 +83,11 @@ public class ActivityFormViewModel : ViewModelBase
             Title = ActivityTitle,
             Content = string.IsNullOrWhiteSpace(ActivityContent) ? "No Content" : ActivityContent,
             Id = Guid.NewGuid().ToString(),
-            Duration = new TimeSpan(hours: _hourCount, minutes: _minuteCount, seconds: 0),
+            Duration = new TimeSpan(hours: _hour, minutes: _minute, seconds: 0),
             RepeatOn = DaysOfWeek.ToDayOfWeek(),
         };
         
         _activitiesData.Save(activity);
-        _closeWindow?.Invoke();
         CleanFields();
         
     }
@@ -94,20 +100,19 @@ public class ActivityFormViewModel : ViewModelBase
         activityEntry.Color = _colorIndex;
         activityEntry.Title = ActivityTitle;
         activityEntry.Content = string.IsNullOrWhiteSpace(ActivityContent) ? "No Content" : ActivityContent;
-        activityEntry.Duration = new TimeSpan(hours: _hourCount, minutes: _minuteCount, seconds: 0);
+        activityEntry.Duration = new TimeSpan(hours: _hour, minutes: _minute, seconds: 0);
         activityEntry.RepeatOn = DaysOfWeek.ToDayOfWeek();
         
         WeakReferenceMessenger.Default.Send(new ActivityEditedMessage());
         WeakReferenceMessenger.Default.Send(new RebuildSlicesMessage());
         
         _activitiesData.Serialize();
-        _closeWindow?.Invoke();
     }
     
-    private bool CanSaveAction()
+    private bool CanSaveActivity()
     {
         var daysOfWeek = DaysOfWeek.ToDayOfWeek();
-        var duration = (_currentHourCount: _hourCount, _currentMinuteCount: _minuteCount);
+        var duration = (_currentHourCount: _hour, _currentMinuteCount: _minute);
         
         var isTitleNotEmpty = ValidateActivity.Title(ActivityTitle);
         var isWeekDaySelected = ValidateActivity.WeekDay(DaysOfWeek);
@@ -118,37 +123,19 @@ public class ActivityFormViewModel : ViewModelBase
         var parts = new List<string> {isTitleNotEmpty.Message, isWeekDaySelected.Message, isDurationValid.Message}
             .Where(e => !string.IsNullOrWhiteSpace(e));
         
-        WarningMessages = parts.Any() ? string.Join("\n", parts) : "No warning." ;
-        WarningColor = canAdd ? Colors.GetBrush("#C3FE0C") : Colors.GetBrush("#ea163b");
+        WarningMessages = string.Join("\n", parts);
         ShowWarning = canAdd;
         return canAdd;
     }
-    private void SaveAction()
+    private void SaveActivity()
     {
         if (_windowMode == WindowMode.Add)
             SaveNewActivity();
         else
             SaveEditActivity();
     }
-
-    private static SolidColorBrush LimitColor(int length, int limit) =>
-        (limit, length) switch
-        {
-            var (lim, len) when lim - len > lim * 0.2 => Colors.GetBrush("#C3FE0C"),
-            var (lim, len) when len == lim => Colors.GetBrush("#ea163b"),
-            _ => Colors.GetBrush("#0c4af7")
-        };
     
     public string WarningMessages
-    {
-        get;
-        set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-    public Brush? WarningColor
     {
         get;
         set
@@ -181,9 +168,9 @@ public class ActivityFormViewModel : ViewModelBase
         set
         {
             field = CharacterLimiter.LimitActivityTitle(ref value);
-            TitleLimitIndicator = LimitColor(field.Length, 25);
+            TitleLimitIndicator = (25 - field.Length).ToString();
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
     } = "";
     public string ActivityContent
@@ -192,8 +179,9 @@ public class ActivityFormViewModel : ViewModelBase
         set
         {
             field = CharacterLimiter.LimitActivityContent(ref value);
-            ContentLimitIndicator = LimitColor(field.Length, 500);
+            ContentLimitIndicator = (500 - field.Length).ToString();
             OnPropertyChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
     } = "";
     
@@ -209,21 +197,20 @@ public class ActivityFormViewModel : ViewModelBase
         
         _colorIndex = 0;
         
-        (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) =
-            (true, true, true, true, true, true, true);
-        (_hourCount, DurationHour) = (0, "00");
-        (_minuteCount, DurationMinute) = (0, "00");
+        (Sun, Mon, Tue, Wed, Thu, Fri, Sat) =
+            (false, false, false, false, false, false, false);
+        (_hour, DurationHour) = (0, "00");
+        (_minute, DurationMinute) = (0, "00");
         
         SetColor();
     }
     
-    /*Color Picking on AddActivityWindow*/
-    public void ChangeColor()
+    /*Color Picking on ActivityForm*/
+    private void ChangeColor()
     {
-        _colorIndex = _colorIndex == _palletLastIndex ? 0 : _colorIndex + 1;
+        _colorIndex = _colorIndex == Colors.Palette.Count - 1 ? 0 : _colorIndex + 1;
         SetColor();
     }
-   
     private void SetColor() =>
         SelectedColor = Colors.Palette[_colorIndex];
     
@@ -236,7 +223,8 @@ public class ActivityFormViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    public Brush? ContentLimitIndicator
+
+    public string ContentLimitIndicator
     {
         get;
         set
@@ -244,8 +232,8 @@ public class ActivityFormViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
         }
-    } 
-    public Brush? TitleLimitIndicator
+    } = "500";
+    public string TitleLimitIndicator
     {
         get;
         set
@@ -253,9 +241,9 @@ public class ActivityFormViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
         }
-    }
+    } = "25";
     
-    /*Duration behavior on AddActivityWindow*/
+    /*Pick Duration*/
     private void PickDurationAction(object identifier)
     {
         var id = identifier.ToString();
@@ -263,20 +251,20 @@ public class ActivityFormViewModel : ViewModelBase
         if (id!.StartsWith('H'))
         {
             if (id.EndsWith('U'))
-                _hourCount = _hourCount == 12 ? 0 : _hourCount + 1;
+                _hour = _hour == 12 ? 0 : _hour + 1;
             else
-                _hourCount = _hourCount == 0 ? 12 : _hourCount - 1;
+                _hour = _hour == 0 ? 12 : _hour - 1;
         }
         else if (id.StartsWith('M'))
         {
             if (id.EndsWith('U'))
-                _minuteCount = _minuteCount == 59 ? 0 : _minuteCount + 1;
+                _minute = _minute == 59 ? 0 : _minute + 1;
             else
-                _minuteCount = _minuteCount == 0 ? 59 : _minuteCount - 1; 
+                _minute = _minute == 0 ? 59 : _minute - 1; 
         }
         
-        DurationHour = $"{_hourCount:D2}";
-        DurationMinute = $"{_minuteCount:D2}";
+        DurationHour = $"{_hour:D2}";
+        DurationMinute = $"{_minute:D2}";
     }
     
     public string DurationHour
@@ -286,7 +274,7 @@ public class ActivityFormViewModel : ViewModelBase
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
     } = "00";
     public string DurationMinute
@@ -296,88 +284,141 @@ public class ActivityFormViewModel : ViewModelBase
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
     } = "00";
     
     
     /*Remaining Properties*/
     
-    public bool Sunday
+    public bool Sun
     {
         get;
         set
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
-    } = true;
+    }
 
-    public bool Monday
+    public bool Mon
     {
         get;
         set
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
-    } = true;
+    }
 
-    public bool Tuesday
+    public bool Tue
     {
         get;
         set
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
-    } = true;
+    }
 
-    public bool Wednesday
+    public bool Wed
     {
         get;
         set
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
-    } = true;
+    }
 
-    public bool Thursday
+    public bool Thu
     {
         get;
         set
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
-    } = true;
+    }
 
-    public bool Friday
+    public bool Fri
     {
         get;
         set
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
-    } = true;
+    }
 
-    public bool Saturday
+    public bool Sat
     {
         get;
         set
         {
             field = value;
             OnPropertyChanged();
-            OnSaveAction.RaiseCanExecuteChanged();
+            OnSaveActivity.RaiseCanExecuteChanged();
         }
-    } = true;
+    }
     
+    
+    /*Hover Animation*/
+    public void  SetHover(bool hovered)
+    {
+        _cts.Cancel();
+        _cts = new CancellationTokenSource();
+        
+        foreach (var square in Squares)
+        {
+            var delay = _random.Next(0, 300); 
+            _ = ApplyAfterDelay(square, hovered, delay, _cts.Token);
+        }
+        
+    }
+    private async Task ApplyAfterDelay(Square square, bool value, int delay, CancellationToken token)
+    {
+        try
+        {
+            await Task.Delay(delay, token);
+            square.IsActive = value;
+        }
+        catch (OperationCanceledException) { }
+    }
+    
+    public void ResetAnimation()
+    {
+        MainWidth = 0;
+        timer.Tick -= Timer_Tick;
+        timer.Stop();
+    }
+
+    public void StartAnimation()
+    {
+        timer.Interval = TimeSpan.FromMicroseconds(400);
+        timer.Tick += Timer_Tick;
+        timer.Start();
+    }
+    
+    private void Timer_Tick(object? sender, EventArgs e)
+    {
+        if(MainWidth != 340)
+            MainWidth++;
+    }
+    
+    public int MainWidth
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = 0;
 }

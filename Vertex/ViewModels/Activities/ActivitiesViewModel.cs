@@ -15,8 +15,6 @@ public class ActivitiesViewModel : ViewModelBase
 {
     private ActivitiesHandler ActivitiesData { get; set; }
     
-    public ActivityFormViewModel Form;
-
     public ObservableCollection<ActivityItemViewModel> TodayActivities
     {
         get;
@@ -45,8 +43,6 @@ public class ActivitiesViewModel : ViewModelBase
     {
         ActivitiesData = activitiesHandler;
         
-        Form = new ActivityFormViewModel(activitiesHandler);
-
         LoadCollection();
 
         activitiesHandler.Activities!.CollectionChanged += (s, e) =>
@@ -84,11 +80,9 @@ public class ActivitiesViewModel : ViewModelBase
         
         WeakReferenceMessenger.Default.Register<EditActivityMessage>(this, (r, msg) =>
         {
-            Form.CleanFields();
-            Form.LoadForEdit(msg.Value);
         });
         
-        OnAddActivityView = new RelayCommand(_ => { Form.CleanFields(); });
+        OnAddActivityView = new RelayCommand(_ => { });
 
         TodayIsEmpty = !TodayActivities?.Any() ?? true;
         RemainingIsEmpty = !RemainingActivities?.Any() ?? true;
@@ -119,15 +113,6 @@ public class ActivitiesViewModel : ViewModelBase
         ActivitiesData.Delete(activityEntry!);
     }
     
-    public bool ShowRemainingActivities
-    {
-        get;
-        set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    }
     public bool TodayIsEmpty
     {
         get;

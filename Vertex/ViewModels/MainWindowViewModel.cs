@@ -10,7 +10,9 @@ public class MainWindowViewModel : ViewModelBase
 {
     private ActivitiesHandler ActivitiesData { get; set; }
     private RemindersHandler RemindersData { get; set; }
+    
     public ActivitiesViewModel ActivitiesVM { get; }
+    public ActivityFormViewModel ActivityFormVM { get; }
     public RemindersViewModel RemindersVM { get; }
     public  DonutGraphViewModel DonutGraphVM { get; }
 
@@ -19,6 +21,7 @@ public class MainWindowViewModel : ViewModelBase
         RemindersHandler remindersData,
         
         ActivitiesViewModel activitiesViewModel,
+        ActivityFormViewModel activityFormViewModel,
         RemindersViewModel remindersViewModel,
         DonutGraphViewModel  donutGraphViewModel)
     {
@@ -26,6 +29,7 @@ public class MainWindowViewModel : ViewModelBase
         RemindersData = remindersData;
         
         ActivitiesVM = activitiesViewModel;
+        ActivityFormVM = activityFormViewModel;
         RemindersVM = remindersViewModel;
         DonutGraphVM = donutGraphViewModel;
     }

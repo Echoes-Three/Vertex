@@ -67,9 +67,10 @@
                 Style="{StaticResource SwapFormToggle}"/> <!--Swap Form Toggle-->
         </Grid>
         
-        <activities:AddActivityWindow Grid.Row="3">
-            <activities:AddActivityWindow.Style>
-                <Style TargetType="activities:AddActivityWindow">
+        <activities:ActivityForm Grid.Row="3"
+                                 DataContext="{Binding ActivityFormVM}">
+            <activities:ActivityForm.Style>
+                <Style TargetType="activities:ActivityForm">
                     <Setter Property="Visibility" Value="Visible"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsChecked, ElementName=SwapForm}" Value="True">
@@ -77,8 +78,8 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </activities:AddActivityWindow.Style>
-        </activities:AddActivityWindow><!--Activities-->
+            </activities:ActivityForm.Style>
+        </activities:ActivityForm><!--Activities-->
                     
         <reminders:AddReminderWindow Grid.Row="3">
             <reminders:AddReminderWindow.Style>

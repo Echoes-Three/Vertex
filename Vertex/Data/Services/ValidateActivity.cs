@@ -8,7 +8,7 @@ public static class ValidateActivity
     public static (bool IsValid, string Message) Title(string title)
     {
         var isValid = !string.IsNullOrWhiteSpace(title);
-        var warning = isValid ? "" : "- Title must not be empty.";
+        var warning = isValid ? "" : "TITLE MUST NOT BE EMPTY!";
         
         return  (isValid, warning);
     }
@@ -16,7 +16,7 @@ public static class ValidateActivity
     public static (bool IsValid, string Message) WeekDay(List<bool> daysOfWeek)
     {
         var isValid = daysOfWeek.Contains(true);
-        var warning = isValid ? "" : "- Must pick at least one day.";
+        var warning = isValid ? "" : "MUST PICK AT LEAST ONE DAY!";
         
         return  (isValid, warning);
     }
@@ -53,11 +53,11 @@ public static class ValidateActivity
 
             }
         
-            warining = isValid ? "" : $"- Activity duration is above 24h limit on:{warining[..^1]}.";
+            warining = isValid ? "" : $"DURATION IS ABOVE 24H LIMIT ON:{warining[..^1]}!";
         
             return (isValid, warining);
         }
         
-        return (false, "- Minimum activity duration is 10min.");
+        return (false, "MINIMUM DURATION IS 10MIN!");
     }
 }

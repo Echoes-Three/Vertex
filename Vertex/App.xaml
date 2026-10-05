@@ -19,7 +19,7 @@
                 <!--Activities-->
                 <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivitiesTabStyle.xaml"/>
                 <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivityItemStyle.xaml"/>
-                <ResourceDictionary Source="/Vertex;component/Themes/Activities/AddActivityStyle.xaml"/>
+                <ResourceDictionary Source="/Vertex;component/Themes/Activities/ActivityFormStyle.xaml"/>
                 <!--Form-->
                 <ResourceDictionary Source="/Vertex;component/Themes/Form/FormsTabStyle.xaml"/>
                 <!--Donut Graph-->

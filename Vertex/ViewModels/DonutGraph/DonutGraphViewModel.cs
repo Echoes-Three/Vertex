@@ -27,16 +27,7 @@ public class DonutGraphViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    public ObservableCollection<OrbiterViewModel> Orbiters
-    {
-        get;
-        set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
+    
     private int TodayIndex => (int)DateTime.Today.DayOfWeek;
     private readonly List<string> _meridiem = ["AM", "PM"];
     private int _currentMeridiemIndex;
@@ -51,7 +42,6 @@ public class DonutGraphViewModel : ViewModelBase
         _remindersData = remindersHandler;
 
         BuildSlices();
-        LaunchOrbiters();
             
         activitiesHandler.Activities!.CollectionChanged += (s, e) =>
         {
@@ -78,34 +68,14 @@ public class DonutGraphViewModel : ViewModelBase
             
         };
         
-        remindersHandler.Reminders!.CollectionChanged += (s, e) =>
-        {
-            if (e.NewItems != null)
-                foreach (ReminderEntry entry in e.NewItems)
-                {
-                    Orbiters.Add(new OrbiterViewModel(entry));
-                    LaunchOrbiters();
-                }
-
-            if (e.OldItems != null)
-                foreach (ReminderEntry entry in e.OldItems)
-                {
-                    var vm = Orbiters.FirstOrDefault(x => x.EntryData!.Id == entry.Id);
-                    if (vm != null)
-                        Orbiters.Remove(vm);
-                    LaunchOrbiters();
-                }
-        };
+       
         
         WeakReferenceMessenger.Default.Register<RebuildSlicesMessage> (this, (r, m) => 
             { BuildSlices();});
-        WeakReferenceMessenger.Default.Register<RelaunchOrbitersMessage> (this, (r, m) => 
-            { LaunchOrbiters();});
-
+        
       
         StartClock();
         ActivityColor = Colors.GetBrush("#e6e6ea");
-        Snap = _activitiesData.Snap;
         
     }
     
@@ -123,10 +93,6 @@ public class DonutGraphViewModel : ViewModelBase
             entry.EndAngle[i] = endAngle;
         }
     }
-    private void LaunchOrbiters() =>
-        Orbiters = new ObservableCollection<OrbiterViewModel>(_remindersData.Reminders!
-                .Where(r => r.SetFor.Date == DateTime.Today)
-                .Select(r => new OrbiterViewModel(r)));
     private void BuildSlices() =>
         Slices = new ObservableCollection<SliceViewModel>(_activitiesData.Activities!
             .Where(s => s!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
@@ -164,16 +130,16 @@ public class DonutGraphViewModel : ViewModelBase
 
         var radian = angle * (Math.PI / 180);
 
-        var x1 = 510 + 305 * Math.Cos(radian);
-        var y1 = 377 + 305 * Math.Sin(radian);
+        var x1 = 350 + 305 * Math.Cos(radian);
+        var y1 = 350 + 305 * Math.Sin(radian);
 
-        var x2 = 510 + 325 * Math.Cos(radian);
-        var y2 = 377 + 325 * Math.Sin(radian);
+        var x2 = 350 + 325 * Math.Cos(radian);
+        var y2 = 350 + 325 * Math.Sin(radian);
 
         X1 = Math.Truncate(x1);
-        Y1 = Math.Truncate(Math.Abs(y1 - 754));
+        Y1 = Math.Truncate(Math.Abs(y1 - 700));
         X2 = Math.Truncate(x2);
-        Y2 = Math.Truncate(Math.Abs(y2 - 754));
+        Y2 = Math.Truncate(Math.Abs(y2 - 700));
         
         OnPropertyChanged(nameof(PathData));
     }
@@ -283,23 +249,22 @@ public class DonutGraphViewModel : ViewModelBase
     
     
         
-    /*Dragging Slice*/
-    public void OnMouseDown(object sender, MouseButtonEventArgs e, Canvas donutCanvas)
+    /*Setting Slice*/
+    public void OnRightMouseDown(object sender, MouseButtonEventArgs e, Canvas donutCanvas)
     {
         var path = sender as Path;
-        DragSlice = path.DataContext as SliceViewModel;
-        IsDragging = true;
+        Slice = path.DataContext as SliceViewModel;
 
         var mouse = e.GetPosition(donutCanvas);
-        var dx = mouse.X - 510;
-        var dy = mouse.Y - 377;
+        var dx = mouse.X - 350;
+        var dy = mouse.Y - 350;
         var angle = Math.Atan2(dy, dx) * (180 / Math.PI);
         if (angle < 0) angle += 360;
         LastClockDegree = (angle - 180 + 360) % 360;
     }
     public void OnMouseMove(MouseEventArgs e, Canvas donutCanvas)
     {
-        if (!IsDragging || DragSlice == null) return;
+        if (!IsDragging || Slice == null) return;
 
         var mouse = e.GetPosition(donutCanvas);
         var dx = mouse.X - 510;
@@ -312,14 +277,14 @@ public class DonutGraphViewModel : ViewModelBase
         if (delta > 180) delta -= 360;
         if (delta < -180) delta += 360;
 
-        DragSlice.StartAngle = (DragSlice.StartAngle - delta + 360) % 360;
-        DragSlice.EndAngle = (DragSlice.EndAngle - delta + 360) % 360;
+        Slice.StartAngle = (Slice.StartAngle - delta + 360) % 360;
+        Slice.EndAngle = (Slice.EndAngle - delta + 360) % 360;
 
         LastClockDegree = clockDegrees;
         
 
-        var entry = DragSlice.EntryData;
-        var time = FromAngleToHour(DragSlice.StartAngle);
+        var entry = Slice.EntryData;
+        var time = FromAngleToHour(Slice.StartAngle);
         var hour = $"{(int)entry!.Duration.TotalHours}H";
         var minute = entry.Duration.Minutes == 0
             ? ""
@@ -333,21 +298,18 @@ public class DonutGraphViewModel : ViewModelBase
     }
     public void OnMouseUp()
     {
-        if (DragSlice == null) return; 
+        if (Slice == null) return; 
             
-        var activity = DragSlice.EntryData;
+        var activity = Slice.EntryData;
         
-        activity!.StartAngle[TodayIndex] = DragSlice.StartAngle;
-
-        if (Snap) 
-            activity = DoSnap(activity);
+        activity!.StartAngle[TodayIndex] = Slice.StartAngle;
         
         _activitiesData.Serialize();
         
         CleanActivityInfo();
         
         IsDragging = false;
-        DragSlice = null;
+        Slice = null;
         BuildSlices();
     }
     private static (string Hour, string Minute, string Meridiem) FromAngleToHour(double angle)
@@ -389,27 +351,6 @@ public class DonutGraphViewModel : ViewModelBase
         UpdateClock();
         ActivityColor = Colors.GetBrush("#e6e6ea");
     }
-    private ActivityEntry DoSnap(ActivityEntry entry)
-    {
-        var activities = _activitiesData.Activities;
-        if (activities == null) return entry;
-        
-        var min = entry.StartAngle[TodayIndex] - 5;
-        var max = entry.StartAngle[TodayIndex] + 5;
-        
-        foreach (var activity in activities)
-        {
-            if (activity.Id == entry.Id) continue;
-            
-            if ((activity.EndAngle[TodayIndex] < 0))
-                activity.EndAngle[TodayIndex] += 360;
-                            
-            if (activity.EndAngle[TodayIndex] >= min && activity.EndAngle[TodayIndex] <= max )
-                entry.StartAngle[TodayIndex] = activity.EndAngle[TodayIndex];
-        }
-        
-        return entry;
-    }
     
     private double LastClockDegree
     {
@@ -420,7 +361,7 @@ public class DonutGraphViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    private SliceViewModel? DragSlice
+    private SliceViewModel? Slice
     {
         get;
         set
@@ -444,17 +385,6 @@ public class DonutGraphViewModel : ViewModelBase
         set
         {
             field = value;
-            OnPropertyChanged();
-        }
-    }
-    public bool Snap
-    {
-        get;
-        set
-        {
-            field = value;
-            _activitiesData.Snap = value;
-            _activitiesData.Serialize();
             OnPropertyChanged();
         }
     }

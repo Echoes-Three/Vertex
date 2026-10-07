@@ -4,18 +4,15 @@
     <!--Styles Present Here-->
     
     <!--
-    ////// RIGHT SIDE TAB //////
-    Right Side Toggle Buttons
+    Toggle Buttons
     Activity Toggle Background
     Reminder Toggle Background
     Form Toggle Background
     
     -->
-
-    <!--////// RIGHT SIDE TAB //////-->
     
-    <!--Right Side Toggle Buttons-->
-    <Style x:Key="RightSideToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
+    <!--Toggle Buttons-->
+    <Style x:Key="ToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BasicToggleButton}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="ExtraLight"/>
         <Setter Property="FontSize" Value="30"/>
@@ -89,5 +86,27 @@
         
     </Style>
     
+    
+    <!--Duration Setter Icons-->
+    <Style x:Key="DurationSetterButtonIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-500}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+    </Style>
+    
+    <!--Duration Setter Digits-->
+    <Style x:Key="DurationSetterDigits" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="35"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-400}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
     
 </ResourceDictionary>

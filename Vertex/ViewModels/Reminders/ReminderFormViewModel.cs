@@ -14,9 +14,9 @@ public class ReminderFormViewModel : ViewModelBase
     private readonly RemindersHandler _remindersData;
     
     private readonly List<string> _meridiem = ["AM", "PM"];
-    private int _currentMeridiemIndex;
-    private int _currentHourCount = 12;
-    private int _currentMinuteCount = 59;
+    private int _meridiemIndex;
+    private int _hour = 12;
+    private int _minute = 59;
 
     private WindowMode _windowMode = WindowMode.Add;
     
@@ -24,12 +24,14 @@ public class ReminderFormViewModel : ViewModelBase
     public void SetCloseAction(Action close) => _closeWindow = close;
     
     public RelayCommand OnSaveAction { get; }
+    public RelayCommand OnPickHourAction { get; }
     
     public ReminderFormViewModel(RemindersHandler remindersHandler)
     {
         _remindersData = remindersHandler;
         
         OnSaveAction = new RelayCommand(_ => SaveAction(), _ => CanSaveAction());
+        OnPickHourAction = new RelayCommand(param => PickHourAction(param));
     }
     
     /*Saving Reminder*/
@@ -41,7 +43,7 @@ public class ReminderFormViewModel : ViewModelBase
         
         if (isDateNotEmpty.IsValid)
             isHourValid = ReminderSetFor == DateTime.Today 
-                ? ValidateReminder.Hour(_currentHourCount, _currentMinuteCount, CurrentMeridiem)
+                ? ValidateReminder.Hour(_hour, _minute, Meridiem)
                 : (true, "");
         
         var canAdd = isTitleNotEmpty.IsValid && isHourValid.IsValid && isDateNotEmpty.IsValid;
@@ -78,9 +80,9 @@ public class ReminderFormViewModel : ViewModelBase
         ReminderContent = reminderEntry.Content;
         ReminderSetFor = new DateTime(reminderEntry.SetFor.Year, reminderEntry.SetFor.Month, reminderEntry.SetFor.Day);
         
-        (_currentHourCount, CurrentHour) = ( hour12, hour12.ToString("D2"));
-        (_currentMinuteCount, CurrentMinute) = (minute, minute.ToString("D2"));
-        (_currentMeridiemIndex, CurrentMeridiem) = (meridiemCount, meridiem);
+        (_hour, Hour) = ( hour12, hour12.ToString("D2"));
+        (_minute, Minute) = (minute, minute.ToString("D2"));
+        (_meridiemIndex, Meridiem) = (meridiemCount, meridiem);
     }
     
     private void SaveEditReminder()
@@ -96,7 +98,6 @@ public class ReminderFormViewModel : ViewModelBase
         
         CleanFields();
         WeakReferenceMessenger.Default.Send(new ReminderEditedMessage());
-        WeakReferenceMessenger.Default.Send(new RelaunchOrbitersMessage());
     }
     private void SaveNewReminder()
     {
@@ -112,14 +113,6 @@ public class ReminderFormViewModel : ViewModelBase
         
         CleanFields();
     }
-    
-    private static SolidColorBrush LimitColor(int length, int limit) =>
-        (limit, length) switch
-        {
-            var (lim, len) when lim - len > lim * 0.2 => Colors.GetBrush("#C3FE0C"),
-            var (lim, len) when len == lim => Colors.GetBrush("#ea163b"),
-            _ => Colors.GetBrush("#0c4af7")
-        };
     
     public string WarningMessages
     {
@@ -148,7 +141,8 @@ public class ReminderFormViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    public Brush? ContentLimitIndicator
+
+    public string ContentLimitIndicator
     {
         get;
         set
@@ -156,7 +150,7 @@ public class ReminderFormViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
         }
-    }
+    } = "250";
     
     
     /*Helper Methods*/
@@ -165,19 +159,19 @@ public class ReminderFormViewModel : ViewModelBase
         _windowMode = WindowMode.Add;
         EditReminderId = "";
         (ReminderSetFor, ReminderContent) = (null, "");
-        (_currentHourCount, CurrentHour) = (12, "12");
-        (_currentMinuteCount, CurrentMinute) = (59, "59");
-        (_currentMeridiemIndex, CurrentMeridiem) = (0, "AM");
+        (_hour, Hour) = (12, "12");
+        (_minute, Minute) = (59, "59");
+        (_meridiemIndex, Meridiem) = (0, "AM");
     }
     private DateTime ConvertDateTime()
     {
-        switch (CurrentMeridiem)
+        switch (Meridiem)
         {
-            case "PM" when _currentHourCount != 12:
-                _currentHourCount += 12;
+            case "PM" when _hour != 12:
+                _hour += 12;
                 break;
-            case "AM" when _currentHourCount == 12:
-                _currentHourCount = 0;
+            case "AM" when _hour == 12:
+                _hour = 0;
                 break;
         }
         
@@ -185,54 +179,44 @@ public class ReminderFormViewModel : ViewModelBase
             ReminderSetFor!.Value.Year,
             ReminderSetFor!.Value.Month,
             ReminderSetFor!.Value.Day,
-            _currentHourCount,
-            _currentMinuteCount,
+            _hour,
+            _minute,
             0
         );
     }
     
     
     /*HourPicker scroll behavior on AddReminderWindow*/
-    public void UpdateMeridiem() => 
-        CurrentMeridiem = _meridiem[_currentMeridiemIndex = (_currentMeridiemIndex + 1) % 2];
-    public void RemindHourUp()
+    
+    private void PickHourAction(object identifier)
     {
-        if (_currentHourCount == 12)
-            _currentHourCount = 1;
-        else
-            _currentHourCount++;
+        var id = identifier.ToString();
         
-        CurrentHour = $"{_currentHourCount:D2}";
-    }
-    public void RemindHourDown()
-    {
-        if (_currentHourCount == 1)
-            _currentHourCount = 12;
-        else
-            _currentHourCount--;
+        if (id!.StartsWith('H'))
+        {
+            if (id.EndsWith('U'))
+                _hour = _hour == 12 ? 0 : _hour + 1;
+            else
+                _hour = _hour == 0 ? 12 : _hour - 1;
+        }
+        else if (id.StartsWith('M'))
+        {
+            if (id.EndsWith('U'))
+                _minute = _minute == 59 ? 0 : _minute + 1;
+            else
+                _minute = _minute == 0 ? 59 : _minute - 1; 
+        }
+        else if (id.StartsWith('T'))
+        {
+           _meridiemIndex = (_meridiemIndex + 1) % 2;
+        }
         
-        CurrentHour = $"{_currentHourCount:D2}";
-    }
-    public void RemindMinuteUp()
-    {
-        if (_currentMinuteCount == 59)
-            _currentMinuteCount = 0;
-        else
-            _currentMinuteCount++;
-        
-        CurrentMinute = $"{_currentMinuteCount:D2}";
-    }
-    public void RemindMinuteDown()
-    {
-        if (_currentMinuteCount == 0)
-            _currentMinuteCount = 59;
-        else
-            _currentMinuteCount--;
-        
-        CurrentMinute = $"{_currentMinuteCount:D2}";
+        Hour = $"{_hour:D2}";
+        Minute = $"{_minute:D2}";
+        Meridiem =  _meridiem[_meridiemIndex];
     }
     
-    public string CurrentHour
+    public string Hour
     {
         get;
         set
@@ -242,7 +226,7 @@ public class ReminderFormViewModel : ViewModelBase
             OnSaveAction.RaiseCanExecuteChanged();
         }
     } = "12";
-    public string CurrentMinute
+    public string Minute
     {
         get;
         set
@@ -252,7 +236,7 @@ public class ReminderFormViewModel : ViewModelBase
             OnSaveAction.RaiseCanExecuteChanged();
         }
     } = "59";
-    public string CurrentMeridiem
+    public string Meridiem
     {
         get;
         set
@@ -281,7 +265,7 @@ public class ReminderFormViewModel : ViewModelBase
         {
             field = CharacterLimiter.LimitReminderContent(ref value);
             OnPropertyChanged();
-            ContentLimitIndicator = LimitColor(field.Length, 250);
+            ContentLimitIndicator = (250 - field.Length).ToString();
             OnSaveAction.RaiseCanExecuteChanged();
         }
     } = "";

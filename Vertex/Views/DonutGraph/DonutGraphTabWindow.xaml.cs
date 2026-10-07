@@ -19,10 +19,10 @@ public partial class DonutGraphTabWindow : UserControl
     public DonutGraphTabWindow()
     {
         InitializeComponent();
-        GenerateClockTicks(DonutCanvas, new Point(510, 377), 320, 15);
+        GenerateClockTicks(DonutCanvas, new Point(350, 350), 320, 15);
     }
 
-    private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => Vm.OnMouseDown(sender, e, DonutCanvas);
+    private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e) => Vm.OnRightMouseDown(sender, e, DonutCanvas);
     
     private void OnMouseMove(object sender, MouseEventArgs e) => Vm.OnMouseMove(e, DonutCanvas);
     

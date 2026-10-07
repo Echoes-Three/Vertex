@@ -45,7 +45,7 @@
                     <TextBlock 
                         Grid.Row="2"
                         Text="{Binding ContentLimitIndicator, FallbackValue=500}"
-                        Tag="{Binding TitleLimitIndicator}"
+                        Tag="Content"
                         Style="{StaticResource ActivityLimitIndicator}"/> <!--Content Character Limit Indicator-->
                     
                     <TextBox
@@ -78,69 +78,6 @@
                         <ColumnDefinition Width="10"/> <!--Spacer-->
                         <ColumnDefinition Width="130"/> <!--Color Picker-->
                     </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="2">
-                        
-                        <Border
-                            Width="130"
-                            Height="130"
-                            Background="{StaticResource Brush-Gray-700}"/> <!--Color PIcker Background-->
-                        
-                        <Border
-                            Width="15"
-                            Height="8"
-                            Background="{StaticResource Brush-Gray-500}"
-                            IsHitTestVisible="False"
-                            VerticalAlignment="Top" HorizontalAlignment="Left"/> <!--VE TL-->
-                        <Border
-                            Width="15"
-                            Height="8"
-                            Background="{StaticResource Brush-Gray-500}"
-                            IsHitTestVisible="False"
-                            VerticalAlignment="Top" HorizontalAlignment="Right"/> <!--VE TR-->
-                        <Border
-                            Width="15"
-                            Height="8"
-                            Background="{StaticResource Brush-Gray-500}"
-                            IsHitTestVisible="False"
-                            VerticalAlignment="Bottom" HorizontalAlignment="Left"/> <!--VE BL-->
-                        <Border
-                            Width="15"
-                            Height="8"
-                            Background="{StaticResource Brush-Gray-500}"
-                            IsHitTestVisible="False"
-                            VerticalAlignment="Bottom" HorizontalAlignment="Right"/> <!--VE BR-->
-                        
-                        <Border
-                            Background="{Binding SelectedColor, FallbackValue=Red}"
-                            Style="{StaticResource Color}"/> <!--Color-->
-                        
-                        <Border
-                            Style="{StaticResource ColorCover}"/> <!--Color Cover-->
-                        
-                        <Button
-                            x:Name="ColorPicker"
-                            Height="80"
-                            Width="80"
-                            Command="{Binding OnChangeColor}"
-                            Style="{StaticResource BasicButton}"/> <!--Color Picker Interactable-->
-                        
-                        <Border 
-                            Style="{StaticResource ReticleTL}"/> <!--Reticle TL-->
-                        <Border 
-                            Style="{StaticResource ReticleTR}"/> <!--Reticle TR-->
-                        <Border 
-                            Style="{StaticResource ReticleBL}"/> <!--Reticle BL-->
-                        <Border 
-                            Style="{StaticResource ReticleBR}"/> <!--Reticle Br-->
-                        
-                        <Border
-                            Width="10"
-                            Height="10"
-                            IsHitTestVisible="False"
-                            Background="{StaticResource Brush-Gray-600}"/> <!--VE-->
-                        
-                    </Grid> <!--Color Picker-->
                     
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
@@ -266,11 +203,72 @@
                             Style="{StaticResource DurationPickerDigits}"
                             Text="{Binding DurationMinute, FallbackValue=00}"/> <!--MM-->
                             
-                    </Grid> <!--Duration Scroll-->
-    
+                    </Grid> <!--Duration Picker-->
                     
-    
-                    </Grid> <!--Duration Picker + Color Picker-->
+                    <Grid Grid.Column="2">
+                        
+                        <Border
+                            Width="130"
+                            Height="130"
+                            Background="{StaticResource Brush-Gray-700}"/> <!--Color PIcker Background-->
+                        
+                        <Border
+                            Width="15"
+                            Height="8"
+                            Background="{StaticResource Brush-Gray-500}"
+                            IsHitTestVisible="False"
+                            VerticalAlignment="Top" HorizontalAlignment="Left"/> <!--VE TL-->
+                        <Border
+                            Width="15"
+                            Height="8"
+                            Background="{StaticResource Brush-Gray-500}"
+                            IsHitTestVisible="False"
+                            VerticalAlignment="Top" HorizontalAlignment="Right"/> <!--VE TR-->
+                        <Border
+                            Width="15"
+                            Height="8"
+                            Background="{StaticResource Brush-Gray-500}"
+                            IsHitTestVisible="False"
+                            VerticalAlignment="Bottom" HorizontalAlignment="Left"/> <!--VE BL-->
+                        <Border
+                            Width="15"
+                            Height="8"
+                            Background="{StaticResource Brush-Gray-500}"
+                            IsHitTestVisible="False"
+                            VerticalAlignment="Bottom" HorizontalAlignment="Right"/> <!--VE BR-->
+                        
+                        <Border
+                            Background="{Binding SelectedColor, FallbackValue=Red}"
+                            Style="{StaticResource Color}"/> <!--Color-->
+                        
+                        <Border
+                            Style="{StaticResource ColorCover}"/> <!--Color Cover-->
+                        
+                        <Button
+                            x:Name="ColorPicker"
+                            Height="80"
+                            Width="80"
+                            Command="{Binding OnChangeColor}"
+                            Style="{StaticResource BasicButton}"/> <!--Color Picker Interactable-->
+                        
+                        <Border 
+                            Style="{StaticResource ReticleTL}"/> <!--Reticle TL-->
+                        <Border 
+                            Style="{StaticResource ReticleTR}"/> <!--Reticle TR-->
+                        <Border 
+                            Style="{StaticResource ReticleBL}"/> <!--Reticle BL-->
+                        <Border 
+                            Style="{StaticResource ReticleBR}"/> <!--Reticle Br-->
+                        
+                        <Border
+                            Width="10"
+                            Height="10"
+                            IsHitTestVisible="False"
+                            Background="{StaticResource Brush-Gray-600}"/> <!--VE-->
+                        
+                    </Grid> <!--Color Picker-->
+                    
+                </Grid> <!--Duration Picker + Color Picker-->
                     
                 <Grid Grid.Row="4">
                             <Grid.ColumnDefinitions>
@@ -701,7 +699,6 @@
                     </Border> <!--Warning Body-->
                     
                 </Grid> <!--Warning-->
-                
             </Grid>
             
         </Grid>

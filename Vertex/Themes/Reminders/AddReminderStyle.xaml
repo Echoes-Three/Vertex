@@ -16,17 +16,17 @@
     
     <!--Reminder Content Input Placeholder-->
     <Style x:Key="ReminderContentInputPlaceholder" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-300}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Margin" Value="5"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="Visibility" Value="Hidden"/>
         
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Text, ElementName=ReminderInput}" Value="">
+            <DataTrigger Binding="{Binding Text, ElementName=ContentInput}" Value="">
                 <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </Style.Triggers>
@@ -35,27 +35,40 @@
     <!--Reminder Content Input-->
     <Style x:Key="ReminderContentInput" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-200}"/>
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="CaretBrush" Value="{DynamicResource Brush-Gray-100}"/>
     </Style>
     
-    <!--Time Picker-->
-    <Style x:Key="TimePicker" TargetType="{x:Type TextBlock}">
+    <!--Duration Picker-->
+    <Style x:Key="TimePickerDigits" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-100}"/>
+        <Setter Property="FontSize" Value="50"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-400}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="65"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
+        
+    </Style>
+    
+    <!--Time Picker Icons-->
+    <Style x:Key="TimePickerButtonIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush-Gray-500}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
         
     </Style>
     
@@ -91,13 +104,13 @@
     </Style>
     
     <!--Content Limit Counter-->
-    <Style x:Key="ReminderContentLimitIndicator" TargetType="{x:Type Border}">
+    <Style x:Key="ReminderContentLimitIndicator" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource JetBrainsMono}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
-        <Setter Property="Margin" Value="0,0,5,5"/>
-        <Setter Property="Height" Value="15"/>
-        <Setter Property="Width" Value="15"/>
-        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="Foreground" Value="{StaticResource Brush-Gray-500}"/>
         
     </Style>
     

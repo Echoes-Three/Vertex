@@ -24,10 +24,6 @@ public partial class DonutGraphTabWindow : UserControl
 
     private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e) => Vm.OnRightMouseDown(sender, e, DonutCanvas);
     
-    private void OnMouseMove(object sender, MouseEventArgs e) => Vm.OnMouseMove(e, DonutCanvas);
-    
-    private void OnMouseUp(object sender, MouseButtonEventArgs e) => Vm.OnMouseUp();
-    
     private static void GenerateClockTicks(Canvas canvas, Point center, double faceRadius, double tickLength)
     {
         for (var hour = 0; hour < 24; hour++)

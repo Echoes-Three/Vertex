@@ -45,16 +45,13 @@
             <mainWindow:TitleBarView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" /><!--TitleBar-->
             
             <Grid 
-                Grid.Row="1"
-                Grid.Column="1">
-                
+                Grid.Row="1" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1140"/> <!--Donut Graph-->
                     <ColumnDefinition Width="420"/> <!--Side Tab-->
                 </Grid.ColumnDefinitions>
                 
                 <Border Grid.Column="0" Background="{StaticResource VividRoyalBrush}"/> <!--Donut Background-->
-                
                 
                 <Border Grid.Column="0">
                     
@@ -96,7 +93,6 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Grid.Column="0" /><!--Donut Graph-->
-
                 
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
@@ -123,32 +119,55 @@
                         
                         <Border  Grid.Row="0" Style="{StaticResource ActivityToggleBackground}"/> <!--Activity Toggle Background-->
 
+                        <Path 
+                            Grid.Row="0"
+                            Style="{StaticResource ActivityToggleIcon}"
+                              Data="M3,1 L4,1 L4,2 L3,2 Z
+                              M1,2 L3,2 L3,3 L2,3 L2,4 L3,4 L3,5 L1,5 Z
+                              M4,2 L6,2 L6,5 L4,5 L4,4 L5,4 L5,3 L4,3 Z
+                              M3,5 L4,5 L4,6 L3,6 Z" />
+                        
                         <ToggleButton 
                             x:Name="ActivityToggle"
                             Grid.Row="0"
-                            Content="⍹"
                             IsChecked="{Binding ActivityIsVisible}"
-                            Style="{StaticResource ToggleButton}"/> <!--Activity Tab Toggle-->
+                            Style="{StaticResource BasicToggleButton}"/> <!--Activity Tab Toggle-->
                         
                         
                         <Border Grid.Row="2" Style="{StaticResource ReminderToggleBackground}"/> <!--Reminder Toggle Background-->
 
+                        <Path 
+                            Grid.Row="2"
+                            Style="{StaticResource ReminderToggleIcon}"
+                            Data="M1,1 L2,1 L2,2 L5,2 L5,1 L6,1 L6,3 L4,3 L4,4 L6,4 L6,6 L5,6 L5,5 
+                            L2,5 L2,6 L1,6 L1,4 L3,4 L3,3 L1,3 Z"/>
+                        
                         <ToggleButton 
                             x:Name="ReminderToggle"
                             Grid.Row="2"
-                            Content="⍶"
                             IsChecked="{Binding ReminderIsVisible}"
-                            Style="{StaticResource ToggleButton}"/> <!--Reminder Tab Toggle-->
-                            
+                            Style="{StaticResource BasicToggleButton}"/> <!--Reminder Tab Toggle-->
+                        
+                        
                         
                         <Border Grid.Row="4" Style="{StaticResource FormToggleBackground}"/>  <!--Form Toggle Background-->
 
+                        <Path
+                            Grid.Row="4"
+                            Style="{StaticResource FormToggleIcon}"
+                            Data="M3,1 L4,1 L4,3 L6,3 L6,4 L4,4 L4,6 L3,6 L3,4 L1,4 L1,3 L3,3 Z
+                            M1,1 L2,1 L2,2 L1,2 Z
+                            M5,1 L6,1 L6,2 L5,2 Z
+                            M1,5 L2,5 L2,6 L1,6 Z
+                            M5,5 L6,5 L6,6 L5,6 Z" /> <!--Form Toggle Icon-->
+                        
                         <ToggleButton 
                             x:Name="FormToggle"
                             Grid.Row="4"
-                            Content="+"
                             IsChecked="{Binding FormIsVisible}"
-                            Style="{StaticResource ToggleButton}"/> <!--Form Tab Toggle-->
+                            Style="{StaticResource BasicToggleButton}"/> <!--Form Tab Toggle-->
+                        
+                        
                         
                     </Grid> <!--Toggles-->
                     
@@ -160,272 +179,286 @@
                     
                     <Border
                         Width="310" Height="130"
+                        Canvas.Left="{Binding WindowX, FallbackValue=0}"
+                        Canvas.Top="{Binding WindowY, FallbackValue=0}"
                         Background="{StaticResource Brush-Gray-800}"
-                        CornerRadius="5"/> <!--Background-->
+                        CornerRadius="5"
+                        Visibility="{Binding SetHourVisibility}"
+                        MouseEnter="EnterSetHour"
+                        MouseLeave="LeaveSetHour">
+                        
+                        <Grid>
+                             <Grid
+                                 Width="270" Height="90">
+                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="15" /> <!--Up Button-->
+                                    <RowDefinition Height="60" /> <!--Digits-->
+                                    <RowDefinition Height="15" /> <!--Down Buttons-->
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15" /><!--Spacer-->
+                                    <ColumnDefinition Width="70" /> <!--HH-->
+                                    <ColumnDefinition Width="15" /><!--:-->
+                                    <ColumnDefinition Width="70" /><!--MM-->
+                                    <ColumnDefinition Width="15" /><!--Spacer-->
+                                    <ColumnDefinition Width="70" /><!--TT-->
+                                    <ColumnDefinition Width="15" /><!--Spacer-->
+                                </Grid.ColumnDefinitions>
+    
+                                    <Border
+                                        Grid.Row="1"
+                                        Grid.Column="0" Grid.ColumnSpan="7"
+                                        Background="{StaticResource Brush-Gray-700}"/><!--Background-->
+                
+                                    <Border
+                                        Grid.Row="0" Grid.RowSpan="3"
+                                        Grid.Column="1"
+                                        Background="{StaticResource Brush-Gray-700}"/><!--HH Background-->
+                                    <Border
+                                        Grid.Row="0" Grid.RowSpan="3"
+                                        Grid.Column="3"
+                                        Background="{StaticResource Brush-Gray-700}"/><!--MM Background-->
+                                    <Border
+                                        Grid.Row="0" Grid.RowSpan="3"
+                                        Grid.Column="5"
+                                        Background="{StaticResource Brush-Gray-700}"/><!--TT Background-->
+                                    
+                                    <Path
+                                        Grid.Row="1" Grid.Column="2" 
+                                        Height="16"
+                                        Data="M 0,0 L 92,0 L 46,85 L 92,170 L 0,170 L 46,85 Z"
+                                        Fill="{StaticResource Brush-Gray-500}"
+                                        Stretch="Uniform"/> <!--VE-->
+                                    <Path
+                                        Grid.Row="1" Grid.Column="4" 
+                                        Height="16"
+                                        Data="M 0,0 L 92,0 L 46,85 L 92,170 L 0,170 L 46,85 Z"
+                                        Fill="{StaticResource Brush-Gray-500}"
+                                        Stretch="Uniform"/> <!--VE-->
+                                    
+                                    <Button
+                                        Grid.Row="0" Grid.Column="1" 
+                                        Command="{Binding OnSetTime}"
+                                        CommandParameter="HU">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button> <!--HH Up Button-->
+                                    <Button
+                                        Grid.Row="2" Grid.Column="1" 
+                                        Command="{Binding OnSetTime}"
+                                        CommandParameter="HD">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button> <!--HH Down Button-->
+                                               
+                                    <Button
+                                        Grid.Row="0" Grid.Column="3" 
+                                        Command="{Binding OnSetTime}"
+                                        CommandParameter="MU">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button> <!--MM Up Button-->
+                                    <Button
+                                        Grid.Row="2" Grid.Column="3" 
+                                        Command="{Binding OnSetTime}"
+                                        CommandParameter="MD">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button> <!--MM Down Button-->
+                                    
+                                    <Button
+                                        Grid.Row="0" Grid.Column="5" 
+                                        Command="{Binding OnSetTime}"
+                                        CommandParameter="TU">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button> <!--TT Up Button-->
+                                    <Button
+                                        Grid.Row="2" Grid.Column="5" 
+                                        Command="{Binding OnSetTime}"
+                                        CommandParameter="TD">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button> <!--TT Down Button-->
+                                    
+                                    <TextBlock
+                                        Grid.Row="0" Grid.Column="1" 
+                                        Text="+"
+                                        Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
+                                    <TextBlock
+                                        Grid.Row="2" Grid.Column="1" 
+                                        Text="+"
+                                        Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
+                                    
+                                    <TextBlock
+                                        Grid.Row="0" Grid.Column="3" 
+                                        Text="+"
+                                        Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
+                                    <TextBlock
+                                        Grid.Row="2" Grid.Column="3" 
+                                        Text="+"
+                                        Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
+                                    
+                                    <TextBlock
+                                        Grid.Row="0" Grid.Column="5" 
+                                        Text="+"
+                                        Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
+                                    <TextBlock
+                                        Grid.Row="2" Grid.Column="5" 
+                                        Text="+"
+                                        Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
+                                    
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        IsHitTestVisible="False"
+                                        Style="{StaticResource DurationSetterDigits}"
+                                        Text="{Binding Hour, FallbackValue=12}"/> <!--HH-->
+                                    <TextBlock
+                                       Grid.Row="1"
+                                       Grid.Column="3"
+                                       IsHitTestVisible="False"
+                                       Style="{StaticResource DurationSetterDigits}"
+                                        Text="{Binding Minute, FallbackValue=59}"/> <!--MM-->
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="5"
+                                        IsHitTestVisible="False"
+                                        Style="{StaticResource DurationSetterDigits}"
+                                        Text="{Binding Meridiem, FallbackValue=AM}"/> <!--TT-->
+                                        
+                                </Grid> <!--Time Setter-->
                     
-                    <Grid
-                    Width="270" Height="90"
-                    Canvas.Left="20" Canvas.Top="20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="15" /> <!--Up Button-->
-                            <RowDefinition Height="60" /> <!--Digits-->
-                            <RowDefinition Height="15" /> <!--Down Buttons-->
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="15" /><!--Spacer-->
-                            <ColumnDefinition Width="70" /> <!--HH-->
-                            <ColumnDefinition Width="15" /><!--:-->
-                            <ColumnDefinition Width="70" /><!--MM-->
-                            <ColumnDefinition Width="15" /><!--Spacer-->
-                            <ColumnDefinition Width="70" /><!--TT-->
-                            <ColumnDefinition Width="15" /><!--Spacer-->
-                        </Grid.ColumnDefinitions>
-    
-                        <Border
-                            Grid.Row="1"
-                            Grid.Column="0" Grid.ColumnSpan="7"
-                            Background="{StaticResource Brush-Gray-700}"/><!--Background-->
-    
-                        <Border
-                            Grid.Row="0" Grid.RowSpan="3"
-                            Grid.Column="1"
-                            Background="{StaticResource Brush-Gray-700}"/><!--HH Background-->
-                        <Border
-                            Grid.Row="0" Grid.RowSpan="3"
-                            Grid.Column="3"
-                            Background="{StaticResource Brush-Gray-700}"/><!--MM Background-->
-                        <Border
-                            Grid.Row="0" Grid.RowSpan="3"
-                            Grid.Column="5"
-                            Background="{StaticResource Brush-Gray-700}"/><!--TT Background-->
-                        
-                        <Path
-                            Grid.Row="1" Grid.Column="2" 
-                            Height="16"
-                            Data="M 0,0 L 92,0 L 46,85 L 92,170 L 0,170 L 46,85 Z"
-                            Fill="{StaticResource Brush-Gray-500}"
-                            Stretch="Uniform"/> <!--VE-->
-                        <Path
-                            Grid.Row="1" Grid.Column="4" 
-                            Height="16"
-                            Data="M 0,0 L 92,0 L 46,85 L 92,170 L 0,170 L 46,85 Z"
-                            Fill="{StaticResource Brush-Gray-500}"
-                            Stretch="Uniform"/> <!--VE-->
-                        
-                        <Button
-                            Grid.Row="0" Grid.Column="1" 
-                            Command="{Binding OnPickDuration}"
-                            CommandParameter="HU">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button> <!--HH Up Button-->
-                        <Button
-                            Grid.Row="2" Grid.Column="1" 
-                            Command="{Binding OnPickDuration}"
-                            CommandParameter="HD">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button> <!--HH Down Button-->
-                                   
-                        <Button
-                            Grid.Row="0" Grid.Column="3" 
-                            Command="{Binding OnPickDuration}"
-                            CommandParameter="MU">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button> <!--MM Up Button-->
-                        <Button
-                            Grid.Row="2" Grid.Column="3" 
-                            Command="{Binding OnPickDuration}"
-                            CommandParameter="MD">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button> <!--MM Down Button-->
-                        
-                        <Button
-                            Grid.Row="0" Grid.Column="5" 
-                            Command="{Binding OnPickDuration}"
-                            CommandParameter="TU">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button> <!--TT Up Button-->
-                        <Button
-                            Grid.Row="2" Grid.Column="5" 
-                            Command="{Binding OnPickDuration}"
-                            CommandParameter="TD">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButton}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource Brush-Gray-600}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button> <!--TT Down Button-->
-                        
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="1" 
-                            Text="+"
-                            Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="1" 
-                            Text="+"
-                            Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
-                        
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="3" 
-                            Text="+"
-                            Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="3" 
-                            Text="+"
-                            Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
-                        
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="5" 
-                            Text="+"
-                            Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="5" 
-                            Text="+"
-                            Style="{StaticResource DurationSetterButtonIcon}"/> <!--Button Icon-->
-                        
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            IsHitTestVisible="False"
-                            Style="{StaticResource DurationSetterDigits}"
-                            Text="{Binding DurationHour, FallbackValue=00}"/> <!--HH-->
-                        <TextBlock
-                           Grid.Row="1"
-                           Grid.Column="3"
-                           IsHitTestVisible="False"
-                           Style="{StaticResource DurationSetterDigits}"
-                            Text="{Binding DurationMinute, FallbackValue=00}"/> <!--MM-->
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="5"
-                            IsHitTestVisible="False"
-                            Style="{StaticResource DurationSetterDigits}"
-                            Text="{Binding DurationMinute, FallbackValue=AM}"/> <!--TT-->
+                            <Grid 
+                                Width="60" Height="20"
+                                VerticalAlignment="Bottom"
+                                IsHitTestVisible="False">
+                                
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="60" Height="2"/>
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="2" Height="20"/>
+                            </Grid> <!--B-VE-->
+                            <Grid 
+                                Width="60" Height="20"
+                                VerticalAlignment="Top"
+                                IsHitTestVisible="False">
+                                
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="60" Height="2"/>
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="2" Height="20"/>
+                            </Grid> <!--T-VE-->
                             
-                    </Grid> <!--Time Setter-->
+                            <Grid 
+                                Width="40" Height="20"
+                                VerticalAlignment="Top" HorizontalAlignment="Left"
+                                IsHitTestVisible="False">
+                                
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="60" Height="2"/>
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="2" Height="20"
+                                    HorizontalAlignment="Left"
+                                    Margin="12,0,0,0"/>
+                            </Grid> <!--TL-VE-->
+                            <Grid 
+                                Width="40" Height="20"
+                                VerticalAlignment="Top" HorizontalAlignment="Right"
+                                IsHitTestVisible="False">
+                                
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="60" Height="2"/>
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="2" Height="20"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,12,0"/>
+                            </Grid> <!--TR-VE-->
+                            
+                            <Grid 
+                                Width="40" Height="20"
+                                VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                                IsHitTestVisible="False">
+                                
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="60" Height="2"/>
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="2" Height="20"
+                                    HorizontalAlignment="Left"
+                                    Margin="12,0,0,0"/>
+                            </Grid> <!--BL-VE-->
+                            <Grid 
+                                Width="40" Height="20"
+                                VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                IsHitTestVisible="False">
+                                
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="60" Height="2"/>
+                                <Border 
+                                    Background="{StaticResource Brush-Gray-600}"
+                                    Width="2" Height="20"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,12,0"/>
+                            </Grid> <!--BR-VE-->
+                            
+                        </Grid> <!--Elements-->
+                        
+                    </Border> <!--Background-->
                     
-                    <Grid 
-                        Width="60" Height="20"
-                        Canvas.Top="110" Canvas.Left="125">
-                        
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="60" Height="2"/>
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="2" Height="20"/>
-                    </Grid> <!--B-VE-->
-                    <Grid 
-                        Width="60" Height="20"
-                        Canvas.Top="0" Canvas.Left="125">
-                        
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="60" Height="2"/>
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="2" Height="20"/>
-                    </Grid> <!--T-VE-->
-                    
-                    <Grid 
-                        Width="40" Height="20"
-                        Canvas.Top="0" Canvas.Left="0">
-                        
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="60" Height="2"/>
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="2" Height="20"
-                            HorizontalAlignment="Left"
-                            Margin="12,0,0,0"/>
-                    </Grid> <!--TL-VE-->
-                    <Grid 
-                        Width="40" Height="20"
-                        Canvas.Top="0" Canvas.Left="270">
-                        
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="60" Height="2"/>
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="2" Height="20"
-                            HorizontalAlignment="Right"
-                            Margin="0,0,12,0"/>
-                    </Grid> <!--TR-VE-->
-                    
-                    <Grid 
-                        Width="40" Height="20"
-                        Canvas.Top="110" Canvas.Left="0">
-                        
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="60" Height="2"/>
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="2" Height="20"
-                            HorizontalAlignment="Left"
-                            Margin="12,0,0,0"/>
-                    </Grid> <!--BL-VE-->
-                    <Grid 
-                        Width="40" Height="20"
-                        Canvas.Top="110" Canvas.Left="270">
-                        
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="60" Height="2"/>
-                        <Border 
-                            Background="{StaticResource Brush-Gray-700}"
-                            Width="2" Height="20"
-                            HorizontalAlignment="Right"
-                            Margin="0,0,12,0"/>
-                    </Grid> <!--BR-VE-->
-                    
-            
-                </Canvas>
+                </Canvas> <!--Time Setter -->
                 
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
@@ -448,7 +481,6 @@
                         Visibility="{Binding IsChecked, ElementName=FormToggle, Converter={StaticResource BoolToVis}}"/><!--Form-->
                     
                 </Grid> <!--Side Tab-->
-                
                 
             </Grid>
             

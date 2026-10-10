@@ -10,7 +10,7 @@
              d:DesignHeight="840" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance Type=remindersViewModel:RemindersViewModel}">
     
-    <Grid>
+    <Grid Background="{StaticResource Brush-Gray-800}">
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/> <!--Spacer-->
             <RowDefinition Height="40"/> <!--Title-->
@@ -25,23 +25,24 @@
         
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
-                <RowDefinition Height="360"/>
+                <RowDefinition Height="350"/>
                 <RowDefinition Height="84"/>
                 <RowDefinition Height="316"/>
             </Grid.RowDefinitions>
            
-            <TextBlock 
+            <Path 
                 Grid.Row="0"
                 Grid.RowSpan="2"
-                Text="⍶"
-                FontFamily="{StaticResource JetBrainsMono}"
-                FontSize="450"
-                FontWeight="Regular"
-                VerticalAlignment="Bottom"
-                Margin="0,0,20,30"
+                Stretch="Uniform"
+                Fill="{StaticResource Brush-Gray-100}"
+                Width="300"
+                IsHitTestVisible="False"
                 HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Opacity="0.01"
-                Foreground="{StaticResource Brush-Gray-100}"/>
+                Margin="0,0,0,80"
+                Data="M1,1 L2,1 L2,2 L5,2 L5,1 L6,1 L6,3 L4,3 L4,4 L6,4 
+                L6,6 L5,6 L5,5 L2,5 L2,6 L1,6 L1,4 L3,4 L3,3 L1,3 Z"/>
             
             <TextBlock 
                 Grid.Row="0"
@@ -70,8 +71,8 @@
             <TextBlock 
                 Grid.Row="1"
                 Text="POSTEA"
-                FontFamily="{StaticResource JetBrainsMono}"
-                FontSize="70"
+                FontFamily="{StaticResource Arimo}"
+                FontSize="80"
                 FontWeight="Bold"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
                 Opacity="0.01"

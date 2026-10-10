@@ -12,7 +12,7 @@
     
      <!--Forms Tab Title-->
     <Style x:Key="FormsTabTitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource DmSerif}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Arimo}"/>
         <Setter Property="FontSize" Value="35"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>

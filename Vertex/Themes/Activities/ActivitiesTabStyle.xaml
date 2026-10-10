@@ -9,9 +9,9 @@
     
     <!--Activities Tab Title-->
     <Style x:Key="ActivitiesTabTitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource DmSerif}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Arimo}"/>
         <Setter Property="FontSize" Value="35"/>
-        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Foreground" Value="{StaticResource Brush-Gray-200}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>

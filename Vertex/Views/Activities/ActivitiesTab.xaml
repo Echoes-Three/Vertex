@@ -10,8 +10,7 @@
              d:DesignHeight="840" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance Type=activities:ActivitiesViewModel}">
     
-    <Grid>
-        
+    <Grid Background="{StaticResource Brush-Gray-800}">
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/> <!--Spacer-->
             <RowDefinition Height="40"/> <!--Title-->
@@ -26,23 +25,26 @@
         
        <Grid Grid.Row="3">
             <Grid.RowDefinitions>
-                <RowDefinition Height="360"/>
+                <RowDefinition Height="350"/>
                 <RowDefinition Height="84"/>
                 <RowDefinition Height="316"/>
             </Grid.RowDefinitions>
            
-            <TextBlock 
+            <Path 
                 Grid.Row="0"
                 Grid.RowSpan="2"
-                Text="⍹"
-                FontFamily="{StaticResource JetBrainsMono}"
-                FontSize="450"
-                FontWeight="Regular"
-                VerticalAlignment="Bottom"
-                Margin="0,0,0,30"
+                Stretch="Uniform"
+                Fill="{StaticResource Brush-Gray-100}"
+                Width="300"
+                IsHitTestVisible="False"
                 HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Opacity="0.01"
-                Foreground="{StaticResource Brush-Gray-100}"/>
+                Margin="0,0,0,80"
+                Data="M3,1 L4,1 L4,2 L3,2 Z
+                M1,2 L3,2 L3,3 L2,3 L2,4 L3,4 L3,5 L1,5 Z
+                M4,2 L6,2 L6,5 L4,5 L4,4 L5,4 L5,3 L4,3 Z
+                M3,5 L4,5 L4,6 L3,6 Z" />
             
             <TextBlock 
                 Grid.Row="0"
@@ -71,8 +73,8 @@
             <TextBlock 
                 Grid.Row="1"
                 Text="ANTEA"
-                FontFamily="{StaticResource JetBrainsMono}"
-                FontSize="70"
+                FontFamily="{StaticResource Arimo}"
+                FontSize="90"
                 FontWeight="Bold"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
                 Opacity="0.01"

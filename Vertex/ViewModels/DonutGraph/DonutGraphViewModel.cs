@@ -7,6 +7,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using Vertex.Data.Handlers;
+using Vertex.Data.Services;
 using Vertex.Models.Entities;
 using Vertex.MVVM;
 using Colors = Vertex.Data.Services.Colors;
@@ -15,7 +16,7 @@ namespace Vertex.ViewModels.DonutGraph;
 
 public class DonutGraphViewModel : ViewModelBase
 {
-    private ActivitiesHandler _activitiesData;
+    private ActivitiesHandler _data;
     private readonly RemindersHandler _remindersData;
 
     public ObservableCollection<SliceViewModel> Slices
@@ -28,7 +29,7 @@ public class DonutGraphViewModel : ViewModelBase
         }
     }
     
-    private int TodayIndex => (int)DateTime.Today.DayOfWeek;
+    private readonly int _today = (int)DateTime.Today.DayOfWeek;
     private readonly List<string> _meridiem = ["AM", "PM"];
     private int _currentMeridiemIndex;
     private int _currentHourCount = 06;
@@ -38,7 +39,7 @@ public class DonutGraphViewModel : ViewModelBase
     
     public DonutGraphViewModel(ActivitiesHandler activitiesHandler, RemindersHandler remindersHandler)
     {
-        _activitiesData = activitiesHandler;
+        _data = activitiesHandler;
         _remindersData = remindersHandler;
 
         BuildSlices();
@@ -49,7 +50,7 @@ public class DonutGraphViewModel : ViewModelBase
             {
                 foreach (ActivityEntry entry in e.OldItems)
                 {
-                    var vm = Slices.FirstOrDefault(x => x.EntryData!.Id == entry.Id);
+                    var vm = Slices.FirstOrDefault(x => x.Data!.Id == entry.Id);
                     if (vm == null) continue;
                     Slices.Remove(vm);
                     BuildSlices();
@@ -94,7 +95,7 @@ public class DonutGraphViewModel : ViewModelBase
         }
     }
     private void BuildSlices() =>
-        Slices = new ObservableCollection<SliceViewModel>(_activitiesData.Activities!
+        Slices = new ObservableCollection<SliceViewModel>(_data.Activities!
             .Where(s => s!.RepeatOn.Contains(DateTime.Today.DayOfWeek))
             .Select(s => new SliceViewModel(s)));
     
@@ -143,13 +144,7 @@ public class DonutGraphViewModel : ViewModelBase
         
         OnPropertyChanged(nameof(PathData));
     }
-    private static Point GetPointOnCircle(double clockAngle)
-    {
-        var radians = clockAngle * Math.PI / 180;
-        var x = 315 * Math.Cos(radians);
-        var y = -315 * Math.Sin(radians);
-        return new Point(x, y);
-    }
+  
     
     public Geometry PathData
     {
@@ -160,11 +155,11 @@ public class DonutGraphViewModel : ViewModelBase
 
             var angle = 270 - (15 * hour + 0.25 * minute);
 
-            angle = angle % 360;
+            angle %= 360;
             if (angle < 0) angle += 360;
             
-            var p1 = GetPointOnCircle(180);
-            var p2 = GetPointOnCircle(angle);
+            var p1 = AngleConverters.AngleToPoint(180, 315);
+            var p2 = AngleConverters.AngleToPoint(angle, 315);
             
             var spanAngle = 180 - angle;
             if (spanAngle < 0) spanAngle += 360;
@@ -248,7 +243,6 @@ public class DonutGraphViewModel : ViewModelBase
     }
     
     
-        
     /*Setting Slice*/
     public void OnRightMouseDown(object sender, MouseButtonEventArgs e, Canvas donutCanvas)
     {
@@ -256,68 +250,18 @@ public class DonutGraphViewModel : ViewModelBase
         Slice = path.DataContext as SliceViewModel;
 
         var mouse = e.GetPosition(donutCanvas);
-        var dx = mouse.X - 350;
-        var dy = mouse.Y - 350;
-        var angle = Math.Atan2(dy, dx) * (180 / Math.PI);
-        if (angle < 0) angle += 360;
-        LastClockDegree = (angle - 180 + 360) % 360;
+        var x = mouse.X - 350;
+        var y = mouse.Y - 350;
+        
+        WeakReferenceMessenger.Default.Send(new SetSliceMessage((Slice!.Data.Id, x, y)));
     }
-    public void OnMouseMove(MouseEventArgs e, Canvas donutCanvas)
-    {
-        if (!IsDragging || Slice == null) return;
-
-        var mouse = e.GetPosition(donutCanvas);
-        var dx = mouse.X - 510;
-        var dy = mouse.Y - 377;
-        var angle = Math.Atan2(dy, dx) * (180 / Math.PI);
-        if (angle < 0) angle += 360;
-        var clockDegrees = (angle - 180 + 360) % 360;
-
-        var delta = clockDegrees - LastClockDegree;
-        if (delta > 180) delta -= 360;
-        if (delta < -180) delta += 360;
-
-        Slice.StartAngle = (Slice.StartAngle - delta + 360) % 360;
-        Slice.EndAngle = (Slice.EndAngle - delta + 360) % 360;
-
-        LastClockDegree = clockDegrees;
-        
-
-        var entry = Slice.EntryData;
-        var time = FromAngleToHour(Slice.StartAngle);
-        var hour = $"{(int)entry!.Duration.TotalHours}H";
-        var minute = entry.Duration.Minutes == 0
-            ? ""
-            : $"{entry.Duration.Minutes}MIN";
-        var title = entry.Title.Length > 16 ? entry.Title[..10] : entry.Title;
-            
-        ActivityColor = Colors.Palette[entry.Color];
-        ClockTime = $"{time.Hour}:{time.Minute} {time.Meridiem}";
-        ClockDayOfTheWeek = $"{title}... -> {hour}{minute}";
-        ClockDate = "↑↑↑ STARTS ↑↑↑";
-    }
-    public void OnMouseUp()
-    {
-        if (Slice == null) return; 
-            
-        var activity = Slice.EntryData;
-        
-        activity!.StartAngle[TodayIndex] = Slice.StartAngle;
-        
-        _activitiesData.Serialize();
-        
-        CleanActivityInfo();
-        
-        IsDragging = false;
-        Slice = null;
-        BuildSlices();
-    }
+    
     private static (string Hour, string Minute, string Meridiem) FromAngleToHour(double angle)
     {
         var adjustedAngle = (180 - angle + 360) % 360;
         var totalHours = adjustedAngle / 15.0;
         var hour = (int)totalHours + 6;
-        hour = hour % 24;
+        hour %= 24;
         var minutes = (int)((totalHours % 1) * 60);
 
         var meridiem = hour >= 12 ? "PM" : "AM";
@@ -326,30 +270,31 @@ public class DonutGraphViewModel : ViewModelBase
         
         return (correctHour.ToString("D2"), minutes.ToString("D2"), meridiem);
     }
-    public void PopulateActivityInfo(object pathTag)
+    public void PopulateActivityInfo(object id)
     {
-        var entry = _activitiesData.Activities!.FirstOrDefault(x => x.Id == (string)pathTag);
+        var entry = _data.Activities!.FirstOrDefault(x => x.Id == (string)id);
         if (entry == null) return;
         
-        var today = (int)DateTime.Today.DayOfWeek;
-        var time = FromAngleToHour(entry.StartAngle[today]);
-        var hour = (int)entry!.Duration.TotalHours == 0
-            ? ""
-            : $"{(int)entry!.Duration.TotalHours}H";
-        var minute = entry.Duration.Minutes == 0
-            ? ""
-            : $"{entry.Duration.Minutes}MIN";
-        var title = entry.Title.Length > 16 ? entry.Title[..10] : entry.Title;
+        var time = FromAngleToHour(entry.StartAngle[_today]);
+        /*var title = entry.Title.Length > 16 ? entry.Title[..10] : entry.Title;*/
+        var title = entry.Title;
             
         ActivityColor = Colors.Palette[entry.Color];
         ClockTime = $"{time.Hour}:{time.Minute} {time.Meridiem}";
-        ClockDayOfTheWeek = $"{title}... -> {hour}{minute}";
-        ClockDate = "↑↑↑ STARTS ↑↑↑";
+        ClockDayOfTheWeek = title;
+        ClockDate = "↑↑↑ STARTS AT ↑↑↑";
     }
     public void CleanActivityInfo()
     {
         UpdateClock();
         ActivityColor = Colors.GetBrush("#e6e6ea");
+        
+        /*_data.Serialize();
+        
+        CleanActivityInfo();
+        
+        Slice = null;
+        BuildSlices();*/
     }
     
     private double LastClockDegree
@@ -362,15 +307,6 @@ public class DonutGraphViewModel : ViewModelBase
         }
     }
     private SliceViewModel? Slice
-    {
-        get;
-        set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-    private bool IsDragging
     {
         get;
         set
